@@ -1,0 +1,16 @@
+# TANE Core
+---
+This is TANE Core.
+
+# .env
+---
+See Firebase TANE Project settings.
+```
+VITE_API_KEY=<->
+VITE_AUTH_DOMAIN=<->
+VITE_PROJECT_ID=<->
+VITE_STORAGE_BUCKET=<->
+VITE_MESSAGING_SENDER_ID=<->
+VITE_APP_ID=<->
+VITE_MEASUREMENT_ID=<->
+```
