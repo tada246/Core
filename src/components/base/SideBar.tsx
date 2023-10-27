@@ -12,7 +12,17 @@ import {
     IoPeople,
     IoPersonCircleSharp,
 } from 'react-icons/io5';
-import { Button } from '@nextui-org/react';
+import {
+    Button,
+    Navbar,
+    NavbarBrand,
+    NavbarContent,
+    NavbarItem,
+    NavbarMenu,
+    NavbarMenuItem,
+    NavbarMenuToggle,
+} from '@nextui-org/react';
+import { useState } from 'react';
 
 interface SidebarContent {
     name: string;
@@ -29,22 +39,22 @@ const sidebar_content: SidebarContent[] = [
     {
         name: 'アナリティクス',
         icon: <IoAnalyticsOutline />,
-        link: '/',
+        link: '/analytics',
     },
     {
         name: 'ユーザー管理',
         icon: <IoPeople />,
-        link: '/',
+        link: '/user-management',
     },
     {
         name: 'Map',
         icon: <IoMapOutline />,
-        link: '/',
+        link: '/map',
     },
     {
         name: '輝緑祭公式ページ',
         icon: <IoPawSharp />,
-        link: '/',
+        link: '/school-festival',
     },
     {
         name: 'border',
@@ -54,7 +64,7 @@ const sidebar_content: SidebarContent[] = [
     {
         name: '画像一覧',
         icon: <IoFolderOpen />,
-        link: '/',
+        link: '/images',
     },
     {
         name: '画像アップロード',
@@ -69,12 +79,12 @@ const sidebar_content: SidebarContent[] = [
     {
         name: 'アカウント',
         icon: <IoPersonCircleSharp />,
-        link: '/',
+        link: '/account',
     },
     {
         name: 'サインアウト',
         icon: <IoExitOutline />,
-        link: '/',
+        link: '/signout',
     },
     {
         name: 'border',
@@ -94,31 +104,75 @@ const sidebar_content: SidebarContent[] = [
 ];
 
 export default function SideBar() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     return (
-        <div className='w-60 border-r border-default h-screen'>
-            <ul className='w-52 mx-auto mt-4 flex flex-col gap-1'>
-                {sidebar_content.map((content, index) => (
-                    <li key={index}>
-                        {content.name !== 'border' ? (
-                            <Button
-                                color='default'
-                                variant='light'
-                                fullWidth
-                                startContent={content.icon}
-                                as={Link}
-                                to={content.link}
-                                className='justify-start'
-                            >
-                                <p className='text-size-[0.8rem]'>
-                                    {content.name}
-                                </p>
-                            </Button>
-                        ) : (
-                            <div className='border-t border-default'></div>
-                        )}
-                    </li>
-                ))}
-            </ul>
+        <div>
+            <div className='w-60 md:block hidden'>
+                <div className='w-60 border-r border-default h-screen fixed top-0 left-0'>
+                    <ul className='w-52 mx-auto mt-4 flex flex-col gap-1'>
+                        {sidebar_content.map((content, index) => (
+                            <li key={index}>
+                                {content.name !== 'border' ? (
+                                    <Button
+                                        color='default'
+                                        variant='light'
+                                        fullWidth
+                                        startContent={content.icon}
+                                        as={Link}
+                                        to={content.link}
+                                        className='justify-start'
+                                    >
+                                        <p>
+                                            {content.name}
+                                        </p>
+                                    </Button>
+                                ) : (
+                                    <div className='border-t border-default' key={index}></div>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <div className='md:hidden'>
+                <Navbar
+                    onMenuOpenChange={setIsMenuOpen}
+                    className='fixed top-0'
+                >
+                    <NavbarContent>
+                        <NavbarMenuToggle
+                            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                            className='sm:hidden'
+                        />
+                        <NavbarBrand>
+                            <p className='font-bold text-inherit'>Core</p>
+                        </NavbarBrand>
+                    </NavbarContent>
+                    <NavbarMenu>
+                        {sidebar_content.map((content, index) => (
+                            <li key={index}>
+                                {content.name !== 'border' ? (
+                                    <NavbarMenuItem key={index}>
+                                        <Link
+                                            to={content.link}
+                                            className='flex items-center gap-2'
+                                        >
+                                            {content.icon}
+                                            <p>{content.name}</p>
+                                        </Link>
+                                    </NavbarMenuItem>
+                                ) : (
+                                    <div
+                                        className='border-t border-default'
+                                        key={index}
+                                    ></div>
+                                )}
+                            </li>
+                        ))}
+                    </NavbarMenu>
+                </Navbar>
+            </div>
         </div>
     );
 }

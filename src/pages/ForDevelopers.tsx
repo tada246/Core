@@ -2,7 +2,7 @@ import { IoGitBranchOutline, IoLogoCss3, IoLogoFirebase, IoLogoGithub, IoLogoHtm
 
 export default function ForDevelopers() {
     return (
-        <div className='max-w-4xl mx-auto w-full mt-12'>
+        <div className='max-w-4xl mx-auto w-full py-12 px-6'>
             <div>
                 <div className='flex items-center gap-4'>
                     <IoGitBranchOutline size={24} />

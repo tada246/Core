@@ -6,7 +6,7 @@ type Props = {
 
 export default function Layout(props: Props) {
     return (
-        <main className='flex dark text-foreground bg-background'>
+        <main className='flex'>
             <SideBar />
             {props.children}
         </main>
