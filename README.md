@@ -1,9 +1,7 @@
 # TANE Core
----
 This is TANE Core.
 
 # .env
----
 See Firebase TANE Project settings.
 ```
 VITE_API_KEY=<->
