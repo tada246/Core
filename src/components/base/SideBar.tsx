@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
     IoAnalyticsOutline,
     IoDuplicate,
@@ -17,7 +17,6 @@ import {
     Navbar,
     NavbarBrand,
     NavbarContent,
-    NavbarItem,
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
@@ -105,10 +104,11 @@ const sidebar_content: SidebarContent[] = [
 
 export default function SideBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
 
     return (
         <div>
-            <div className='w-60 md:block hidden'>
+            <div className='w-60 sm:block hidden'>
                 <div className='w-60 border-r border-default h-screen fixed top-0 left-0'>
                     <ul className='w-52 mx-auto mt-4 flex flex-col gap-1'>
                         {sidebar_content.map((content, index) => (
@@ -116,26 +116,31 @@ export default function SideBar() {
                                 {content.name !== 'border' ? (
                                     <Button
                                         color='default'
-                                        variant='light'
+                                        variant={
+                                            location.pathname === content.link
+                                                ? 'flat'
+                                                : 'light'
+                                        }
                                         fullWidth
                                         startContent={content.icon}
                                         as={Link}
                                         to={content.link}
                                         className='justify-start'
                                     >
-                                        <p>
-                                            {content.name}
-                                        </p>
+                                        {content.name}
                                     </Button>
                                 ) : (
-                                    <div className='border-t border-default' key={index}></div>
+                                    <div
+                                        className='border-t border-default'
+                                        key={index}
+                                    ></div>
                                 )}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
-            <div className='md:hidden'>
+            <div className='sm:hidden'>
                 <Navbar
                     onMenuOpenChange={setIsMenuOpen}
                     className='fixed top-0'
@@ -149,7 +154,7 @@ export default function SideBar() {
                             <p className='font-bold text-inherit'>Core</p>
                         </NavbarBrand>
                     </NavbarContent>
-                    <NavbarMenu>
+                    <NavbarMenu className='flex flex-col gap-3'>
                         {sidebar_content.map((content, index) => (
                             <li key={index}>
                                 {content.name !== 'border' ? (

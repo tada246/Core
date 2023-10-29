@@ -1,8 +1,8 @@
-import { IoHelpOutline } from "react-icons/io5";
+import { IoHelpOutline } from 'react-icons/io5';
 
 export default function Help() {
     return (
-        <div className='max-w-4xl mx-auto w-full py-12 px-6'>
+        <div>
             <div>
                 <div className='flex items-center gap-4'>
                     <IoHelpOutline size={24} />

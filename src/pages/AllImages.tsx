@@ -2,7 +2,7 @@ import { IoFolderOpen } from "react-icons/io5";
 
 export default function AllImages() {
     return (
-        <div className='max-w-4xl mx-auto w-full py-12 px-6'>
+        <div>
             <div>
                 <div className='flex items-center gap-4'>
                     <IoFolderOpen size={24} />

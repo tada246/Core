@@ -1,8 +1,20 @@
-import { IoGitBranchOutline, IoLogoCss3, IoLogoFirebase, IoLogoGithub, IoLogoHtml5, IoLogoMarkdown, IoLogoNodejs, IoLogoNpm, IoLogoPwa, IoLogoReact } from 'react-icons/io5';
+import {
+    IoGitBranchOutline,
+    IoLogoCss3,
+    IoLogoFirebase,
+    IoLogoGithub,
+    IoLogoHtml5,
+    IoLogoMarkdown,
+    IoLogoNodejs,
+    IoLogoNpm,
+    IoLogoPwa,
+    IoLogoReact,
+} from 'react-icons/io5';
+import { Image } from '@nextui-org/react';
 
 export default function ForDevelopers() {
     return (
-        <div className='max-w-4xl mx-auto w-full py-12 px-6'>
+        <div>
             <div>
                 <div className='flex items-center gap-4'>
                     <IoGitBranchOutline size={24} />
@@ -29,6 +41,17 @@ export default function ForDevelopers() {
                     <IoLogoNpm size={28} />
                     <IoLogoMarkdown size={28} />
                     <IoLogoNodejs size={28} />
+                </div>
+            </div>
+            <div className='mt-10'>
+                <div>
+                    <p className='text-xl font-bold'>システム構成図</p>
+                    <p className='text-sm opacity-80'>
+                        TANE Project全体のシステム構成図です
+                    </p>
+                </div>
+                <div className='mt-4 w-full'>
+                    <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2Fsystem-configuration.jpg?alt=media&token=d29cfa1b-c697-4f4b-9fbd-823b223aff42' />
                 </div>
             </div>
         </div>

@@ -1,10 +1,8 @@
-import { Button } from '@nextui-org/react';
 import { IoSadOutline } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
 
 export default function NotFound() {
     return (
-        <div className='max-w-4xl mx-auto w-full py-12 px-6'>
+        <div>
             <div>
                 <div className='flex items-center gap-4'>
                     <IoSadOutline size={24} />
@@ -13,17 +11,6 @@ export default function NotFound() {
                 <p className='text-sm mt-1 opacity-80'>
                     お探しのページは見つかりませんでした。
                 </p>
-            </div>
-            <div className='mt-10'>
-                <div>
-                    <p className='text-xl font-bold'>ホームに戻る</p>
-                    <p className='text-sm opacity-80'>ホームに戻ります</p>
-                </div>
-                <div>
-                    <Button as={Link} to='/'>
-                        戻る
-                    </Button>
-                </div>
             </div>
             <div className='mt-10'>
                 <div>

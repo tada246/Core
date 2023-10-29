@@ -19,7 +19,7 @@ export default function Upload() {
         : 'bg-primary-50';
 
     return (
-        <div className='max-w-4xl mx-auto w-full py-12 px-6'>
+        <div>
             <div>
                 <div className='flex items-center gap-4'>
                     <IoDuplicate size={24} />
