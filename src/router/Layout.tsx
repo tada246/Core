@@ -23,7 +23,7 @@ export default function Layout(props: Props) {
     }, []);
 
     return (
-        <main className='flex'>
+        <main className='flex font-noto'>
             <SideBar />
             <div className='max-w-4xl mx-auto w-full pb-12 px-6 pt-24 sm:pt-12'>
                 {loginState === 0 && <Loading />}

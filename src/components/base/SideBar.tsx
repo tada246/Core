@@ -46,21 +46,6 @@ const sidebar_content: SidebarContent[] = [
         link: '/user-management',
     },
     {
-        name: 'Map',
-        icon: <IoMapOutline />,
-        link: '/map',
-    },
-    {
-        name: '輝緑祭公式ページ',
-        icon: <IoPawSharp />,
-        link: '/school-festival',
-    },
-    {
-        name: 'border',
-        icon: <div />,
-        link: '',
-    },
-    {
         name: '画像一覧',
         icon: <IoFolderOpen />,
         link: '/images',
@@ -69,6 +54,16 @@ const sidebar_content: SidebarContent[] = [
         name: '画像アップロード',
         icon: <IoDuplicate />,
         link: '/upload',
+    },
+    {
+        name: 'border',
+        icon: <div />,
+        link: '',
+    },
+    {
+        name: 'Map',
+        icon: <IoMapOutline />,
+        link: '/map',
     },
     {
         name: 'border',
@@ -156,7 +151,7 @@ export default function SideBar() {
                     </NavbarContent>
                     <NavbarMenu className='flex flex-col gap-3'>
                         {sidebar_content.map((content, index) => (
-                            <li key={index}>
+                            <div key={index}>
                                 {content.name !== 'border' ? (
                                     <NavbarMenuItem key={index}>
                                         <Link
@@ -170,10 +165,9 @@ export default function SideBar() {
                                 ) : (
                                     <div
                                         className='border-t border-default'
-                                        key={index}
                                     ></div>
                                 )}
-                            </li>
+                            </div>
                         ))}
                     </NavbarMenu>
                 </Navbar>

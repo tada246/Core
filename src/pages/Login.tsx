@@ -36,7 +36,7 @@ export default function Login() {
                 </p>
             </div>
             <div className='mt-10'>
-                <div className='max-w-md mx-auto bg-gradient-to-br from-sky-400 to-purple-400 h-96 rounded-xl shadow flex justify-center items-center'>
+                <div className='max-w-md mx-auto bg-gradient-to-br from-sky-400 to-purple-400 py-10 rounded-xl shadow flex justify-center items-center'>
                     <Card
                         isBlurred
                         shadow='sm'
@@ -58,7 +58,7 @@ export default function Login() {
                                     onClick={() => loginWithGoogle()}
                                     isLoading={isLoginLoading}
                                 >
-                                    <p>Googleアカウントでログイン</p>
+                                    <p>Login with Google</p>
                                 </Button>
                             </div>
                         </CardBody>

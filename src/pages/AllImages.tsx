@@ -1,4 +1,4 @@
-import { IoFolderOpen } from "react-icons/io5";
+import { IoFolderOpen } from 'react-icons/io5';
 
 export default function AllImages() {
     return (
@@ -13,11 +13,6 @@ export default function AllImages() {
                 </p>
             </div>
             <div className='mt-10'>
-                <div>
-                    <p className='text-xl font-bold'>タイトル</p>
-                    <p className='text-sm opacity-80'>説明</p>
-                </div>
-                <div className='mt-4 flex gap-4'></div>
             </div>
         </div>
     );

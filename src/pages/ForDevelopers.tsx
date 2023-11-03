@@ -43,7 +43,7 @@ export default function ForDevelopers() {
                     <IoLogoNodejs size={28} />
                 </div>
             </div>
-            <div className='mt-10'>
+            {/* <div className='mt-10'>
                 <div>
                     <p className='text-xl font-bold'>システム構成図</p>
                     <p className='text-sm opacity-80'>
@@ -53,7 +53,7 @@ export default function ForDevelopers() {
                 <div className='mt-4 w-full'>
                     <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2Fsystem-configuration.jpg?alt=media&token=d29cfa1b-c697-4f4b-9fbd-823b223aff42' />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
