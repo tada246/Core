@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Account, AllImages, ForDevelopers, Help, Home, NotFound, Upload } from './pages';
+import { Account, AllImages, ForDevelopers, Help, Home, MapDetail, Maps, NotFound, Upload } from './pages';
 
 export default function App() {
     return (
@@ -10,6 +10,8 @@ export default function App() {
             <Route path='/upload' element={<Upload />} />
             <Route path='/images' element={<AllImages />} />
             <Route path='/account' element={<Account />} />
+            <Route path='/map' element={<Maps />} />
+            <Route path='/map/:id' element={<MapDetail />} />
             <Route path='*' element={<NotFound />} />
         </Routes>
     );

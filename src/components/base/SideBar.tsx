@@ -2,13 +2,12 @@ import { Link, useLocation } from 'react-router-dom';
 import {
     IoAnalyticsOutline,
     IoDuplicate,
-    IoExitOutline,
+    IoFileTrayOutline,
     IoFolderOpen,
     IoGitBranchOutline,
     IoHelpOutline,
     IoHome,
     IoMapOutline,
-    IoPawSharp,
     IoPeople,
     IoPersonCircleSharp,
 } from 'react-icons/io5';
@@ -61,9 +60,14 @@ const sidebar_content: SidebarContent[] = [
         link: '',
     },
     {
-        name: 'Map',
+        name: 'マップイベント',
         icon: <IoMapOutline />,
         link: '/map',
+    },
+    {
+        name: 'リアルタイム連絡',
+        icon: <IoFileTrayOutline />,
+        link: '/message',
     },
     {
         name: 'border',
@@ -74,16 +78,6 @@ const sidebar_content: SidebarContent[] = [
         name: 'アカウント',
         icon: <IoPersonCircleSharp />,
         link: '/account',
-    },
-    {
-        name: 'サインアウト',
-        icon: <IoExitOutline />,
-        link: '/signout',
-    },
-    {
-        name: 'border',
-        icon: <div />,
-        link: '',
     },
     {
         name: 'ヘルプ',
@@ -163,9 +157,7 @@ export default function SideBar() {
                                         </Link>
                                     </NavbarMenuItem>
                                 ) : (
-                                    <div
-                                        className='border-t border-default'
-                                    ></div>
+                                    <div className='border-t border-default'></div>
                                 )}
                             </div>
                         ))}

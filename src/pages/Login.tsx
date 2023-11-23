@@ -54,7 +54,7 @@ export default function Login() {
                                     color='primary'
                                     variant='shadow'
                                     fullWidth
-                                    startContent={<IoLogoGoogle size={24} />}
+                                    startContent={<IoLogoGoogle size={20} />}
                                     onClick={() => loginWithGoogle()}
                                     isLoading={isLoginLoading}
                                 >

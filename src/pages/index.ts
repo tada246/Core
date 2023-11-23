@@ -6,3 +6,5 @@ export { default as AllImages } from './AllImages';
 export { default as Account } from './Account';
 export { default as NotFound } from './NotFound';
 export { default as Login } from './Login';
+export { default as Maps } from './Maps';
+export { default as MapDetail } from './MapDetail';

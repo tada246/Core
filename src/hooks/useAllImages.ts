@@ -3,7 +3,7 @@ import { storage } from '../features/firebase';
 import { list, ref } from 'firebase/storage';
 
 async function getAllImages() {
-    const listRef = ref(storage, '/uploads/');
+    const listRef = ref(storage, '/api/uploads/');
     const items = await list(listRef, { maxResults: 200 });
 
     return items;

@@ -10,7 +10,6 @@ import {
     IoLogoPwa,
     IoLogoReact,
 } from 'react-icons/io5';
-import { Image } from '@nextui-org/react';
 
 export default function ForDevelopers() {
     return (
@@ -21,7 +20,7 @@ export default function ForDevelopers() {
                     <p className='text-3xl font-bold'>開発者用</p>
                 </div>
                 <p className='text-sm mt-1 opacity-80'>
-                    開発用のドキュメントが今すべてここに
+                    開発用のドキュメントが今すべてここにあるかも知れません。
                 </p>
             </div>
             <div className='mt-10'>
