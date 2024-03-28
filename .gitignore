@@ -24,3 +24,12 @@ dist-ssr
 
 # env
 .env
+
+# obsidian
+/doc/.obsidian
+
+# vscode
+.vscode/*
+
+# vite
+dev-dist/*
