@@ -1,1 +1,0 @@
-TANE CoreのURL設計
