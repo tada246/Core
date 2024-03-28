@@ -1,5 +1,3 @@
-function copyText(text: string) {
+export function copyText(text: string) {
     navigator.clipboard.writeText(text);
 }
-
-export { copyText };
