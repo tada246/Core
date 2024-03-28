@@ -1,19 +1,29 @@
 import useSWR from 'swr';
-import { storage } from '../features/firebase';
-import { list, ref } from 'firebase/storage';
+import { db } from '../features/firebase';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import { Image } from '../types/firebase';
 
 async function getAllImages() {
-    const listRef = ref(storage, '/api/uploads/');
-    const items = await list(listRef, { maxResults: 200 });
+    const q = query(
+        collection(db, 'images'),
+        limit(100),
+        orderBy('timestamp', 'desc')
+    );
+    const querySnapshot = await getDocs(q);
 
-    return items;
+    const result: Image[] = [];
+    querySnapshot.forEach((doc: { data: Function }) => {
+        result.push(doc.data());
+    });
+
+    return result;
 }
 
 export default function useAllImages() {
-    const { data, error, isLoading } = useSWR(
-        '/images/list',
-        getAllImages
-    );
+    const { data, error, isLoading } = useSWR(`/images`, getAllImages, {
+        revalidateIfStale: false,
+        focusThrottleInterval: 12000,
+    });
 
     return {
         data,

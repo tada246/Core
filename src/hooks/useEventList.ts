@@ -1,7 +1,7 @@
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import useSWR from 'swr';
 import { db } from '../features/firebase';
-import { Event } from '../type/firebase';
+import { Event } from '../types/firebase';
 
 async function getEventList() {
     const q = query(
@@ -16,16 +16,18 @@ async function getEventList() {
         result.push(doc.data());
     });
 
-    console.log(
-        '%c イベント一覧の読み取り ',
-        'color:white; background-color:rgb(34 211 238); padding:2px; border-radius:4px;'
-    );
-
     return result;
 }
 
 export default function useEventList() {
-    const { data, isLoading, error } = useSWR('/api/events/list', getEventList);
+    const { data, isLoading, error } = useSWR(
+        '/api/events/list',
+        getEventList,
+        {
+            revalidateOnFocus: false,
+            errorRetryInterval: 10000,
+        }
+    );
 
     return {
         data,
