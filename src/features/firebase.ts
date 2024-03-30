@@ -1,3 +1,4 @@
+import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { ReCaptchaV3Provider, initializeAppCheck } from 'firebase/app-check';
 import { GoogleAuthProvider, getAuth } from 'firebase/auth';
@@ -25,4 +26,6 @@ const appCheck = initializeAppCheck(app, {
     isTokenAutoRefreshEnabled: true,
 });
 
-export { google_provider, auth, db, storage, appCheck };
+const analytics = getAnalytics(app);
+
+export { google_provider, auth, db, storage, appCheck, analytics };
