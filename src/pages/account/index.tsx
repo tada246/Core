@@ -116,13 +116,13 @@ export default function Page() {
                     <TableBody>
                         {table_data.map((data, index) => (
                             <TableRow key={index}>
-                                <TableCell className='text-nowrap'>
+                                <TableCell className='whitespace-nowrap'>
                                     {data.target}
                                 </TableCell>
-                                <TableCell className='text-nowrap'>
+                                <TableCell className='whitespace-nowrap'>
                                     {data.data}
                                 </TableCell>
-                                <TableCell className='text-nowrap'>
+                                <TableCell className='whitespace-nowrap'>
                                     {data.detail}
                                 </TableCell>
                             </TableRow>
