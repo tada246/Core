@@ -186,6 +186,7 @@ export default function SideBar() {
                 <Navbar
                     onMenuOpenChange={setIsMenuOpen}
                     className='fixed top-0'
+                    isMenuOpen={isMenuOpen}
                 >
                     <NavbarContent>
                         <NavbarMenuToggle
@@ -204,9 +205,10 @@ export default function SideBar() {
                                         <Link
                                             to={content.link}
                                             className='flex items-center gap-2'
+                                            onClick={() => setIsMenuOpen(false)}
                                         >
                                             {content.icon}
-                                            <p className='text-sm text-default-500'>
+                                            <p className='text-default-500'>
                                                 {content.name}
                                             </p>
                                         </Link>
