@@ -8,6 +8,8 @@ type Props = {
 
 export default function ToastBar(props: Props) {
     useEffect(() => {
+        if (props.toast.type !== 'success') return;
+
         confetti({
             particleCount: 500,
             spread: 400,
