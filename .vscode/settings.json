@@ -1,3 +1,21 @@
 {
-    "cSpell.words": ["armands", "flowbite", "nextui", "tailwindcss", "TANE"]
+    "cSpell.words": [
+        "APPCHECK",
+        "armands",
+        "DDTHH",
+        "Firestore",
+        "flowbite",
+        "nextui",
+        "Noto",
+        "Pressable",
+        "signout",
+        "Squoosh",
+        "tailwindcss",
+        "TANE",
+        "toko",
+        "uuidv",
+        "webp"
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
 }

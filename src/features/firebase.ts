@@ -1,5 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+import { ReCaptchaV3Provider, initializeAppCheck } from 'firebase/app-check';
+import { GoogleAuthProvider, getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
@@ -12,6 +15,14 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getFirestore(app);
+const google_provider = new GoogleAuthProvider();
+const auth = getAuth(app);
+const storage = getStorage(app);
+if (import.meta.env.DEV) window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true,
+});
 
-export default { app, analytics };
+export { google_provider, auth, db, storage, appCheck };
