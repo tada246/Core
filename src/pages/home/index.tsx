@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import Head from '../../components/ui/Head';
 import {
-    IoAnalyticsOutline,
     IoDuplicate,
     IoFolderOpen,
+    IoGitBranchOutline,
     IoHelp,
     IoHome,
     IoMapOutline,
@@ -51,10 +51,10 @@ export default function Page() {
                     <IoFolderOpen size={42} />
                 </Link>
                 <Link
-                    to='/analytics'
+                    to='/for-developers'
                     className='col-span-1 row-span-1 aspect-square shadow-medium rounded-medium drop-shadow-lg flex justify-center items-center hover:shadow-large duration-300'
                 >
-                    <IoAnalyticsOutline size={42} />
+                    <IoGitBranchOutline size={42} />
                 </Link>
                 <Link
                     to='/upload'

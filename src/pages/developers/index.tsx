@@ -13,6 +13,13 @@ import {
 import Head from '../../components/ui/Head';
 import SubHead from '../../components/ui/SubHead';
 import { Image } from '@nextui-org/react';
+import {
+    SiEslint,
+    SiPostcss,
+    SiTailwindcss,
+    SiTypescript,
+} from 'react-icons/si';
+import { FaAutoprefixer, FaCookie } from 'react-icons/fa';
 
 export default function Page() {
     return (
@@ -27,7 +34,7 @@ export default function Page() {
                 subtitle='このアプリに使われている技術を紹介します（アイコンがあるもののみ）'
                 className='mt-10'
             >
-                <div className='mt-4 flex gap-4'>
+                <div className='mt-4 flex gap-4 flex-wrap w-full'>
                     <IoLogoReact size={28} />
                     <IoLogoFirebase size={28} />
                     <IoLogoPwa size={28} />
@@ -37,6 +44,12 @@ export default function Page() {
                     <IoLogoNpm size={28} />
                     <IoLogoMarkdown size={28} />
                     <IoLogoNodejs size={28} />
+                    <SiPostcss size={28} />
+                    <FaCookie size={28} />
+                    <FaAutoprefixer size={28} />
+                    <SiEslint size={28} />
+                    <SiTailwindcss size={28} />
+                    <SiTypescript size={28} />
                 </div>
             </SubHead>
             <SubHead
@@ -45,7 +58,7 @@ export default function Page() {
                 className='mt-10'
             >
                 <div className='mt-4 w-full'>
-                    <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2Fsystem-configuration.jpg?alt=media&token=d29cfa1b-c697-4f4b-9fbd-823b223aff42' />
+                    <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2Fsystem-configuration-06.jpg?alt=media&token=7a9b5280-63a2-41d2-b4ea-17c64c7a3349' />
                 </div>
             </SubHead>
         </div>

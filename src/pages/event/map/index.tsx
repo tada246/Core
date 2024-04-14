@@ -5,7 +5,7 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { Button, Image, Tooltip } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import { IoChevronForward } from 'react-icons/io5';
+import { IoChevronForward, IoTrash } from 'react-icons/io5';
 import EditMapInfo from './edit';
 import AddMapInfo from './add';
 
@@ -89,6 +89,15 @@ export default function MapInfo(props: Props) {
                                 imageURL={place.imageURL}
                                 name={place.name}
                             />
+                            <Tooltip content='再帰的に削除する必要があるので実装にもう少し時間がかかります'>
+                                <Button
+                                    isIconOnly
+                                    size='sm'
+                                    className='opacity-50'
+                                >
+                                    <IoTrash />
+                                </Button>
+                            </Tooltip>
                             <Button
                                 as={Link}
                                 to={`/map/${props.id}/place/${place.id}`}

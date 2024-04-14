@@ -3,7 +3,7 @@ import { IoPencilSharp } from 'react-icons/io5';
 import { Event } from '../../../types/firebase';
 import OnlyEditors from '../../../components/ui/OnlyEditors';
 
-export const COMMON_INFO_NAME_CLASS = 'text-md font-semibold';
+export const COMMON_INFO_NAME_CLASS = 'text-md font-semibold line-clamp-3';
 
 export type CommonEditInfoProps = {
     event: Event;

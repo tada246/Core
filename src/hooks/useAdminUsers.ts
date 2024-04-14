@@ -8,8 +8,10 @@ export default function useAdminUsers() {
         `/admin/users`,
         getAdminUsers,
         {
+            revalidateOnFocus: false,
             revalidateIfStale: false,
-            focusThrottleInterval: 12000,
+            errorRetryInterval: 100000,
+            focusThrottleInterval: 100000,
         }
     );
 
