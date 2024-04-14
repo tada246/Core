@@ -25,7 +25,9 @@ export default function useEventList() {
         getEventList,
         {
             revalidateOnFocus: false,
-            errorRetryInterval: 10000,
+            revalidateIfStale: false,
+            errorRetryInterval: 100000,
+            focusThrottleInterval: 100000,
         }
     );
 

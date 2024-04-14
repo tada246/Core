@@ -21,8 +21,10 @@ async function getAllImages() {
 
 export default function useAllImages() {
     const { data, error, isLoading } = useSWR(`/images`, getAllImages, {
+        revalidateOnFocus: false,
         revalidateIfStale: false,
-        focusThrottleInterval: 12000,
+        errorRetryInterval: 100000,
+        focusThrottleInterval: 100000,
     });
 
     return {
