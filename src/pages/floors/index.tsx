@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Entertainment, Floor } from '../../types/firebase';
 import {
     collection,
+    deleteDoc,
     doc,
     onSnapshot,
     orderBy,
@@ -139,6 +140,28 @@ function EventList(props: EventListProps) {
         );
     }
 
+    async function deleteEvent(id: string) {
+        await deleteDoc(
+            doc(
+                db,
+                'events',
+                props.event_id,
+                'places',
+                props.place_id,
+                'floor',
+                props.floor_id,
+                'events',
+                id
+            )
+        )
+            .then(() => {
+                toast.success('削除に成功');
+            })
+            .catch(() => {
+                toast.error('削除に失敗');
+            });
+    }
+
     useEffect(() => {
         getEventData().catch(() => {
             toast.error('フォームの取得に失敗');
@@ -171,7 +194,7 @@ function EventList(props: EventListProps) {
                                 size='sm'
                                 isIconOnly
                                 variant='flat'
-                                isDisabled
+                                onClick={() => deleteEvent(item.id)}
                             >
                                 <IoTrash />
                             </Button>
