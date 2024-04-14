@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-    IoAnalyticsOutline,
     IoApps,
     IoArrowBackOutline,
     IoArrowForwardOutline,
@@ -40,11 +39,6 @@ const sidebar_content: SidebarContent[] = [
         name: 'ホーム',
         icon: <IoHome />,
         link: '/',
-    },
-    {
-        name: 'アナリティクス',
-        icon: <IoAnalyticsOutline />,
-        link: '/analytics',
     },
     {
         name: 'ユーザー管理',
@@ -186,6 +180,7 @@ export default function SideBar() {
                 <Navbar
                     onMenuOpenChange={setIsMenuOpen}
                     className='fixed top-0'
+                    classNames={{ base: 'h-20' }}
                     isMenuOpen={isMenuOpen}
                 >
                     <NavbarContent>
