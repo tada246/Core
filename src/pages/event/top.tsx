@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Event } from '../../types/firebase';
 import { Chip, Image } from '@nextui-org/react';
+import getEventStatus from '../../features/getEventStatus';
 
 type Props = {
     event: Event;
@@ -33,6 +34,12 @@ export default function MapTopInfo(props: Props) {
             <div className='flex gap-2 mt-3 w-full overflow-x-auto'>
                 <Chip color='primary' variant='flat'>
                     {event.isPublic ? '公開' : '非公開'}
+                </Chip>
+                <Chip color='primary' variant='flat'>
+                    {getEventStatus({
+                        start: new Date(event.date.start.seconds * 1000),
+                        end: new Date(event.date.end.seconds * 1000),
+                    })}
                 </Chip>
                 <Chip color='default' variant='flat'>
                     {startDate.format('YYYY年 MM月 DD日')}
