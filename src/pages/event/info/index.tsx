@@ -3,6 +3,7 @@ import EditEndDate from './endDate';
 import EditImageURL from './image';
 import EditIsPublic from './isPublic';
 import EditLink from './link';
+import EditMapImage from './mapImage';
 import EditName from './name';
 import EditOverview from './overview';
 import EditStartDate from './startDate';
@@ -21,6 +22,7 @@ export default function EditInfo(props: EditInfoProps) {
             <EditIsPublic event={event} />
             <EditLink event={event} />
             <EditImageURL event={event} />
+            <EditMapImage event={event} />
             <EditStartDate event={event} />
             <EditEndDate event={event} />
         </div>
