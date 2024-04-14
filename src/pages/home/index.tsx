@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Head from '../../components/ui/Head';
 import {
-    IoAnalyticsOutline,
     IoDuplicate,
     IoFolderOpen,
     IoGitBranchOutline,
