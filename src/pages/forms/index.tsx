@@ -24,6 +24,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import EditorModal from '../../components/ui/EditorModal';
 import OnlyEditors from '../../components/ui/OnlyEditors';
+import Head from '../../components/ui/Head';
 
 export default function Page() {
     const { id } = useParams<{ id: string }>();
@@ -57,7 +58,11 @@ export default function Page() {
 
     return (
         <div>
-            <div className='flex flex-col gap-8'>
+            <Head
+                title={'アンケートの編集'}
+                subtitle={`${id} のアンケートを編集します。`}
+            />
+            <div className='flex flex-col gap-8 mt-6'>
                 {forms.map((form) => (
                     <div
                         key={form.id}
