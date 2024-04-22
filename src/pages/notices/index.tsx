@@ -16,7 +16,12 @@ import {
     Textarea,
     useDisclosure,
 } from '@nextui-org/react';
-import { IoAddCircleOutline, IoFileTrayOutline } from 'react-icons/io5';
+import {
+    IoAddCircleOutline,
+    IoFileTrayOutline,
+    IoPencil,
+    IoTrash,
+} from 'react-icons/io5';
 import { message_type, writer } from '../../store/notice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -35,6 +40,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Notice } from '../../types/firebase';
 import dayjs from 'dayjs';
 import Head from '../../components/ui/Head';
+import OnlyEditors from '../../components/ui/OnlyEditors';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
@@ -65,7 +71,9 @@ export default function Message() {
             />
             <div className='mt-10'>
                 <div>
-                    <MessageAddModal />
+                    <OnlyEditors>
+                        <MessageAddModal />
+                    </OnlyEditors>
                 </div>
                 {data.length === 0 && (
                     <p className='text-center text-sm opacity-80 mt-6'>
@@ -125,7 +133,18 @@ function NoticeCard(props: Notice) {
                     <p key={i}>{v}</p>
                 ))}
             </CardBody>
-            <CardFooter></CardFooter>
+            <CardFooter>
+                <OnlyEditors>
+                    <div className='flex gap-2'>
+                        <Button size='sm' variant='flat' isIconOnly isDisabled>
+                            <IoPencil />
+                        </Button>
+                        <Button size='sm' variant='flat' isIconOnly isDisabled>
+                            <IoTrash />
+                        </Button>
+                    </div>
+                </OnlyEditors>
+            </CardFooter>
         </Card>
     );
 }
