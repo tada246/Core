@@ -2,8 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import SideBar from '../components/base/SideBar';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../features/firebase';
-import Loading from '../components/base/Loading';
-import { BannedPage, Login } from '../pages';
+import { BannedPage, LoadingPage, Login } from '../pages';
 import { Toaster } from 'react-hot-toast';
 import { useAtom } from 'jotai';
 import { user as user_atom } from '../store/jotai';
@@ -45,7 +44,7 @@ function Content(props: ContentProps) {
     const { state } = props;
 
     if (state === 0) {
-        return <Loading />;
+        return <LoadingPage />;
     }
 
     if (state === 2) {

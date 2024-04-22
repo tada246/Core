@@ -12,7 +12,7 @@ import {
 } from 'react-icons/io5';
 import Head from '../../components/ui/Head';
 import SubHead from '../../components/ui/SubHead';
-import { Image } from '@nextui-org/react';
+import { Image, Link } from '@nextui-org/react';
 import {
     SiEslint,
     SiPostcss,
@@ -27,7 +27,7 @@ export default function Page() {
             <Head
                 icon={<IoGitBranchOutline size={24} />}
                 title='開発者用'
-                subtitle='開発用のドキュメントが今すべてここにあるかも知れません。'
+                subtitle='開発用の簡単なドキュメントです。'
             />
             <SubHead
                 title='使われている技術'
@@ -59,6 +59,24 @@ export default function Page() {
             >
                 <div className='mt-4 w-full'>
                     <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2Fsystem-configuration-06.jpg?alt=media&token=7a9b5280-63a2-41d2-b4ea-17c64c7a3349' />
+                </div>
+            </SubHead>
+            <SubHead
+                title='スピナーについて'
+                subtitle='ローディング中に表示されるスピナーについての説明です'
+                className='mt-10'
+            >
+                <div className='mt-2'>
+                    <p>
+                        デオキシリボ核酸です。DNAが回っています。
+                        <Link
+                            href='https://mhnpd.github.io/react-loader-spinner/docs/components/dna'
+                            isExternal
+                            showAnchorIcon
+                        >
+                            URL
+                        </Link>
+                    </p>
                 </div>
             </SubHead>
         </div>

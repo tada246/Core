@@ -14,3 +14,4 @@ export { default as PlacePage } from './floors';
 export { default as ManagePage } from './manage';
 export { default as AnalyticsPage } from './analytics';
 export { default as BannedPage } from './banned';
+export { default as LoadingPage } from './loading';

@@ -1,4 +1,4 @@
-import { Input, useDisclosure } from '@nextui-org/react';
+import { Textarea, useDisclosure } from '@nextui-org/react';
 import {
     COMMON_INFO_NAME_CLASS,
     CommonEditInfoProps,
@@ -53,11 +53,10 @@ export default function EditOverview(props: CommonEditInfoProps) {
                 onOpenChange={onOpenChange}
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <Input
-                    autoComplete='off'
-                    type='text'
+                <Textarea
                     label='新しい見出し'
                     defaultValue={event.overview}
+                    height='12rem'
                     {...register('overview')}
                     isRequired
                 />

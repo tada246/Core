@@ -13,6 +13,7 @@ import {
     NotFoundPage,
     PlacePage,
     UploadPage,
+    Message,
 } from './pages';
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
             <Route path='/upload' element={<UploadPage />} />
             <Route path='/images' element={<ImagesPage />} />
             <Route path='/account' element={<AccountPage />} />
-            {/* <Route path='/message' element={<Message />} /> */}
+            <Route path='/message' element={<Message />} />
             <Route path='/analytics' element={<AnalyticsPage />} />
             <Route path='/map' element={<EventsPage />} />
             <Route path='/map/:id' element={<MapPage />} />

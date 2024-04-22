@@ -21,7 +21,7 @@ export default function Help() {
                     src={presentationUrl}
                     width='960'
                     height='569'
-                    className='w-full mt-4'
+                    className='w-full mt-4 bg-default-200'
                 />
             </SubHead>
         </div>

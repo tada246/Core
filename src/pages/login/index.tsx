@@ -30,8 +30,8 @@ export default function Page() {
         <div>
             <Head
                 icon={<IoLogInOutline size={24} />}
-                title='おかえり😊'
-                subtitle='Coreにログインする。アカウントをお持ちでない場合も、以下のボタンを押してアカウントを作成することができます。'
+                title={<OkaeriNasai />}
+                subtitle='Coreにログインする。アカウントがない場合も、以下のボタンを押してアカウントを作成することができます。'
             />
             <div className='mt-10'>
                 <div className='max-w-md mx-auto bg-gradient-to-br from-sky-400 to-purple-400 py-10 rounded-xl shadow flex justify-center items-center'>
@@ -79,5 +79,25 @@ export default function Page() {
                 </div>
             </div>
         </div>
+    );
+}
+
+function OkaeriNasai() {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <p
+            className='text-3xl font-bold'
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            おかえりなさい
+            {isHovered && (
+                <span className=''>
+                    ませご主人様！
+                    <span className='text-sm'>（代表の人が提案しました）</span>
+                </span>
+            )}
+        </p>
     );
 }
