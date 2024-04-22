@@ -5,6 +5,7 @@ import {
     IoArrowForwardOutline,
     IoDuplicate,
     IoFolderOpen,
+    IoGitBranchOutline,
     IoHelp,
     IoHelpOutline,
     IoHome,
@@ -46,6 +47,11 @@ const sidebar_content: SidebarContent[] = [
         link: '/user-management',
     },
     {
+        name: 'border',
+        icon: <div />,
+        link: '',
+    },
+    {
         name: '画像一覧',
         icon: <IoFolderOpen />,
         link: '/images',
@@ -79,6 +85,11 @@ const sidebar_content: SidebarContent[] = [
         name: 'ヘルプ',
         icon: <IoHelpOutline />,
         link: '/help',
+    },
+    {
+        name: '開発者用',
+        icon: <IoGitBranchOutline />,
+        link: '/for-developers',
     },
 ];
 
