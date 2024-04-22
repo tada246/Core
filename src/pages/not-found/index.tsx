@@ -12,7 +12,10 @@ export default function NotFound() {
                     data-size='auto'
                 />
             </div>
-            <p className='text-center text-5xl font-extrabold'>404 Not Found</p>
+            <h1 className='text-center text-5xl font-extrabold'>
+                404 Not Found
+            </h1>
+            <p className='text-center mt-1'>残念でした。</p>
         </div>
     );
 }
