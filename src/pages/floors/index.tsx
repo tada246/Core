@@ -10,6 +10,7 @@ import {
     orderBy,
     query,
     setDoc,
+    updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../features/firebase';
 import toast from 'react-hot-toast';
@@ -26,6 +27,7 @@ import { IoAddCircleOutline, IoPencil, IoTrash } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
 import EditorModal from '../../components/ui/EditorModal';
 import OnlyEditors from '../../components/ui/OnlyEditors';
+import Head from '../../components/ui/Head';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -66,7 +68,11 @@ export default function Page() {
 
     return (
         <div>
-            <div className='flex flex-col gap-8'>
+            <Head
+                title={'催し物と階層の編集'}
+                subtitle={`${params.id} - ${params.place_id} の催し物と階層を編集します。`}
+            />
+            <div className='flex flex-col gap-8 mt-6'>
                 {place.map((item) => (
                     <div
                         key={item.id}
@@ -180,15 +186,27 @@ function EventList(props: EventListProps) {
                             <p className='text-sm'>{item.order}</p>
                         </div>
                         <OnlyEditors>
-                            <Button
-                                className='w-8 h-8'
-                                size='sm'
-                                isIconOnly
-                                variant='flat'
-                                isDisabled
-                            >
-                                <IoPencil />
-                            </Button>
+                            <EditExistEvent
+                                event_id={props.event_id}
+                                place_id={props.place_id}
+                                floor_id={props.floor_id}
+                                entertainment_id={item.id}
+                                info={{
+                                    name: item.name,
+                                    explanation: item.explanation,
+                                    imageURL: item.imageURL,
+                                    order: item.order,
+                                    overview: item.overview,
+                                    date: {
+                                        start: dayjs(
+                                            item.date.start.seconds * 1000
+                                        ).format('YYYY-MM-DDTHH:mm'),
+                                        end: dayjs(
+                                            item.date.end.seconds * 1000
+                                        ).format('YYYY-MM-DDTHH:mm'),
+                                    },
+                                }}
+                            />
                             <Button
                                 className='w-8 h-8'
                                 size='sm'
@@ -449,6 +467,152 @@ function AddNewEvent(props: AddNewEventProps) {
                 isOpen={isOpen}
                 onOpenChange={onOpenChangeModal}
                 title='新しい催し物の追加'
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <Input
+                    autoComplete='off'
+                    type='text'
+                    label='名前'
+                    {...register('name')}
+                    isRequired
+                />
+                <Input
+                    autoComplete='off'
+                    label='見出し'
+                    {...register('overview')}
+                />
+                <Textarea
+                    autoComplete='off'
+                    label='説明'
+                    {...register('explanation')}
+                />
+                <div className='flex gap-2'>
+                    <Input
+                        autoComplete='off'
+                        type='datetime-local'
+                        label='開始時刻'
+                        {...register('date.start')}
+                        isRequired
+                    />
+                    <Input
+                        autoComplete='off'
+                        type='datetime-local'
+                        label='終了時刻'
+                        isRequired
+                        {...register('date.end')}
+                    />
+                </div>
+                <Input
+                    autoComplete='off'
+                    type='text'
+                    label='画像URL'
+                    {...register('imageURL')}
+                    isRequired
+                    description='リンクは、必ず「https://」から始まるURLを入力してください。'
+                />
+                <Input
+                    autoComplete='off'
+                    type='number'
+                    label='順番'
+                    {...register('order')}
+                    description='数字が小さいほど上に表示されます。'
+                    isRequired
+                />
+            </EditorModal>
+        </>
+    );
+}
+
+type EditExistEventProps = {
+    event_id: string;
+    place_id: string;
+    floor_id: string;
+    entertainment_id: string;
+    info: EditMapInfoForm;
+};
+
+function EditExistEvent(props: EditExistEventProps) {
+    const { isOpen, onOpenChange } = useDisclosure();
+    const { register, handleSubmit, reset } = useForm<EditMapInfoForm>();
+
+    const updateExistMap = async (data: EditMapInfoForm) => {
+        await updateDoc(
+            doc(
+                db,
+                'events',
+                props.event_id,
+                'places',
+                props.place_id,
+                'floor',
+                props.floor_id,
+                'events',
+                props.entertainment_id
+            ),
+            {
+                id: props.entertainment_id,
+                name: data.name,
+                explanation: data.explanation,
+                imageURL: data.imageURL,
+                order: parseInt(data.order.toString()),
+                overview: data.overview,
+                date: {
+                    start: new Date(data.date.start),
+                    end: new Date(data.date.end),
+                },
+            }
+        );
+    };
+
+    const updateFormValue = () => {
+        reset({
+            name: props.info.name,
+            explanation: props.info.explanation,
+            imageURL: props.info.imageURL,
+            order: props.info.order,
+            overview: props.info.overview,
+            date: {
+                start: dayjs(props.info.date.start).format('YYYY-MM-DDTHH:mm'),
+                end: dayjs(props.info.date.end).format('YYYY-MM-DDTHH:mm'),
+            },
+        });
+    };
+
+    useEffect(() => {
+        updateFormValue();
+    }, [props.info]);
+
+    const onSubmit = (data: EditMapInfoForm) => {
+        updateExistMap(data)
+            .then(() => {
+                onOpenChangeModal();
+                toast.success('編集に成功');
+            })
+            .catch((_) => {
+                toast.error('編集に失敗');
+            });
+    };
+
+    const onOpenChangeModal = () => {
+        reset();
+        updateFormValue();
+        onOpenChange();
+    };
+
+    return (
+        <>
+            <Button
+                onClick={onOpenChangeModal}
+                isIconOnly
+                className='w-8 h-8'
+                size='sm'
+                variant='flat'
+            >
+                <IoPencil />
+            </Button>
+            <EditorModal
+                isOpen={isOpen}
+                onOpenChange={onOpenChangeModal}
+                title='存在している催し物の編集'
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <Input
