@@ -56,6 +56,26 @@ export default function Page() {
             target: 'ユーザー識別ID',
             detail: 'ユーザーの識別ID',
         },
+        {
+            target: 'メール認証',
+            data: user.emailVerified ? '有効' : '無効',
+            detail: 'メール認証が有効かどうか',
+        },
+        {
+            target: 'メール',
+            data: user.email ?? 'メールアドレスが登録されていません',
+            detail: 'メールアドレス',
+        },
+        {
+            target: 'プロバイダ',
+            data: user.providerData[0].providerId,
+            detail: '認証サービスの名前',
+        },
+        {
+            target: '表示名',
+            data: user.displayName ?? '表示名が登録されていません',
+            detail: '表示名',
+        },
     ];
 
     return (
@@ -67,7 +87,7 @@ export default function Page() {
             />
             <SubHead
                 title='パブリック'
-                subtitle='現在このアプリ内で公開されている情報です。この情報はあなたと管理者しか見れないと思います！'
+                subtitle='現在このアプリ内で公開されている情報です。この情報はあなたと管理者しか見れないと思います。'
                 className='mt-10'
             >
                 <div className='mt-4 flex gap-4 flex-col'>
@@ -87,7 +107,7 @@ export default function Page() {
                                     )[0].icon
                                 }
                                 size='sm'
-                                className='text-tiny mt-2 px-2'
+                                className='text-tiny mt-2 px-2 line-clamp-1'
                                 variant='faded'
                             >
                                 {
@@ -95,6 +115,13 @@ export default function Page() {
                                         (auth) => auth.id === data.authority
                                     )[0].name
                                 }
+                                （
+                                {
+                                    authority.filter(
+                                        (auth) => auth.id === data.authority
+                                    )[0].description
+                                }
+                                ）
                             </Chip>
                             <p className='text-lg font-bold'>{data.name}</p>
                             <p className='text-tiny opacity-60'>{data.mail}</p>
