@@ -3,6 +3,7 @@ import { Form } from '../../types/firebase';
 import { useEffect, useState } from 'react';
 import {
     collection,
+    deleteDoc,
     doc,
     onSnapshot,
     orderBy,
@@ -19,7 +20,7 @@ import {
     Textarea,
     useDisclosure,
 } from '@nextui-org/react';
-import { IoAddCircleOutline, IoPencilSharp } from 'react-icons/io5';
+import { IoAddCircleOutline, IoPencilSharp, IoTrash } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import EditorModal from '../../components/ui/EditorModal';
@@ -74,6 +75,9 @@ export default function Page() {
                             </div>
                             <OnlyEditors>
                                 <UpdateForm form={form} id={id} />
+                            </OnlyEditors>
+                            <OnlyEditors>
+                                <DeleteForm eventId={id} formId={form.id} />
                             </OnlyEditors>
                         </div>
                         <div className='flex-1 w-full'>
@@ -290,5 +294,33 @@ function UpdateForm(props: UpdateFormEditProps) {
                 />
             </EditorModal>
         </>
+    );
+}
+
+type DeleteFormProps = {
+    eventId: string;
+    formId: string;
+};
+
+function DeleteForm(props: DeleteFormProps) {
+    async function deleteForm() {
+        await deleteDoc(doc(db, 'events', props.eventId, 'forms', props.formId))
+            .then(() => {
+                toast.success('削除に成功');
+            })
+            .catch(() => {
+                toast.error('削除に失敗');
+            });
+    }
+
+    return (
+        <Button
+            onPress={() => deleteForm()}
+            isIconOnly
+            size='sm'
+            variant='flat'
+        >
+            <IoTrash size={16} />
+        </Button>
     );
 }

@@ -19,7 +19,7 @@ export default function ImageCard(props: Props) {
     const { image } = props;
 
     return (
-        <Card shadow='sm'>
+        <Card shadow='sm' radius='lg'>
             <CardBody className='overflow-visible p-0'>
                 <Image
                     shadow='sm'
@@ -32,7 +32,7 @@ export default function ImageCard(props: Props) {
                 />
             </CardBody>
             <CardFooter className='flex justify-between py-1'>
-                <p className='text-sm opacity-90'>
+                <p className='text-tiny opacity-90'>
                     {dayjs(image.timestamp.seconds * 1000).format('YYYY/MM/DD')}
                 </p>
                 <Tooltip content='URLをコピーする'>
