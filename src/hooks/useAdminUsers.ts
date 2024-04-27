@@ -24,10 +24,7 @@ export default function useAdminUsers() {
 }
 
 async function getAdminUsers() {
-    const q = query(
-        collection(db, 'admin_users'),
-        orderBy('authority', 'desc')
-    );
+    const q = query(collection(db, 'admin_users'), orderBy('name', 'asc'));
     const querySnapshot = await getDocs(q);
 
     const result: AdminUser[] = [];
