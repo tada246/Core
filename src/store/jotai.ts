@@ -1,21 +1,11 @@
 import { atom } from 'jotai';
 import { AdminUser } from '../types/firebase';
+import { User as AuthUser } from 'firebase/auth';
 
-export type User =
-    | {
-          uid: string;
-          email: string;
-          providerId: string;
-          displayName: string;
-          photoURL: string;
-          isAnonymous: boolean;
-          metadata: {
-              createdAt: string | undefined;
-              creationTime: string | undefined;
-              lastSignInTime: string | undefined;
-          };
-          data: AdminUser | undefined;
-      }
-    | undefined;
+interface _User extends AuthUser {
+    data: AdminUser | undefined;
+}
+
+export type User = _User | undefined;
 
 export const user = atom<User>(undefined);

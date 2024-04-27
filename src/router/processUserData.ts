@@ -21,7 +21,7 @@ export default async function processUserData(
             // ない場合
             let push_user_data = {
                 id: raw_user_data.uid,
-                name: raw_user_data.displayName ?? '名前はまだ無い。',
+                name: raw_user_data.displayName ?? '名前はまだ無い',
                 photoURL: raw_user_data.photoURL ?? '',
                 authority: !raw_user_data.email
                     ?.toString()
@@ -44,17 +44,7 @@ export default async function processUserData(
         }
 
         setUser({
-            uid: raw_user_data.uid,
-            email: raw_user_data.email ?? '',
-            providerId: raw_user_data.providerId,
-            displayName: raw_user_data.displayName ?? '',
-            photoURL: raw_user_data.photoURL ?? '',
-            isAnonymous: raw_user_data.isAnonymous,
-            metadata: {
-                createdAt: raw_user_data.metadata.creationTime,
-                creationTime: raw_user_data.metadata.creationTime,
-                lastSignInTime: raw_user_data.metadata.lastSignInTime,
-            },
+            ...raw_user_data,
             data: user_data,
         });
 
