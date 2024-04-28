@@ -121,7 +121,7 @@ export default function Page() {
         onDrop,
         disabled: !isAllow,
         accept: {
-            'image/png': ['.png', '.jpg', '.jpeg', '.webp'],
+            'image/png': ['.png', '.jpg', '.jpeg', '.webp', '.svg'],
         },
     });
 
