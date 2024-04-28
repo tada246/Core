@@ -13,9 +13,9 @@ export default defineConfig({
                 enabled: true,
             },
             manifest: {
-                name: 'My Awesome App',
-                short_name: 'MyApp',
-                description: 'My Awesome App description',
+                name: 'TANE Core',
+                short_name: 'TANE Core',
+                description: '桐光学園電子工学部が行うプロジェクトの管理アプリ',
                 theme_color: '#ffffff',
             },
             workbox: {

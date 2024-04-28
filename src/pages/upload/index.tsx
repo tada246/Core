@@ -17,6 +17,7 @@ import UploadDescription from './description';
 import { useAtom } from 'jotai';
 import { user as user_atom } from '../../store/jotai';
 import { isEditor } from '../../features/allow';
+import RecommendedUpload from './recommended';
 
 type UploadedImages = {
     name: string;
@@ -121,7 +122,7 @@ export default function Page() {
         onDrop,
         disabled: !isAllow,
         accept: {
-            'image/png': ['.png', '.jpg', '.jpeg', '.webp'],
+            'image/png': ['.png', '.jpg', '.jpeg', '.webp', '.svg'],
         },
     });
 
@@ -184,6 +185,13 @@ export default function Page() {
                 className='mt-10'
             >
                 <UploadDescription />
+            </SubHead>
+            <SubHead
+                title='推奨する画像設定'
+                subtitle='画像のアップロード時に推奨する設定を確認が可能'
+                className='mt-10'
+            >
+                <RecommendedUpload />
             </SubHead>
         </div>
     );
