@@ -62,6 +62,7 @@ type Floor = {
     id: string;
     name: string;
     order: number;
+    mapImageURL?: string;
 };
 
 type Entertainment = {
@@ -74,6 +75,11 @@ type Entertainment = {
     date: {
         start: Timestamp;
         end: Timestamp;
+    };
+    place?: string;
+    location?: {
+        x: number;
+        y: number;
     };
 };
 
