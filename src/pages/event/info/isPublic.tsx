@@ -79,7 +79,9 @@ export default function EditIsPublic(props: CommonEditInfoProps) {
                     <div className='flex flex-col gap-1'>
                         <p className='text-medium'>イベントを公開にする</p>
                         <p className='text-tiny text-default-400'>
-                            公開されたイベントは、全員が閲覧できます
+                            公開されたイベントは、全員が閲覧できます。
+                            <br />
+                            公開すると基本的に編集できません。
                         </p>
                     </div>
                 </Switch>
