@@ -14,6 +14,7 @@ import {
     PlacePage,
     UploadPage,
     Message,
+    LinksPage,
 } from './pages';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
             <Route path='/map/:id/form' element={<FormPage />} />
             <Route path='/map/:id/place/:place_id' element={<PlacePage />} />
             <Route path='/user-management' element={<ManagePage />} />
+            <Route path='/links' element={<LinksPage />} />
             <Route path='*' element={<NotFoundPage />} />
         </Routes>
     );
