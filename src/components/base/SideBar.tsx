@@ -9,6 +9,7 @@ import {
     IoHelp,
     IoHelpOutline,
     IoHome,
+    IoLink,
     IoMapOutline,
     IoPeople,
     IoPersonCircleSharp,
@@ -80,6 +81,16 @@ const sidebar_content: SidebarContent[] = [
         name: 'アカウント',
         icon: <IoPersonCircleSharp />,
         link: '/account',
+    },
+    {
+        name: 'border',
+        icon: <div />,
+        link: '',
+    },
+    {
+        name: '関連リンク',
+        icon: <IoLink />,
+        link: '/links',
     },
     {
         name: 'ヘルプ',

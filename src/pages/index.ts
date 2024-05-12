@@ -15,3 +15,4 @@ export { default as ManagePage } from './manage';
 export { default as AnalyticsPage } from './analytics';
 export { default as BannedPage } from './banned';
 export { default as LoadingPage } from './loading';
+export { default as LinksPage } from './links';

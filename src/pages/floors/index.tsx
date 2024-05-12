@@ -20,14 +20,24 @@ import {
     Image,
     Input,
     Textarea,
+    Tooltip,
     useDisclosure,
 } from '@nextui-org/react';
 import dayjs from 'dayjs';
-import { IoAddCircleOutline, IoPencil, IoTrash } from 'react-icons/io5';
+import {
+    IoAddCircleOutline,
+    IoLocate,
+    IoMap,
+    IoPencil,
+    IoTime,
+    IoTrash,
+} from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
 import EditorModal from '../../components/ui/EditorModal';
 import OnlyEditors from '../../components/ui/OnlyEditors';
 import Head from '../../components/ui/Head';
+import WarningCard from '../../components/ui/WarningCard';
+import getEventStatus from '../../features/getEventStatus';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -97,6 +107,7 @@ export default function Page() {
                             place_id={params.place_id ?? ''}
                             event_id={params.id ?? ''}
                             floor_id={item.id}
+                            mapImageURL={item.mapImageURL}
                         />
                     </div>
                 ))}
@@ -116,6 +127,7 @@ type EventListProps = {
     // ⇩ 行事のID
     event_id: string;
     floor_id: string;
+    mapImageURL?: string;
 };
 
 function EventList(props: EventListProps) {
@@ -175,118 +187,185 @@ function EventList(props: EventListProps) {
     }, []);
 
     return (
-        <div className='flex flex-col gap-4 mt-4'>
-            {events.map((item) => (
-                <div
-                    key={item.id}
-                    className='flex gap-4 rounded-large shadow-small p-6 bg-white items-start outline-1 outline-black/10'
-                >
-                    <div className='flex flex-col gap-3'>
-                        <div className='w-8 h-8 flex items-center justify-center bg-secondary-300 text-white rounded-small'>
-                            <p className='text-sm'>{item.order}</p>
-                        </div>
-                        <OnlyEditors>
-                            <EditExistEvent
-                                event_id={props.event_id}
-                                place_id={props.place_id}
-                                floor_id={props.floor_id}
-                                entertainment_id={item.id}
-                                info={{
-                                    name: item.name,
-                                    explanation: item.explanation,
-                                    imageURL: item.imageURL,
-                                    order: item.order,
-                                    overview: item.overview,
-                                    date: {
-                                        start: dayjs(
-                                            item.date.start.seconds * 1000
-                                        ).format('YYYY-MM-DDTHH:mm'),
-                                        end: dayjs(
-                                            item.date.end.seconds * 1000
-                                        ).format('YYYY-MM-DDTHH:mm'),
-                                    },
-                                }}
-                            />
-                            <Button
-                                className='w-8 h-8'
-                                size='sm'
-                                isIconOnly
-                                variant='flat'
-                                onClick={() => deleteEvent(item.id)}
-                            >
-                                <IoTrash />
-                            </Button>
-                        </OnlyEditors>
+        <>
+            {props.mapImageURL && (
+                <div className='mt-4 overflow-hidden relative outline outline-1 outline-black/10 rounded-medium'>
+                    <img
+                        src={props.mapImageURL}
+                        alt=''
+                        className='w-full aspect-[3/2] object-cover object-center'
+                    />
+                    <div className='w-full h-full absolute top-0 left-0'>
+                        {events.map(
+                            (place) =>
+                                place.location && (
+                                    <Tooltip
+                                        content={place.name}
+                                        key={place.id}
+                                    >
+                                        <button
+                                            className='w-4 h-4 absolute bg-primary rounded-full -translate-x-1/2 -translate-y-1/2'
+                                            style={{
+                                                left: `${place.location.x}%`,
+                                                top: `${place.location.y}%`,
+                                            }}
+                                        />
+                                    </Tooltip>
+                                )
+                        )}
                     </div>
-                    <div className='flex-1'>
-                        <div className='flex gap-3 items-center'>
-                            <div>
-                                <Image
-                                    src={item.imageURL}
-                                    width={120}
-                                    height={120}
-                                    className='w-16 h-16 rounded-large bg-cover bg-center'
-                                />
+                </div>
+            )}
+            <div className='flex flex-col gap-4 mt-4'>
+                {events.map((item) => (
+                    <div
+                        key={item.id}
+                        className='flex gap-4 rounded-large shadow-small p-6 bg-white items-start outline-1 outline-black/10'
+                    >
+                        <div className='flex flex-col gap-3'>
+                            <div className='w-8 h-8 flex items-center justify-center bg-secondary-300 text-white rounded-small'>
+                                <p className='text-sm'>{item.order}</p>
                             </div>
-                            <div>
-                                <h2 className='font-bold w-full line-clamp-1 text-lg'>
-                                    {item.name}
-                                </h2>
-                                <p className='text-sm -mt-1 text-default-600 w-full line-clamp-1'>
-                                    {item.overview}
-                                    {item.overview.length == 0 && (
-                                        <span className='text-danger/60'>
-                                            見出しがありません...
-                                        </span>
-                                    )}
+                            <OnlyEditors>
+                                <EditExistEvent
+                                    event_id={props.event_id}
+                                    place_id={props.place_id}
+                                    floor_id={props.floor_id}
+                                    entertainment_id={item.id}
+                                    info={{
+                                        name: item.name,
+                                        explanation: item.explanation,
+                                        imageURL: item.imageURL,
+                                        order: item.order,
+                                        overview: item.overview,
+                                        date: {
+                                            start: dayjs(
+                                                item.date.start.seconds * 1000
+                                            ).format('YYYY-MM-DDTHH:mm'),
+                                            end: dayjs(
+                                                item.date.end.seconds * 1000
+                                            ).format('YYYY-MM-DDTHH:mm'),
+                                        },
+                                        location: item.location,
+                                        place: item.place,
+                                    }}
+                                />
+                                <Button
+                                    className='w-8 h-8'
+                                    size='sm'
+                                    isIconOnly
+                                    variant='flat'
+                                    onClick={() => deleteEvent(item.id)}
+                                >
+                                    <IoTrash />
+                                </Button>
+                            </OnlyEditors>
+                        </div>
+                        <div className='flex-1'>
+                            <div className='flex gap-4 items-center'>
+                                <div>
+                                    <Image
+                                        src={item.imageURL}
+                                        width={120}
+                                        height={120}
+                                        className='w-16 h-16 rounded-large object-cover object-center'
+                                    />
+                                </div>
+                                <div>
+                                    <h2 className='font-bold w-full line-clamp-1 text-lg'>
+                                        {item.name}
+                                    </h2>
+                                    <p className='text-sm -mt-1 text-default-600 w-full line-clamp-1'>
+                                        {item.overview}
+                                        {item.overview.length == 0 && (
+                                            <span className='text-danger/60'>
+                                                見出しがありません...
+                                            </span>
+                                        )}
+                                    </p>
+                                    <div className='flex gap-2 mt-1'>
+                                        <Chip
+                                            variant='flat'
+                                            size='sm'
+                                            className='text-tiny px-2'
+                                        >
+                                            {getEventStatus({
+                                                start: new Date(
+                                                    item.date.start.seconds *
+                                                        1000
+                                                ),
+                                                end: new Date(
+                                                    item.date.end.seconds * 1000
+                                                ),
+                                            })}
+                                        </Chip>
+                                        <Chip
+                                            variant='flat'
+                                            size='sm'
+                                            className='text-tiny px-2'
+                                        >
+                                            {dayjs(
+                                                item.date.end.seconds * 1000
+                                            ).diff(
+                                                dayjs(
+                                                    item.date.start.seconds *
+                                                        1000
+                                                ),
+                                                'minute'
+                                            )}
+                                            分間
+                                        </Chip>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='text-sm mt-3 border-1 border-default-300 p-2 rounded-medium'>
+                                <p className='line-clamp-4'>
+                                    {item.explanation.split('\n').join(' ')}
                                 </p>
-                                <div className='flex gap-2 mt-1'>
-                                    <Chip
-                                        variant='flat'
-                                        size='sm'
-                                        className='text-tiny px-2'
-                                    >
+                                {item.explanation.length == 0 && (
+                                    <p className='text-danger/60'>
+                                        説明がありません！
+                                    </p>
+                                )}
+                            </div>
+                            <div className='flex flex-col mt-2 text-sm gap-1'>
+                                <div className='flex gap-2 items-center'>
+                                    <IoMap size={16} />
+                                    <p>{item.place ?? '不明'}</p>
+                                </div>
+                                <div className='flex gap-2 items-center'>
+                                    <IoLocate size={16} />
+                                    <p>
+                                        X: {item.location?.x ?? '0'}% Y:{' '}
+                                        {item.location?.y ?? '0'}%
+                                    </p>
+                                </div>
+                                {/* time */}
+                                <div className='flex gap-2'>
+                                    <IoTime size={16} />
+                                    <p>
                                         {dayjs(
                                             item.date.start.seconds * 1000
-                                        ).format('YYYY/MM/DD HH:mm')}
-                                    </Chip>
-                                    <Chip
-                                        variant='flat'
-                                        size='sm'
-                                        className='text-tiny px-2'
-                                    >
+                                        ).format('YYYY/MM/DD HH:mm')}{' '}
+                                        ~{' '}
                                         {dayjs(
                                             item.date.end.seconds * 1000
-                                        ).diff(
-                                            dayjs(
-                                                item.date.start.seconds * 1000
-                                            ),
-                                            'minute'
-                                        )}
-                                        分間
-                                    </Chip>
+                                        ).format('YYYY/MM/DD HH:mm')}
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div className='text-sm line-clamp-2 mt-3 border-1 border-default-300 p-2 rounded-medium'>
-                            {item.explanation}
-                            {item.explanation.length == 0 && (
-                                <span className='text-danger/60'>
-                                    説明がありません！
-                                </span>
-                            )}
-                        </div>
                     </div>
-                </div>
-            ))}
-            <OnlyEditors>
-                <AddNewEvent
-                    event_id={props.event_id}
-                    place_id={props.place_id}
-                    floor_id={props.floor_id}
-                />
-            </OnlyEditors>
-        </div>
+                ))}
+                <OnlyEditors>
+                    <AddNewEvent
+                        event_id={props.event_id}
+                        place_id={props.place_id}
+                        floor_id={props.floor_id}
+                    />
+                </OnlyEditors>
+            </div>
+        </>
     );
 }
 
@@ -294,6 +373,7 @@ type AddNewFloorForm = {
     id: string;
     name: string;
     order: number;
+    mapImageURL: string;
 };
 
 type AddNewFloorProps = {
@@ -320,6 +400,7 @@ function AddNewFloor(props: AddNewFloorProps) {
                 id: data.id,
                 name: data.name,
                 order: parseInt(data.order.toString()),
+                mapImageURL: data.mapImageURL,
             }
         );
     };
@@ -359,6 +440,10 @@ function AddNewFloor(props: AddNewFloorProps) {
                 title='新しい階層の追加'
                 onSubmit={handleSubmit(onSubmit)}
             >
+                <WarningCard
+                    message='階層の追加の注意'
+                    description='追加した後は、編集や削除ができなくなります。近日開発予定です。'
+                />
                 <Input
                     autoComplete='off'
                     type='text'
@@ -373,6 +458,14 @@ function AddNewFloor(props: AddNewFloorProps) {
                     label='名前'
                     {...register('name')}
                     description='階層の名前。例: 1階, 2階, 3階。'
+                />
+                <Input
+                    autoComplete='off'
+                    type='text'
+                    label='画像URL'
+                    {...register('mapImageURL')}
+                    description='リンクは、必ず「https://」から始まるURLを入力してください。'
+                    isRequired
                 />
                 <Input
                     autoComplete='off'
@@ -403,6 +496,11 @@ type EditMapInfoForm = {
         start: string;
         end: string;
     };
+    location?: {
+        x: number;
+        y: number;
+    };
+    place?: string;
 };
 
 function AddNewEvent(props: AddNewEventProps) {
@@ -434,6 +532,15 @@ function AddNewEvent(props: AddNewEventProps) {
                     start: new Date(data.date.start),
                     end: new Date(data.date.end),
                 },
+                location: {
+                    x: data.location
+                        ? parseInt(data.location?.x.toString())
+                        : 0,
+                    y: data.location
+                        ? parseInt(data.location?.y.toString())
+                        : 0,
+                },
+                place: data.place,
             }
         );
     };
@@ -510,6 +617,32 @@ function AddNewEvent(props: AddNewEventProps) {
                     isRequired
                     description='リンクは、必ず「https://」から始まるURLを入力してください。'
                 />
+                <div className='flex gap-2'>
+                    <Input
+                        autoComplete='off'
+                        type='number'
+                        label='X座標'
+                        {...register('location.x')}
+                        description='0〜100の間で入力してください。単位は%です。'
+                        isRequired
+                    />
+                    <Input
+                        autoComplete='off'
+                        type='number'
+                        label='Y座標'
+                        {...register('location.y')}
+                        description='0〜100の間で入力してください。単位は%です。'
+                        isRequired
+                    />
+                </div>
+                <Input
+                    autoComplete='off'
+                    type='text'
+                    label='場所'
+                    {...register('place')}
+                    description='場所の名前を入力してください。'
+                    isRequired
+                />
                 <Input
                     autoComplete='off'
                     type='number'
@@ -559,6 +692,15 @@ function EditExistEvent(props: EditExistEventProps) {
                     start: new Date(data.date.start),
                     end: new Date(data.date.end),
                 },
+                location: {
+                    x: data.location
+                        ? parseInt(data.location?.x.toString())
+                        : 0,
+                    y: data.location
+                        ? parseInt(data.location?.y.toString())
+                        : 0,
+                },
+                place: data.place ?? '',
             }
         );
     };
@@ -574,6 +716,8 @@ function EditExistEvent(props: EditExistEventProps) {
                 start: dayjs(props.info.date.start).format('YYYY-MM-DDTHH:mm'),
                 end: dayjs(props.info.date.end).format('YYYY-MM-DDTHH:mm'),
             },
+            location: props.info.location ?? { x: 0, y: 0 },
+            place: props.info.place ?? '',
         });
     };
 
@@ -648,6 +792,7 @@ function EditExistEvent(props: EditExistEventProps) {
                         {...register('date.end')}
                     />
                 </div>
+
                 <Input
                     autoComplete='off'
                     type='text'
@@ -655,6 +800,32 @@ function EditExistEvent(props: EditExistEventProps) {
                     {...register('imageURL')}
                     isRequired
                     description='リンクは、必ず「https://」から始まるURLを入力してください。'
+                />
+                <div className='flex gap-2'>
+                    <Input
+                        autoComplete='off'
+                        type='number'
+                        label='X座標'
+                        {...register('location.x')}
+                        description='0〜100の間で入力してください。単位は%です。'
+                        isRequired
+                    />
+                    <Input
+                        autoComplete='off'
+                        type='number'
+                        label='Y座標'
+                        {...register('location.y')}
+                        description='0〜100の間で入力してください。単位は%です。'
+                        isRequired
+                    />
+                </div>
+                <Input
+                    autoComplete='off'
+                    type='text'
+                    label='場所'
+                    {...register('place')}
+                    description='場所の名前を入力してください。'
+                    isRequired
                 />
                 <Input
                     autoComplete='off'
