@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import {
     AccountPage,
     ImagesPage,
-    AnalyticsPage,
     DevelopersPage,
     FormPage,
     HelpPage,
@@ -15,6 +14,7 @@ import {
     UploadPage,
     Message,
     LinksPage,
+    TeapotPage,
 } from './pages';
 
 export default function App() {
@@ -27,13 +27,13 @@ export default function App() {
             <Route path='/images' element={<ImagesPage />} />
             <Route path='/account' element={<AccountPage />} />
             <Route path='/message' element={<Message />} />
-            <Route path='/analytics' element={<AnalyticsPage />} />
             <Route path='/map' element={<EventsPage />} />
             <Route path='/map/:id' element={<MapPage />} />
             <Route path='/map/:id/form' element={<FormPage />} />
             <Route path='/map/:id/place/:place_id' element={<PlacePage />} />
             <Route path='/user-management' element={<ManagePage />} />
             <Route path='/links' element={<LinksPage />} />
+            <Route path='/418' element={<TeapotPage />} />
             <Route path='*' element={<NotFoundPage />} />
         </Routes>
     );

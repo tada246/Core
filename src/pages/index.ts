@@ -12,7 +12,7 @@ export { default as Message } from './notices';
 export { default as FormPage } from './forms';
 export { default as PlacePage } from './floors';
 export { default as ManagePage } from './manage';
-export { default as AnalyticsPage } from './analytics';
 export { default as BannedPage } from './banned';
 export { default as LoadingPage } from './loading';
 export { default as LinksPage } from './links';
+export { default as TeapotPage } from './teapot';
