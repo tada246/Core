@@ -3,3 +3,7 @@ export function isEditor(user_authority: string) {
         (authority) => authority === user_authority
     );
 }
+
+export function isAdmin(user_authority: string) {
+    return user_authority === 'ADMIN';
+}

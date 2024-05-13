@@ -20,7 +20,7 @@ async function getEventList() {
 }
 
 export default function useEventList() {
-    const { data, isLoading, error } = useSWR(
+    const { data, isLoading, error, mutate } = useSWR(
         '/api/events/list',
         getEventList,
         {
@@ -35,5 +35,6 @@ export default function useEventList() {
         data,
         isLoading,
         error,
+        mutate,
     };
 }

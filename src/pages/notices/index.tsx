@@ -6,11 +6,6 @@ import {
     CardHeader,
     Chip,
     Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
     Select,
     SelectItem,
     Textarea,
@@ -27,6 +22,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import {
     collection,
+    deleteDoc,
     doc,
     limit,
     onSnapshot,
@@ -41,6 +37,9 @@ import { Notice } from '../../types/firebase';
 import dayjs from 'dayjs';
 import Head from '../../components/ui/Head';
 import OnlyEditors from '../../components/ui/OnlyEditors';
+import EditorModal from '../../components/ui/EditorModal';
+import toast from 'react-hot-toast';
+import NoticesAdvice from './advice';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
@@ -49,7 +48,7 @@ export default function Message() {
         onSnapshot(
             query(
                 collection(db, 'notices'),
-                limit(10),
+                limit(20),
                 orderBy('timestamp', 'desc')
             ),
             (querySnapshot) => {
@@ -70,6 +69,7 @@ export default function Message() {
                 subtitle='TANE Mapへのお知らせの投稿を行うことができます'
             />
             <div className='mt-10'>
+                <NoticesAdvice />
                 <div>
                     <OnlyEditors>
                         <MessageAddModal />
@@ -94,6 +94,16 @@ export default function Message() {
 
 function NoticeCard(props: Notice) {
     const type = message_type.find((v) => v.id === props.type);
+
+    async function deleteNotice() {
+        await deleteDoc(doc(db, 'notices', props.id))
+            .then(() => {
+                toast.success('削除に成功');
+            })
+            .catch(() => {
+                toast.error('削除に失敗');
+            });
+    }
 
     return (
         <Card className='w-full p-2 mb-8 max-w-lg mx-auto' shadow='sm'>
@@ -121,14 +131,14 @@ function NoticeCard(props: Notice) {
                             key={i}
                             size='sm'
                             variant='flat'
-                            className='text-tiny text-default-700'
+                            className='text-tiny'
                         >
                             {v}
                         </Chip>
                     ))}
                 </div>
             </CardHeader>
-            <CardBody className='px-3 py-0 text-small text-default-500 flex flex-col gap-2'>
+            <CardBody className='px-3 py-0 text-small flex flex-col gap-2'>
                 {props.content.split('\n').map((v, i) => (
                     <p key={i}>{v}</p>
                 ))}
@@ -136,11 +146,23 @@ function NoticeCard(props: Notice) {
             <CardFooter>
                 <OnlyEditors>
                     <div className='flex gap-2'>
-                        <Button size='sm' variant='flat' isIconOnly isDisabled>
-                            <IoPencil />
+                        <Button
+                            size='sm'
+                            variant='flat'
+                            isDisabled
+                            startContent={<IoPencil />}
+                        >
+                            編集
                         </Button>
-                        <Button size='sm' variant='flat' isIconOnly isDisabled>
-                            <IoTrash />
+                        <Button
+                            size='sm'
+                            variant='flat'
+                            startContent={<IoTrash />}
+                            onPress={() => {
+                                deleteNotice();
+                            }}
+                        >
+                            削除
                         </Button>
                     </div>
                 </OnlyEditors>
@@ -161,25 +183,27 @@ function MessageAddModal() {
     const { register, handleSubmit, reset } = useForm<MessageForm>();
     const [error, setError] = useState<string | null>(null);
 
-    const onSubmit: SubmitHandler<MessageForm> = async (data) => {
+    async function createNewNotice(data: MessageForm) {
         const id = uuidv4();
-        try {
-            await setDoc(doc(db, 'notices', id), {
-                id: id,
-                timestamp: serverTimestamp(),
-                title: data.title,
-                type: data.type,
-                writer: data.writer.toString().split(','),
-                content: data.content,
-            }).then(() => {
+        await setDoc(doc(db, 'notices', id), {
+            id: id,
+            timestamp: serverTimestamp(),
+            title: data.title,
+            type: data.type,
+            writer: data.writer.toString().split(','),
+            content: data.content,
+        });
+    }
+
+    const onSubmit: SubmitHandler<MessageForm> = (data) => {
+        createNewNotice(data)
+            .then(() => {
                 onOpenChange();
+                toast.success('追加に成功');
+            })
+            .catch((_) => {
+                toast.error('追加に失敗');
             });
-        } catch (e) {
-            setError(
-                'エラーになったっぽい。何がエラーを起こしたのか検討中です...（実際には何もしていないので開発者に連絡してください）'
-            );
-            throw new Error(e?.toString());
-        }
     };
 
     return (
@@ -198,99 +222,73 @@ function MessageAddModal() {
                     新規投稿
                 </Button>
             </div>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                <ModalContent>
-                    {(onClose) => (
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <ModalHeader className='flex flex-col gap-1'>
-                                お知らせの投稿
-                            </ModalHeader>
-                            <ModalBody>
-                                <Input
-                                    defaultValue=''
-                                    type='text'
-                                    label='タイトル'
-                                    isRequired
-                                    id='title'
-                                    {...register('title')}
-                                />
-                                <Select
-                                    label='タイプ'
-                                    isRequired
-                                    defaultSelectedKeys={['normal']}
-                                    id='type'
-                                    {...register('type')}
-                                >
-                                    {message_type.map((v) => (
-                                        <SelectItem
-                                            key={v.id}
-                                            value={v.id}
-                                            textValue={v.name}
-                                            aria-label={v.name}
-                                        >
-                                            <div className='flex gap-2 items-center'>
-                                                <div>{v.icon}</div>
-                                                <p className='flex-1'>
-                                                    {v.name}
-                                                </p>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </Select>
-                                <Select
-                                    label='投稿者'
-                                    isRequired
-                                    id='writer'
-                                    defaultSelectedKeys={[]}
-                                    selectionMode='multiple'
-                                    description='複数選択可'
-                                    {...register('writer')}
-                                >
-                                    {writer.map((v) => (
-                                        <SelectItem
-                                            key={v}
-                                            value={v}
-                                            textValue={v}
-                                            aria-label={v}
-                                        >
-                                            {v}
-                                        </SelectItem>
-                                    ))}
-                                </Select>
-                                <Textarea
-                                    label='内容'
-                                    isRequired
-                                    defaultValue=''
-                                    id='content'
-                                    placeholder='お知らせの内容を入力'
-                                    {...register('content')}
-                                />
-                                {error && (
-                                    <p className='text-red-500 text-tiny opacity-80'>
-                                        {error}
-                                    </p>
-                                )}
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button
-                                    color='danger'
-                                    variant='light'
-                                    onPress={onClose}
-                                >
-                                    キャンセル
-                                </Button>
-                                <Button
-                                    color='primary'
-                                    type='submit'
-                                    variant='shadow'
-                                >
-                                    投稿
-                                </Button>
-                            </ModalFooter>
-                        </form>
-                    )}
-                </ModalContent>
-            </Modal>
+            <EditorModal
+                title='お知らせの投稿'
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <Input
+                    defaultValue=''
+                    type='text'
+                    label='タイトル'
+                    isRequired
+                    id='title'
+                    {...register('title')}
+                />
+                <Select
+                    label='タイプ'
+                    isRequired
+                    defaultSelectedKeys={['normal']}
+                    id='type'
+                    {...register('type')}
+                >
+                    {message_type.map((v) => (
+                        <SelectItem
+                            key={v.id}
+                            value={v.id}
+                            textValue={v.name}
+                            aria-label={v.name}
+                        >
+                            <div className='flex gap-2 items-center'>
+                                <div>{v.icon}</div>
+                                <p className='flex-1'>{v.name}</p>
+                            </div>
+                        </SelectItem>
+                    ))}
+                </Select>
+                <Select
+                    label='投稿者'
+                    isRequired
+                    id='writer'
+                    defaultSelectedKeys={[]}
+                    selectionMode='multiple'
+                    description='複数選択可'
+                    {...register('writer')}
+                >
+                    {writer.map((v) => (
+                        <SelectItem
+                            key={v}
+                            value={v}
+                            textValue={v}
+                            aria-label={v}
+                        >
+                            {v}
+                        </SelectItem>
+                    ))}
+                </Select>
+                <Textarea
+                    label='内容'
+                    isRequired
+                    defaultValue=''
+                    id='content'
+                    placeholder='お知らせの内容を入力'
+                    {...register('content')}
+                />
+                {error && (
+                    <p className='text-red-500 text-tiny opacity-80'>{error}</p>
+                )}
+            </EditorModal>
         </>
     );
 }
