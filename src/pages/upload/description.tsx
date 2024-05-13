@@ -32,6 +32,9 @@ const UploadDescription = memo(() => {
             <li>
                 <p>ファイル名は削除され、ランダムなIDが付与されます。</p>
             </li>
+            <li>
+                <p>学校のGoogleアカウントのみアップロードできます。</p>
+            </li>
         </ul>
     );
 });
