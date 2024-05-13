@@ -1,6 +1,36 @@
 import { Image } from '@nextui-org/react';
+import confetti from 'canvas-confetti';
+import { useEffect } from 'react';
 
 export default function NotFound() {
+    function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+    }
+    const defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 0,
+    };
+
+    useEffect(() => {
+        setInterval(() => {
+            confetti({
+                ...defaults,
+                origin: {
+                    x: randomInRange(0.1, 0.3),
+                    y: Math.random() - 0.2,
+                },
+            });
+            confetti({
+                ...defaults,
+                origin: {
+                    x: randomInRange(0.7, 0.9),
+                    y: Math.random() - 0.2,
+                },
+            });
+        }, 300);
+    }, []);
     return (
         <div>
             <div className='flex justify-center'>
