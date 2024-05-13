@@ -116,7 +116,9 @@ export default function Page() {
     };
 
     // ⇩ 安全じゃないから後で修正
-    const isAllow = isEditor(user?.data?.authority ?? '');
+    const isAllow =
+        isEditor(user?.data?.authority ?? '') &&
+        user?.data?.mail.endsWith('@toko.ed.jp');
 
     const { getRootProps, isDragActive } = useDropzone({
         onDrop,
