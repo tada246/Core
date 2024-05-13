@@ -146,7 +146,7 @@ function EventList(props: EventListProps) {
                     props.floor_id,
                     'events'
                 ),
-                orderBy('date.start', 'asc')
+                orderBy('order', 'asc')
             ),
             (doc) => {
                 const _events: Entertainment[] = [];
