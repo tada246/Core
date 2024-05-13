@@ -18,7 +18,11 @@ type Props = {
 
 export default function EditorModal(props: Props) {
     return (
-        <Modal isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
+        <Modal
+            isOpen={props.isOpen}
+            onOpenChange={props.onOpenChange}
+            backdrop='blur'
+        >
             <ModalContent>
                 {(onClose) => (
                     <form onSubmit={props.onSubmit}>
