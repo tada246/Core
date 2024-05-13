@@ -4,6 +4,7 @@ import {
     IoArrowBackOutline,
     IoArrowForwardOutline,
     IoDuplicate,
+    IoFileTrayOutline,
     IoFolderOpen,
     IoGitBranchOutline,
     IoHelp,
@@ -29,6 +30,7 @@ import {
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { user as user_atom } from '../../store/jotai';
+import SuperModeButton from '../ui/SuperModeButton';
 
 interface SidebarContent {
     name: string;
@@ -71,6 +73,11 @@ const sidebar_content: SidebarContent[] = [
         name: 'マップイベント',
         icon: <IoMapOutline />,
         link: '/map',
+    },
+    {
+        name: 'リアルタイム連絡',
+        icon: <IoFileTrayOutline />,
+        link: '/message',
     },
     {
         name: 'border',
@@ -146,55 +153,58 @@ export default function SideBar() {
                             </li>
                         ))}
                     </ul>
-                    <div className='w-52 bg-default-900 rounded-medium flex justify-evenly items-center p-1 shadow-large'>
-                        <Button
-                            variant='light'
-                            isIconOnly
-                            className='text-white'
-                            size='sm'
-                            onClick={() => navigate(-1)}
-                        >
-                            <IoArrowBackOutline />
-                        </Button>
-                        <Button
-                            variant='light'
-                            isIconOnly
-                            className='text-white'
-                            size='sm'
-                            onClick={() => navigate(1)}
-                        >
-                            <IoArrowForwardOutline />
-                        </Button>
-                        <Divider
-                            orientation='vertical'
-                            className='bg-default-600 h-5'
-                        />
-                        <Button
-                            variant='light'
-                            isIconOnly
-                            className='text-white'
-                            size='sm'
-                            as={Link}
-                            to='/help'
-                        >
-                            <IoHelp />
-                        </Button>
-                        <Button
-                            variant='light'
-                            isIconOnly
-                            className='text-white'
-                            size='sm'
-                            as={NextUILink}
-                            href='https://drive.google.com/drive/folders/1or5eg7FhQ7_v8C7Hxox_Jp13a9Pw28gj'
-                            isExternal
-                        >
-                            <IoApps />
-                        </Button>
-                        <Image
-                            src={user?.data?.photoURL}
-                            className='w-5 h-5 mx-1 rounded-full'
-                            alt='user'
-                        />
+                    <div className='w-52 flex flex-col gap-2'>
+                        <SuperModeButton />
+                        <div className='w-full bg-default-900 rounded-medium flex justify-evenly items-center p-1 shadow-large'>
+                            <Button
+                                variant='light'
+                                isIconOnly
+                                className='text-white'
+                                size='sm'
+                                onClick={() => navigate(-1)}
+                            >
+                                <IoArrowBackOutline />
+                            </Button>
+                            <Button
+                                variant='light'
+                                isIconOnly
+                                className='text-white'
+                                size='sm'
+                                onClick={() => navigate(1)}
+                            >
+                                <IoArrowForwardOutline />
+                            </Button>
+                            <Divider
+                                orientation='vertical'
+                                className='bg-default-600 h-5'
+                            />
+                            <Button
+                                variant='light'
+                                isIconOnly
+                                className='text-white'
+                                size='sm'
+                                as={Link}
+                                to='/help'
+                            >
+                                <IoHelp />
+                            </Button>
+                            <Button
+                                variant='light'
+                                isIconOnly
+                                className='text-white'
+                                size='sm'
+                                as={NextUILink}
+                                href='https://drive.google.com/drive/folders/1or5eg7FhQ7_v8C7Hxox_Jp13a9Pw28gj'
+                                isExternal
+                            >
+                                <IoApps />
+                            </Button>
+                            <Image
+                                src={user?.data?.photoURL}
+                                className='w-5 h-5 mx-1 rounded-full'
+                                alt='user'
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
