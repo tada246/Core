@@ -29,7 +29,11 @@ export default function EditorModal(props: Props) {
                         <ModalHeader className='flex flex-col gap-1'>
                             {props.title}
                         </ModalHeader>
-                        <ModalBody>{props.children}</ModalBody>
+                        <ModalBody className='block'>
+                            <div className='flex gap-3 h-full flex-col'>
+                                {props.children}
+                            </div>
+                        </ModalBody>
                         <ModalFooter>
                             <Button
                                 color='danger'
