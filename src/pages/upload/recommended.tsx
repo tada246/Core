@@ -6,7 +6,7 @@ export default function RecommendedUpload() {
             </li>
             <li>
                 <p>
-                    催し物の画像は、1:1で表示され、256px×256pxが適しています。
+                    催し物の画像は、1:1で表示され、120px×120pxが適しています。
                 </p>
             </li>
             <li>

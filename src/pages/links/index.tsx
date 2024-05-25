@@ -62,6 +62,10 @@ const links: {
                 link: 'https://docs.google.com/document/d/1cCeTHCW9fWmgGft5hfQWtBsKSwTwEIeTNRbCWLmvT04/edit?usp=drive_link',
             },
             {
+                name: '輝緑祭 企画書',
+                link: 'https://docs.google.com/document/d/1XLvDFLT5TnbGCut6_m4h9SFuS_JCoMkYewPYwrzDjqU/edit?usp=drive_link',
+            },
+            {
                 name: '料金シュミレーター',
                 link: 'https://docs.google.com/spreadsheets/d/1wxLv-KM4bbDHPZ9AzZzl9bUPDcP6VHuJq7N7W_EUKpc/edit?usp=sharing',
             },

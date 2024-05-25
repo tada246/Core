@@ -20,15 +20,21 @@ export default function ImageCard(props: Props) {
 
     return (
         <Card shadow='sm' radius='lg'>
-            <CardBody className='overflow-visible p-0'>
+            <CardBody className='overflow-visible p-0 w-full'>
                 <Image
                     shadow='sm'
                     radius='lg'
-                    width={250}
-                    height={250}
+                    width={300}
+                    height={300}
                     alt={image.id}
                     className='w-full object-cover aspect-square'
+                    isBlurred
                     src={image.url}
+                    classNames={{
+                        img: 'w-full',
+                        wrapper: 'w-full',
+                        blurredImg: 'w-full',
+                    }}
                 />
             </CardBody>
             <CardFooter className='flex justify-between py-1'>
