@@ -16,23 +16,24 @@ export default function MapTopInfo(props: Props) {
     return (
         <div className='w-full'>
             {event.isPublic && (
-                <WarningCard
-                    message='公開後の編集の警告'
-                    description={
-                        <p className='text-sm'>
-                            公開後の編集は、基本的にMapに反映されません。永続キャッシュがあるためです。
-                            <Link
-                                isExternal
-                                href='https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5_(%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0)'
-                                showAnchorIcon
-                                className='text-sm'
-                            >
-                                詳しくはこちら
-                            </Link>
-                        </p>
-                    }
-                    className='mb-5'
-                />
+                <div className='mb-5'>
+                    <WarningCard
+                        message='公開後の編集の警告'
+                        description={
+                            <p className='text-sm'>
+                                公開後の編集は、基本的にMapに反映されません。永続キャッシュがあるためです。
+                                <Link
+                                    isExternal
+                                    href='https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5_(%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0)'
+                                    showAnchorIcon
+                                    className='text-sm'
+                                >
+                                    詳しくはこちら
+                                </Link>
+                            </p>
+                        }
+                    />
+                </div>
             )}
             <div className='relative w-full h-96'>
                 <Image
