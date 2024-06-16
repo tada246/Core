@@ -14,7 +14,6 @@ import {
 import {
     IoAddCircleOutline,
     IoFileTrayOutline,
-    IoPencil,
     IoTrash,
 } from 'react-icons/io5';
 import { message_type, writer } from '../../store/notice';
@@ -146,14 +145,6 @@ function NoticeCard(props: Notice) {
             <CardFooter>
                 <OnlyEditors>
                     <div className='flex gap-2'>
-                        <Button
-                            size='sm'
-                            variant='flat'
-                            isDisabled
-                            startContent={<IoPencil />}
-                        >
-                            編集
-                        </Button>
                         <Button
                             size='sm'
                             variant='flat'

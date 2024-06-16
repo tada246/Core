@@ -10,7 +10,7 @@ export default function Head(props: Props) {
     return (
         <div>
             <div className='flex items-center gap-4'>
-                {props.icon}
+                <div className='drop-shadow-lg'>{props.icon}</div>
                 {typeof props.title === 'string' ? (
                     <p className='text-3xl font-bold'>{props.title}</p>
                 ) : (

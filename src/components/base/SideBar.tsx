@@ -137,7 +137,11 @@ export default function SideBar() {
                                                 : 'light'
                                         }
                                         fullWidth
-                                        startContent={content.icon}
+                                        startContent={
+                                            <div className='drop-shadow-md'>
+                                                {content.icon}
+                                            </div>
+                                        }
                                         as={Link}
                                         to={content.link}
                                         className='justify-start'
