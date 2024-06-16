@@ -5,12 +5,14 @@ import { Colors } from '../types/colors';
 
 export const writer: string[] = [
     '学校',
-    '生徒会本部',
+    '生徒会',
     '装飾（文化祭実行委員）',
     '総務（文化祭実行委員）',
     '備品（文化祭実行委員）',
     '広報（文化祭実行委員）',
     'システム',
+    '電子工学部（運営）',
+    '宣伝',
 ];
 
 export const message_type: {
