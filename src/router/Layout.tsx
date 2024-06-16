@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import { user as user_atom } from '../store/jotai';
 import processUserData from './processUserData';
 import ToastBar from './ToastBar';
+import RightChip from '../components/base/RightChip';
 
 type Props = {
     children: ReactNode;
@@ -27,6 +28,7 @@ export default function Layout(props: Props) {
     return (
         <main className='flex font-noto'>
             <SideBar />
+            <RightChip />
             <Toaster>{(t) => <ToastBar toast={t} />}</Toaster>
             <div className='max-w-4xl mx-auto w-full pb-12 px-6 pt-24 md:pt-12'>
                 <Content state={loginState}>{props.children}</Content>
