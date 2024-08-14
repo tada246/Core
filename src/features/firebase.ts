@@ -1,9 +1,13 @@
 import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { ReCaptchaV3Provider, initializeAppCheck } from 'firebase/app-check';
-import { GoogleAuthProvider, getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import {
+    GoogleAuthProvider,
+    connectAuthEmulator,
+    getAuth,
+} from 'firebase/auth';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
+import { connectStorageEmulator, getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
@@ -20,12 +24,32 @@ const db = getFirestore(app);
 const google_provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 const storage = getStorage(app);
-if (import.meta.env.DEV) window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY),
-    isTokenAutoRefreshEnabled: true,
-});
 
-const analytics = getAnalytics(app);
+const useEmulators =
+    import.meta.env.VITE_USE_EMULATORS.toLowerCase() === 'true';
+const isDev = import.meta.env.DEV;
 
-export { google_provider, auth, db, storage, appCheck, analytics };
+if (useEmulators) {
+    connectAuthEmulator(auth, 'http://localhost:9099', {
+        disableWarnings: true,
+    });
+    connectFirestoreEmulator(db, 'localhost', 8080);
+    connectStorageEmulator(storage, 'localhost', 9199);
+}
+
+if (isDev && !useEmulators) {
+    window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+}
+
+if (!useEmulators) {
+    initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider(
+            import.meta.env.VITE_RECAPTCHA_SITE_KEY
+        ),
+        isTokenAutoRefreshEnabled: true,
+    });
+
+    getAnalytics(app);
+}
+
+export { google_provider, auth, db, storage };
