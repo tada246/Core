@@ -58,7 +58,7 @@ export default function Page() {
                 className='mt-10'
             >
                 <div className='mt-4 w-full'>
-                    <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2Fsystem-configuration-06.jpg?alt=media&token=7a9b5280-63a2-41d2-b4ea-17c64c7a3349' />
+                    <Image src='https://firebasestorage.googleapis.com/v0/b/tane-project.appspot.com/o/documents%2F%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%902.png?alt=media&token=30d00470-776b-4397-a2b3-d5cc54203743' />
                 </div>
             </SubHead>
             <SubHead

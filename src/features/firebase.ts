@@ -25,9 +25,9 @@ const google_provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-const useEmulators =
-    import.meta.env.VITE_USE_EMULATORS.toLowerCase() === 'true';
 const isDev = import.meta.env.DEV;
+const useEmulators =
+    import.meta.env.VITE_USE_EMULATORS.toLowerCase() === 'true' && isDev;
 
 if (useEmulators) {
     connectAuthEmulator(auth, 'http://localhost:9099', {
