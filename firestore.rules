@@ -1,0 +1,219 @@
+rules_version = '2';
+
+service cloud.firestore {
+	match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+		
+    function isAuthenticatedUID(uid) {
+	    return isAuthenticated() && request.auth.uid == uid;
+		}
+    
+    function isAuthenticatedEmail(email) {
+   		return  isAuthenticated() && request.auth.token.email == email;
+		}
+    
+    function isAuthenticatedName(name) {
+   		return  isAuthenticated() && request.auth.token.name == name;
+    }
+    
+    function isEmail(value) {
+    	return value.matches('.+@.+[.].+');
+		}
+    
+    function getData(collection, documentID) {
+    	return get(/databases/(default)/documents/$(collection)/$(documentID));
+		}
+    
+    function isAdmin() {
+    	return isAuthenticated() && getData('admin_users', request.auth.uid).data.authority == 'ADMIN';
+    }
+    
+    function isEditor() {
+    	return isAuthenticated()
+      	&& ['EDITOR', 'ADMIN'].hasAny([getData('admin_users', request.auth.uid).data.authority]);
+    }
+    
+    function isReader() {
+    	return isAuthenticated()
+      	&& ['READER', 'EDITOR', 'ADMIN'].hasAny([getData('admin_users', request.auth.uid).data.authority]);
+    }
+    
+    // notices
+    
+    function isValidNotice(data) {
+    	return data.size() == 6
+      	&& 'id' in data && data.id is string
+      	&& 'timestamp' in data && data.timestamp is timestamp
+      	&& 'title' in data && data.title is string
+      	&& 'type' in data && data.type is string
+      	&& 'writer' in data && data.writer is list
+      	&& 'content' in data && data.content is string
+    }
+    
+  	match /notices/{noticeId} {
+    	allow create: if isEditor() && isValidNotice(request.resource.data);
+      allow delete: if isEditor();
+      allow read: if true;
+		}
+    
+    // admin_users
+    
+    function isValidAdminUserAtCreate(data) {
+    	return data.size() == 6
+      	&& 'id' in data && data.id is string
+      	&& 'timestamp' in data && data.timestamp is timestamp
+      	&& 'name' in data && data.name is string
+      	&& 'mail' in data && data.mail is string && isEmail(data.mail)
+      	&& 'photoURL' in data && data.photoURL is string
+      	&& 'authority' in data && data.authority is string
+    }
+    
+    function isValidAdminUserAtUpdate(id, data) {
+    	let oldData = getData('admin_users', id).data;
+      return data.size() == 6
+      	&& 'id' in data && data.id == oldData.id
+      	&& 'timestamp' in data && data.timestamp == oldData.timestamp
+      	&& 'name' in data && data.name == oldData.name
+      	&& 'mail' in data && data.mail == oldData.mail
+      	&& 'photoURL' in data && data.photoURL == oldData.photoURL
+      	&& 'authority' in data && ['BANNED', 'READER', 'EDITOR', 'ADMIN'].hasAny([data.authority])
+    }
+    
+    match /admin_users/{admin_user_id} {
+    	allow create: if isAuthenticated()
+      	&& isValidAdminUserAtCreate(request.resource.data)
+        && isAuthenticatedUID(request.resource.data.id)
+        && isAuthenticatedEmail(request.resource.data.mail)
+        && isAuthenticatedName(request.resource.data.name)
+        && ((!request.auth.token.email.matches('.+toko.ed.jp') && request.resource.data.authority == 'BANNED') || (request.auth.token.email.matches('.+toko.ed.jp') && request.resource.data.authority == 'READER'));
+      allow read: if (isAuthenticated() && admin_user_id == request.auth.uid) || isAdmin();
+      allow update: if isAdmin() && isValidAdminUserAtUpdate(request.resource.id, request.resource.data);
+    }
+  
+    // images
+    
+    function isValidImage(data) {
+    	return data.size() == 3
+      && 'id' in data && data.id is string
+      && 'timestamp' in data && data.timestamp is timestamp
+      && 'url' in data && data.url is string
+    }
+    
+    match /images/{imageId} {
+    	allow create: if isEditor() && isValidImage(request.resource.data);
+      allow read: if isReader();
+    }
+    
+    // events
+    
+    function isValidEventAtUpdate(id, data) {
+    	let oldData = getData('events', id).data;
+    	return data.size() == 8
+    		&& 'id' in data && data.id is string && data.id == oldData.id
+    		&& 'name' in data && data.name is string
+    		&& 'overview' in data && data.overview is string
+    		&& 'mapImageURL' in data && data.mapImageURL is string
+    		&& 'link' in data && data.link is string
+    		&& 'isPublic' in data && data.isPublic is bool
+    		&& 'imageURL' in data && data.imageURL is string
+    		&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp;
+    }
+    
+    function isValidEventAtCreate(data) {
+    	return data.size() == 8
+    		&& 'id' in data && data.id is string
+    		&& 'name' in data && data.name is string
+    		&& 'overview' in data && data.overview is string
+    		&& 'mapImageURL' in data && data.mapImageURL is string
+    		&& 'link' in data && data.link is string
+    		&& 'isPublic' in data && data.isPublic is bool
+    		&& 'imageURL' in data && data.imageURL is string
+    		&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp;
+    }
+    
+    match /events/{eventId} {
+    	allow update: if isEditor() && isValidEventAtUpdate(request.resource.id, request.resource.data);
+      allow create: if isAdmin() && isValidEventAtCreate(request.resource.data);
+      allow read: if true;
+      
+      // forms
+      
+      function isValidForm(id, data) {
+    		return data.size() == 5
+    			&& 'id' in data && data.id is string && data.id == id
+    			&& 'name' in data && data.name is string
+    			&& 'content' in data && data.content is string
+    			&& 'url' in data && data.url is string
+    			&& 'order' in data && data.order is number;
+    	}
+      
+      match /forms/{formId} {
+    		allow create, update: if isEditor() && isValidForm(request.resource.id, request.resource.data);
+        allow read: if true;
+        allow delete: if isEditor();
+      }
+      
+      // places
+      function isValidPlace(id, data) {
+    		return data.size() == 4
+    			&& 'id' in data && data.id is string && data.id == id
+    			&& 'name' in data && data.name is string
+    			&& 'imageURL' in data && data.imageURL is string
+    			&& 'location' in data && data.location.size() == 2 && data.location.x is number && data.location.y is number;
+    	}
+      
+      match /places/{formId} {
+    		allow create, update: if isEditor() && isValidPlace(request.resource.id, request.resource.data);
+      	allow read: if true; 
+        
+        // floor
+        function isValidFloor(id, data) {
+    			return (data.size() == 3
+    				&& 'id' in data && data.id is string && data.id == id
+	    			&& 'name' in data && data.name is string
+	    			&& 'order' in data && data.order is number) || (
+            data.size() == 4
+    				&& 'id' in data && data.id is string && data.id == id
+	    			&& 'name' in data && data.name is string
+	    			&& 'order' in data && data.order is number
+            && 'mapImageURL' in data && data.mapImageURL is string);
+  	  	}
+        
+        match /floor/{floorId} {
+          allow create, update: if isEditor() && isValidFloor(request.resource.id, request.resource.data);
+   	  	 	allow read: if true; 
+          
+          // events
+          function isValidExhibitionEvent(id, data) {
+    				return (data.size() == 7
+    					&& 'id' in data && data.id is string && data.id == id
+	    				&& 'name' in data && data.name is string
+	    				&& 'order' in data && data.order is number
+	    				&& 'overview' in data && data.overview is string
+	    				&& 'imageURL' in data && data.imageURL is string
+	    				&& 'explanation' in data && data.explanation is string
+	    				&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp) ||
+              (data.size() == 9
+    					&& 'id' in data && data.id is string && data.id == id
+	    				&& 'name' in data && data.name is string
+	    				&& 'order' in data && data.order is number
+	    				&& 'overview' in data && data.overview is string
+	    				&& 'imageURL' in data && data.imageURL is string
+	    				&& 'explanation' in data && data.explanation is string
+	    				&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp
+	    				&& 'location' in data && data.location.size() == 2 && data.location.x is number && data.location.y is number
+              && 'place' in data && data.place is string);
+  	  		}
+          
+          match /events/{eventsId} {
+						allow create, update: if isEditor() && isValidExhibitionEvent(request.resource.id, request.resource.data);
+   	  	 		allow read: if true; 
+            allow delete: if isEditor();
+          }
+        }
+      }
+    }
+  }
+}

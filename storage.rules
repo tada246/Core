@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+  		function isSchoolEmail(value) {
+    		return value.matches('.+@toko.ed.jp');
+			}
+  
+      match /uploads/{files} {
+      	allow create: if request.auth != null
+        	&& request.resource.size <= 80 * 1024
+          && request.resource.contentType.matches('image/.*')
+          && isSchoolEmail(request.auth.token.email);
+        allow read: if request.auth != null && isSchoolEmail(request.auth.token.email);
+		}
+  }
+}
