@@ -26,9 +26,8 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 
 const isDev = import.meta.env.DEV;
-const useEmulators = !(
-    !(import.meta.env.VITE_USE_EMULATORS.toLowerCase() === 'true') && isDev
-);
+const useEmulators =
+    import.meta.env.VITE_USE_EMULATORS.toLowerCase() === 'true' && isDev;
 
 if (useEmulators) {
     connectAuthEmulator(auth, 'http://localhost:9099', {
