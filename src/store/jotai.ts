@@ -8,4 +8,11 @@ interface _User extends AuthUser {
 
 export type User = _User | undefined;
 
+interface Clipboard {
+    text: string;
+    timestamp: number;
+}
+
+export const clipboardAtom = atom<Clipboard[]>([]);
+
 export const user = atom<User>(undefined);
