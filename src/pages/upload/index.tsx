@@ -15,7 +15,7 @@ import Head from '../../components/ui/Head';
 import SubHead from '../../components/ui/SubHead';
 import UploadDescription from './description';
 import { useAtom } from 'jotai';
-import { user as user_atom } from '../../store/jotai';
+import { clipboardAtom, user as user_atom } from '../../store/jotai';
 import { isEditor } from '../../features/allow';
 import RecommendedUpload from './recommended';
 
@@ -246,6 +246,19 @@ type UploadedImagesStateProps = {
 };
 
 function UploadedImagesState(props: UploadedImagesStateProps) {
+    const [_, setClipboard] = useAtom(clipboardAtom);
+
+    function copyURL(url: string) {
+        copyText(url);
+        setClipboard((prev) => [
+            {
+                text: url,
+                timestamp: Date.now(),
+            },
+            ...prev,
+        ]);
+    }
+
     return (
         <div className='gap-4 grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2 justify-items-center mt-5'>
             {props.items.map(
@@ -271,7 +284,7 @@ function UploadedImagesState(props: UploadedImagesStateProps) {
                                     color='default'
                                     radius='lg'
                                     size='sm'
-                                    onClick={() => copyText(item.url)}
+                                    onClick={() => copyURL(item.url)}
                                 >
                                     Copy URL
                                 </Button>
