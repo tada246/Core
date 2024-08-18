@@ -9,7 +9,6 @@ import {
 import { useAtom } from 'jotai';
 import { FormEvent, ReactNode } from 'react';
 import { clipboardAtom } from '../../store/jotai';
-import { AnimatePresence, motion } from 'framer-motion';
 import { IoClose, IoCopy } from 'react-icons/io5';
 import { copyText } from '../../features/copy';
 import dayjs from 'dayjs';
