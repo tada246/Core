@@ -13,6 +13,7 @@ import { IoClose, IoCopy } from 'react-icons/io5';
 import { copyText } from '../../features/copy';
 import dayjs from 'dayjs';
 import useWindowSize from '../../hooks/useWindowSize';
+import { ImageList } from '../base/DynamicBar';
 
 type Props = {
     isOpen: boolean;
@@ -70,8 +71,8 @@ export default function EditorModal(props: Props) {
                                 </Button>
                             </ModalFooter>
                         </form>
-                        {clipboard.length > 0 && width >= 1300 && (
-                            <div className='flex fixed right-0 z-50 top-1/2 -translate-y-1/2 px-6 py-2 w-96 bg-white flex-col gap-2 divide-y-1 rounded-l-large shadow-medium divide-default-400 max-h-[70%] overflow-auto'>
+                        {width >= 1300 && (
+                            <div className='flex fixed right-0 z-50 top-1/2 -translate-y-1/2 px-6 py-2 w-96 bg-white flex-col gap-2 divide-y-1 rounded-l-large shadow-medium divide-default-400 h-[70%] overflow-auto'>
                                 <Button
                                     fullWidth
                                     color='danger'
@@ -81,6 +82,11 @@ export default function EditorModal(props: Props) {
                                 >
                                     全て削除
                                 </Button>
+                                {clipboard.length === 0 && (
+                                    <div className='text-default-600 text-center py-12'>
+                                        クリップボードは空です
+                                    </div>
+                                )}
                                 {clipboard.map((item, index) => (
                                     <div
                                         key={item.timestamp}
@@ -122,6 +128,11 @@ export default function EditorModal(props: Props) {
                                         </div>
                                     </div>
                                 ))}
+                            </div>
+                        )}
+                        {width >= 1300 && (
+                            <div className='flex fixed left-0 z-50 top-1/2 -translate-y-1/2 px-6 py-6 w-80 bg-white flex-col gap-2 divide-y-1 rounded-r-large shadow-medium divide-default-400 h-[70%] overflow-auto'>
+                                <ImageList />
                             </div>
                         )}
                     </>
