@@ -38,6 +38,7 @@ import OnlyEditors from '../../components/ui/OnlyEditors';
 import Head from '../../components/ui/Head';
 import WarningCard from '../../components/ui/WarningCard';
 import getEventStatus from '../../features/getEventStatus';
+import FloorEditor from './floor/edit';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -74,7 +75,13 @@ export default function Page() {
         });
     }, [params]);
 
-    if (!params.id || !params.place_id) return <></>;
+    if (
+        !params.id ||
+        !params.place_id ||
+        !(typeof params.id == 'string') ||
+        !(typeof params.place_id == 'string')
+    )
+        return <></>;
 
     return (
         <div>
@@ -86,7 +93,7 @@ export default function Page() {
                 {place.map((item) => (
                     <div
                         key={item.id}
-                        className='p-6 rounded-large shadow-medium'
+                        className='p-4 sm:p-6 rounded-large shadow-medium'
                     >
                         <div className='flex gap-6 items-center'>
                             <div className='flex gap-3 flex-col'>
@@ -101,6 +108,20 @@ export default function Page() {
                                 <p className='text-tiny opacity-60'>
                                     ID: {item.id}
                                 </p>
+                            </div>
+                            <div className='w-12'>
+                                <OnlyEditors>
+                                    <FloorEditor
+                                        event_id={params.id ?? ''}
+                                        place_id={params.place_id ?? ''}
+                                        data={{
+                                            id: item.id,
+                                            name: item.name,
+                                            order: item.order,
+                                            mapImageURL: item.mapImageURL,
+                                        }}
+                                    />
+                                </OnlyEditors>
                             </div>
                         </div>
                         <EventList
