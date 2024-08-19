@@ -153,7 +153,7 @@ export default function DynamicBar() {
                                 一覧
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent className='p-6'>
+                        <PopoverContent className='p-6 max-h-[40rem]'>
                             <ImageList />
                         </PopoverContent>
                     </Popover>
@@ -170,7 +170,7 @@ export function ImageList() {
     if (isLoading) return <Spinner label='読み込み中' />;
 
     return (
-        <div className='grid grid-cols-2 gap-6 max-h-[40rem] overflow-y-auto'>
+        <div className='grid grid-cols-2 gap-6 overflow-y-auto'>
             {data?.map((image) => (
                 <div
                     key={image.id}
