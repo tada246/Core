@@ -1,12 +1,10 @@
 import { useAtom } from 'jotai';
 import { clipboardAtom } from '../../store/jotai';
-import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose, IoCopy, IoImage, IoList } from 'react-icons/io5';
 import dayjs from 'dayjs';
 import {
     Button,
     Chip,
-    Image,
     Popover,
     PopoverContent,
     PopoverTrigger,
