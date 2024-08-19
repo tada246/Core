@@ -6,7 +6,7 @@ import { Image } from '../types/firebase';
 async function getAllImages() {
     const q = query(
         collection(db, 'images'),
-        limit(60),
+        limit(30),
         orderBy('timestamp', 'desc')
     );
     const querySnapshot = await getDocs(q);
