@@ -69,8 +69,14 @@ export default function MapInfo(props: Props) {
                             alt='画像'
                             width={160}
                             height={90}
-                            className='w-16 h-9 rounded-md object-cover bg-center'
+                            className='w-16 h-9 object-cover aspect-square'
+                            style={{
+                                width: '4rem',
+                                height: '2.25rem',
+                            }}
                             isBlurred
+                            isZoomed
+                            radius='md'
                         />
                         <div className='flex-1'>
                             <p className='font-bold'>{place.name}</p>

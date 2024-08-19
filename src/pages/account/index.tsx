@@ -98,6 +98,10 @@ export default function Page() {
                             width={120}
                             height={120}
                             className='w-16 h-16'
+                            style={{
+                                width: '4rem',
+                                height: '4rem',
+                            }}
                         />
                         <div>
                             <Chip

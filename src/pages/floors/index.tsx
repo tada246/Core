@@ -269,6 +269,10 @@ function EventList(props: EventListProps) {
                                         width={120}
                                         height={120}
                                         className='w-16 h-16 rounded-large object-cover object-center'
+                                        style={{
+                                            width: '4rem',
+                                            height: '4rem',
+                                        }}
                                     />
                                 </div>
                                 <div>

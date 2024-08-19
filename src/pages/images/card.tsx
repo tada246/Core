@@ -10,6 +10,8 @@ import dayjs from 'dayjs';
 import { copyText } from '../../features/copy';
 import { IoCopyOutline } from 'react-icons/io5';
 import { Image as ImageType } from '../../types/firebase';
+import { clipboardAtom } from '../../store/jotai';
+import { useAtom } from 'jotai';
 
 type Props = {
     image: ImageType;
@@ -17,7 +19,18 @@ type Props = {
 
 export default function ImageCard(props: Props) {
     const { image } = props;
+    const [_, setClipboard] = useAtom(clipboardAtom);
 
+    function copyURL(url: string) {
+        copyText(url);
+        setClipboard((prev) => [
+            {
+                text: url,
+                timestamp: Date.now(),
+            },
+            ...prev.map((item) => ({ ...item, copied: false })),
+        ]);
+    }
     return (
         <Card shadow='sm' radius='lg'>
             <CardBody className='overflow-visible p-0 w-full'>
@@ -45,7 +58,7 @@ export default function ImageCard(props: Props) {
                     <Button
                         isIconOnly
                         variant='light'
-                        onPress={() => copyText(image.url)}
+                        onPress={() => copyURL(image.url)}
                     >
                         <IoCopyOutline size={16} />
                     </Button>
