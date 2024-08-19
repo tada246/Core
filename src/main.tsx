@@ -6,17 +6,21 @@ import Layout from './router/Layout';
 import { CookiesProvider } from 'react-cookie';
 import ShowLogo from './router/ShowLogo';
 import AnalyticsProvider from './router/AnalyticsProvider.';
+import ErrorBoundary from './components/atom/ErrorBoundary';
+import { ErrorPage } from './pages';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <CookiesProvider>
-        <BrowserRouter>
-            <AnalyticsProvider>
-                <ShowLogo>
-                    <Layout>
-                        <App />
-                    </Layout>
-                </ShowLogo>
-            </AnalyticsProvider>
-        </BrowserRouter>
-    </CookiesProvider>
+    <ErrorBoundary fallback={<ErrorPage />}>
+        <CookiesProvider>
+            <BrowserRouter>
+                <AnalyticsProvider>
+                    <ShowLogo>
+                        <Layout>
+                            <App />
+                        </Layout>
+                    </ShowLogo>
+                </AnalyticsProvider>
+            </BrowserRouter>
+        </CookiesProvider>
+    </ErrorBoundary>
 );
