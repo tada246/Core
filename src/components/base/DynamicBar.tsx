@@ -163,7 +163,7 @@ export default function DynamicBar() {
     );
 }
 
-function ImageList() {
+export function ImageList() {
     const { data, isLoading, error } = useAllImages();
 
     if (error) return <p>エラーが発生しました</p>;
