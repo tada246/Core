@@ -174,29 +174,31 @@ export function ImageList() {
             {data?.map((image) => (
                 <div
                     key={image.id}
-                    className='flex items-center gap-2 w-full justify-center relative'
+                    className='flex items-center gap-2 w-full justify-center'
                 >
-                    <img
-                        src={image.url}
-                        width={100}
-                        height={100}
-                        alt={'画像'}
-                        style={{
-                            width: '7rem',
-                            height: '7rem',
-                        }}
-                        className='object-cover w-28 h-28 rounded-medium'
-                    />
-                    <Button
-                        className='absolute bottom-2 right-2 bg-white/40 backdrop-blur-md rounded-full'
-                        isIconOnly
-                        size='sm'
-                        variant='flat'
-                        color='default'
-                        onClick={() => copyText(image.url)}
-                    >
-                        <IoCopy className='text-default-800' />
-                    </Button>
+                    <div className='relative'>
+                        <img
+                            src={image.url}
+                            width={100}
+                            height={100}
+                            alt={'画像'}
+                            style={{
+                                width: '7rem',
+                                height: '7rem',
+                            }}
+                            className='object-cover w-28 h-28 rounded-medium'
+                        />
+                        <Button
+                            className='absolute bottom-2 right-2 bg-white/40 backdrop-blur-md rounded-full'
+                            isIconOnly
+                            size='sm'
+                            variant='flat'
+                            color='default'
+                            onClick={() => copyText(image.url)}
+                        >
+                            <IoCopy className='text-default-800' />
+                        </Button>
+                    </div>
                 </div>
             ))}
         </div>
