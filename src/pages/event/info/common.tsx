@@ -14,6 +14,8 @@ type CommonEditInfoModalProps = {
     onOpen: () => void;
     value: React.ReactNode;
     icon: React.ReactNode;
+    onOpen2?: () => void;
+    onOpenIcon2?: React.ReactNode;
 };
 
 export function CommonInformation(props: CommonEditInfoModalProps) {
@@ -27,14 +29,26 @@ export function CommonInformation(props: CommonEditInfoModalProps) {
                 </div>
             </div>
             <OnlyEditors>
-                <Button
-                    isIconOnly
-                    size='sm'
-                    variant='flat'
-                    onClick={props.onOpen}
-                >
-                    <IoPencilSharp size={18} />
-                </Button>
+                <div className='flex gap-2'>
+                    <Button
+                        isIconOnly
+                        size='sm'
+                        variant='flat'
+                        onClick={props.onOpen}
+                    >
+                        <IoPencilSharp size={18} />
+                    </Button>
+                    {props.onOpen2 && (
+                        <Button
+                            isIconOnly
+                            size='sm'
+                            variant='flat'
+                            onClick={props.onOpen2}
+                        >
+                            {props.onOpenIcon2}
+                        </Button>
+                    )}
+                </div>
             </OnlyEditors>
         </div>
     );
