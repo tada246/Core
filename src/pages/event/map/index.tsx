@@ -43,7 +43,27 @@ export default function MapInfo(props: Props) {
             <div className='p-4 bg-white rounded-large border-1 border-default-200'>
                 <div className='w-full overflow-hidden relative'>
                     <img src={props.mapImageURL} alt='' className='w-full' />
-                    <div className='w-full h-full absolute top-0 left-0'>
+                    <div className='w-full h-full absolute top-0 left-0 z-10 flex justify-between'>
+                        <div className='w-[0.05rem] h-full bg-none' />
+                        {[...Array(9)].map((_, i) => (
+                            <div
+                                key={i}
+                                className='w-[0.05rem] h-full bg-default-200'
+                            />
+                        ))}
+                        <div className='w-[0.05rem] h-full bg-none' />
+                    </div>
+                    <div className='w-full h-full absolute top-0 left-0 z-10 flex flex-col justify-between'>
+                        <div className='w-full h-[0.05rem] bg-none' />
+                        {[...Array(9)].map((_, i) => (
+                            <div
+                                key={i}
+                                className='w-full h-[0.05rem] bg-default-200'
+                            />
+                        ))}
+                        <div className='w-full h-[0.05rem] bg-none' />
+                    </div>
+                    <div className='w-full h-full absolute top-0 left-0 z-20'>
                         {places.map((place) => (
                             <Tooltip content={place.name} key={place.id}>
                                 <button
