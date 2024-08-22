@@ -10,7 +10,7 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { IoInformation } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
-import PreviewMarkDownModal from '../../../components/ui/PrviewMarkDownModal';
+import PreviewMarkDownModal from '../../../components/ui/PreviewMarkDownModal';
 
 type EditOverviewForm = {
     overview: string;
