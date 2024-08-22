@@ -37,6 +37,7 @@ export default function FinalCheckModal(props: Props) {
                                 </Button>
                                 <Button
                                     onPress={props.onPress}
+                                    onClick={props.onClick}
                                     color='danger'
                                     variant='shadow'
                                 >
