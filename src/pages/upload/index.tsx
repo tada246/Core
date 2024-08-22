@@ -92,7 +92,7 @@ export default function Page() {
                                 )
                             );
                         })
-                        .catch((e) => {
+                        .catch(() => {
                             setUploadedImages((prev) =>
                                 prev.map((item) =>
                                     item.id === fileID
