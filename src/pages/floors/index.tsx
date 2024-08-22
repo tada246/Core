@@ -484,10 +484,11 @@ function AddNewFloor(props: AddNewFloorProps) {
                 onOpenChange={onOpenChangeModal}
                 title='新しい階層の追加'
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <WarningCard
                     message='階層の追加の注意'
-                    description='追加した後は、編集や削除ができなくなります。近日開発予定です。'
+                    description='追加した後は、削除ができなくなります。'
                 />
                 <Input
                     autoComplete='off'
@@ -620,6 +621,7 @@ function AddNewEvent(props: AddNewEventProps) {
                 onOpenChange={onOpenChangeModal}
                 title='新しい催し物の追加'
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <Input
                     autoComplete='off'

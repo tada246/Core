@@ -62,6 +62,7 @@ export default function AddMapInfo(props: Props) {
                 isOpen={isOpen}
                 onOpenChange={onOpenChangeModal}
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <Input
                     autoComplete='off'

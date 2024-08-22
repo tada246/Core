@@ -216,6 +216,7 @@ function MessageAddModal() {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <Input
                     defaultValue=''
