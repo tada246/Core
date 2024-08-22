@@ -10,6 +10,7 @@ import processUserData from './processUserData';
 import ToastBar from './ToastBar';
 import RightChip from '../components/base/RightChip';
 import DynamicBar from '../components/base/DynamicBar';
+import TextHighlight from '../components/atom/TextHighlight';
 
 type Props = {
     children: ReactNode;
@@ -32,6 +33,7 @@ export default function Layout(props: Props) {
             <RightChip />
             <DynamicBar />
             <Toaster>{(t) => <ToastBar toast={t} />}</Toaster>
+            {loginState === 1 && <TextHighlight />}
             <div className='max-w-4xl mx-auto w-full md:pb-36 pb-12 px-6 pt-24 md:pt-12'>
                 <Content state={loginState}>{props.children}</Content>
             </div>
