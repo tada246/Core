@@ -54,7 +54,9 @@ export default function EditMapImage(props: CommonEditInfoProps) {
                     </Link>
                 }
                 icon={<IoMap size={20} />}
-                sideContent={<PreviewImageModal url={event.mapImageURL} />}
+                sideContent={
+                    <PreviewImageModal url={event.mapImageURL} iconSize={18} />
+                }
             />
             <EditorModal
                 title='マップ画像の変更'

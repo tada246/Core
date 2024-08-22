@@ -54,7 +54,9 @@ export default function EditImageURL(props: CommonEditInfoProps) {
                     </Link>
                 }
                 icon={<IoImage size={20} />}
-                sideContent={<PreviewImageModal url={event.imageURL} />}
+                sideContent={
+                    <PreviewImageModal url={event.imageURL} iconSize={18} />
+                }
             />
             <EditorModal
                 title='見出し画像URLの変更'
