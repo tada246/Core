@@ -15,6 +15,7 @@ import {
     Message,
     LinksPage,
     TeapotPage,
+    MarkDownPage,
 } from './pages';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
             <Route path='/map/:id/form' element={<FormPage />} />
             <Route path='/map/:id/place/:place_id' element={<PlacePage />} />
             <Route path='/user-management' element={<ManagePage />} />
+            <Route path='/markdown' element={<MarkDownPage />} />
             <Route path='/links' element={<LinksPage />} />
             <Route path='/418' element={<TeapotPage />} />
             <Route path='*' element={<NotFoundPage />} />
