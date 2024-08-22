@@ -71,7 +71,11 @@ export default function EditOverview(props: CommonEditInfoProps) {
                         />
                     </Tab>
                     <Tab key='preview' title='プレビュー'>
-                        <Markdown content={currentData ?? event.date} />
+                        {!currentData ? (
+                            <Markdown content={event.overview} />
+                        ) : (
+                            <Markdown content={currentData} />
+                        )}
                     </Tab>
                 </Tabs>
             </EditorModal>
