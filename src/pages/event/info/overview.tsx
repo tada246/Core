@@ -10,6 +10,7 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { IoInformation } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
+import PreviewMarkDownModal from '../../../components/ui/PrviewMarkDownModal';
 
 type EditOverviewForm = {
     overview: string;
@@ -46,6 +47,7 @@ export default function EditOverview(props: CommonEditInfoProps) {
                     <p className={COMMON_INFO_NAME_CLASS}>{event.overview}</p>
                 }
                 icon={<IoInformation size={20} />}
+                sideContent={<PreviewMarkDownModal content={event.overview} />}
             />
             <EditorModal
                 title='見出しの変更'
