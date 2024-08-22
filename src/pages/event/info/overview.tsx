@@ -29,8 +29,6 @@ export default function EditOverview(props: CommonEditInfoProps) {
         });
     };
 
-    console.log('event', event);
-
     const onSubmit = (data: EditOverviewForm) => {
         update(data.overview)
             .then(() => {
