@@ -27,6 +27,7 @@
         "react-hot-toast": "^2.4.1",
         "react-icons": "^4.11.0",
         "react-loader-spinner": "^6.1.6",
+        "react-markdown": "^9.0.1",
         "react-router-dom": "^6.17.0",
         "swr": "^2.2.4",
         "uuid": "^9.0.1",
