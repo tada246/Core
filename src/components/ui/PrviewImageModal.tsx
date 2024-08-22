@@ -14,6 +14,7 @@ import { IoArrowRedo, IoEye } from 'react-icons/io5';
 type Props = {
     url: string;
     size?: 'sm' | 'md' | 'lg';
+    iconSize?: number;
 };
 
 export default function PreviewImageModal(props: Props) {
@@ -27,7 +28,7 @@ export default function PreviewImageModal(props: Props) {
                 isIconOnly
                 variant='flat'
             >
-                <IoEye />
+                <IoEye size={props.iconSize ?? 16} />
             </Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
