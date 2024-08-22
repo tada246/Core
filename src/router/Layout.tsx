@@ -32,7 +32,7 @@ export default function Layout(props: Props) {
             <RightChip />
             <DynamicBar />
             <Toaster>{(t) => <ToastBar toast={t} />}</Toaster>
-            <div className='max-w-4xl mx-auto w-full pb-12 px-6 pt-24 md:pt-12'>
+            <div className='max-w-4xl mx-auto w-full md:pb-36 pb-12 px-6 pt-24 md:pt-12'>
                 <Content state={loginState}>{props.children}</Content>
             </div>
         </main>
