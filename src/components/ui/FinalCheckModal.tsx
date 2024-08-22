@@ -20,7 +20,7 @@ export default function FinalCheckModal(props: Props) {
 
     return (
         <>
-            <Button {...props} onPress={onOpen} />
+            <Button {...props} onPress={onOpen} onClick={onOpen} />
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
