@@ -267,6 +267,7 @@ function AddNewEvent(props: AddNewEventProps) {
                 onOpenChange={onOpenChange}
                 title='マップイベントを新規追加'
                 onSubmit={handleSubmit(onFormSubmit)}
+                isAdding
             >
                 <WarningCard
                     message='注意'

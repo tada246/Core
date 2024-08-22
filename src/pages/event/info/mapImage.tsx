@@ -10,6 +10,7 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { IoMap } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
+import PreviewImageModal from '../../../components/ui/PrviewImageModal';
 
 type EditMapImageForm = {
     mapImageURL: string;
@@ -53,6 +54,9 @@ export default function EditMapImage(props: CommonEditInfoProps) {
                     </Link>
                 }
                 icon={<IoMap size={20} />}
+                sideContent={
+                    <PreviewImageModal url={event.mapImageURL} iconSize={18} />
+                }
             />
             <EditorModal
                 title='マップ画像の変更'

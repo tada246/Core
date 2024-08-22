@@ -11,6 +11,7 @@ import {
     IoHelpOutline,
     IoHome,
     IoLink,
+    IoLogoMarkdown,
     IoMapOutline,
     IoPeople,
     IoPersonCircleSharp,
@@ -103,6 +104,11 @@ const sidebar_content: SidebarContent[] = [
         name: 'ヘルプ',
         icon: <IoHelpOutline />,
         link: '/help',
+    },
+    {
+        name: 'マークダウンガイド',
+        icon: <IoLogoMarkdown />,
+        link: '/markdown',
     },
     {
         name: '開発者用',

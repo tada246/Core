@@ -39,6 +39,7 @@ import Head from '../../components/ui/Head';
 import WarningCard from '../../components/ui/WarningCard';
 import getEventStatus from '../../features/getEventStatus';
 import FloorEditor from './floor/edit';
+import FinalCheckModal from '../../components/ui/FinalCheckModal';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -216,7 +217,27 @@ function EventList(props: EventListProps) {
                         alt=''
                         className='w-full aspect-[3/2] object-cover object-center'
                     />
-                    <div className='w-full h-full absolute top-0 left-0'>
+                    <div className='w-full h-full absolute top-0 left-0 z-10 flex justify-between'>
+                        <div className='w-[0.05rem] h-full bg-none' />
+                        {[...Array(9)].map((_, i) => (
+                            <div
+                                key={i}
+                                className='w-[0.05rem] h-full bg-default-200'
+                            />
+                        ))}
+                        <div className='w-[0.05rem] h-full bg-none' />
+                    </div>
+                    <div className='w-full h-full absolute top-0 left-0 z-10 flex flex-col justify-between'>
+                        <div className='w-full h-[0.05rem] bg-none' />
+                        {[...Array(9)].map((_, i) => (
+                            <div
+                                key={i}
+                                className='w-full h-[0.05rem] bg-default-200'
+                            />
+                        ))}
+                        <div className='w-full h-[0.05rem] bg-none' />
+                    </div>
+                    <div className='w-full h-full absolute top-0 left-0 z-20'>
                         {events.map(
                             (place) =>
                                 place.location && (
@@ -271,15 +292,16 @@ function EventList(props: EventListProps) {
                                         place: item.place,
                                     }}
                                 />
-                                <Button
+                                <FinalCheckModal
                                     className='w-8 h-8'
                                     size='sm'
                                     isIconOnly
                                     variant='flat'
                                     onClick={() => deleteEvent(item.id)}
+                                    message='本当に削除しますか？'
                                 >
                                     <IoTrash />
-                                </Button>
+                                </FinalCheckModal>
                             </OnlyEditors>
                         </div>
                         <div className='flex-1'>
@@ -464,10 +486,11 @@ function AddNewFloor(props: AddNewFloorProps) {
                 onOpenChange={onOpenChangeModal}
                 title='新しい階層の追加'
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <WarningCard
                     message='階層の追加の注意'
-                    description='追加した後は、編集や削除ができなくなります。近日開発予定です。'
+                    description='追加した後は、削除ができなくなります。'
                 />
                 <Input
                     autoComplete='off'
@@ -600,6 +623,7 @@ function AddNewEvent(props: AddNewEventProps) {
                 onOpenChange={onOpenChangeModal}
                 title='新しい催し物の追加'
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <Input
                     autoComplete='off'

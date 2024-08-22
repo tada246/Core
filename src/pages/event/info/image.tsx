@@ -10,6 +10,7 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { IoImage } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
+import PreviewImageModal from '../../../components/ui/PrviewImageModal';
 
 type EditImageURLForm = {
     imageURL: string;
@@ -53,6 +54,9 @@ export default function EditImageURL(props: CommonEditInfoProps) {
                     </Link>
                 }
                 icon={<IoImage size={20} />}
+                sideContent={
+                    <PreviewImageModal url={event.imageURL} iconSize={18} />
+                }
             />
             <EditorModal
                 title='見出し画像URLの変更'

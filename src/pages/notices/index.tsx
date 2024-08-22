@@ -38,7 +38,7 @@ import Head from '../../components/ui/Head';
 import OnlyEditors from '../../components/ui/OnlyEditors';
 import EditorModal from '../../components/ui/EditorModal';
 import toast from 'react-hot-toast';
-import NoticesAdvice from './advice';
+import FinalCheckModal from '../../components/ui/FinalCheckModal';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
@@ -68,7 +68,6 @@ export default function Message() {
                 subtitle='TANE Mapへのお知らせの投稿を行うことができます'
             />
             <div className='mt-10'>
-                <NoticesAdvice />
                 <div>
                     <OnlyEditors>
                         <MessageAddModal />
@@ -145,7 +144,8 @@ function NoticeCard(props: Notice) {
             <CardFooter>
                 <OnlyEditors>
                     <div className='flex gap-2'>
-                        <Button
+                        <FinalCheckModal
+                            message='本当にお知らせを削除しますか？'
                             size='sm'
                             variant='flat'
                             startContent={<IoTrash />}
@@ -154,7 +154,7 @@ function NoticeCard(props: Notice) {
                             }}
                         >
                             削除
-                        </Button>
+                        </FinalCheckModal>
                     </div>
                 </OnlyEditors>
             </CardFooter>
@@ -218,6 +218,7 @@ function MessageAddModal() {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 onSubmit={handleSubmit(onSubmit)}
+                isAdding
             >
                 <Input
                     defaultValue=''

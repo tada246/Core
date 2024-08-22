@@ -1,4 +1,4 @@
-import { Textarea, useDisclosure } from '@nextui-org/react';
+import { Tab, Tabs, Textarea, useDisclosure } from '@nextui-org/react';
 import {
     COMMON_INFO_NAME_CLASS,
     CommonEditInfoProps,
@@ -10,6 +10,8 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { IoInformation } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
+import PreviewMarkDownModal from '../../../components/ui/PreviewMarkDownModal';
+import Markdown from '../../../components/atom/Markdown';
 
 type EditOverviewForm = {
     overview: string;
@@ -18,7 +20,8 @@ type EditOverviewForm = {
 export default function EditOverview(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit } = useForm<EditOverviewForm>();
+    const { register, handleSubmit, watch } = useForm<EditOverviewForm>();
+    const currentData = watch('overview');
 
     const update = async (data: string) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -46,6 +49,7 @@ export default function EditOverview(props: CommonEditInfoProps) {
                     <p className={COMMON_INFO_NAME_CLASS}>{event.overview}</p>
                 }
                 icon={<IoInformation size={20} />}
+                sideContent={<PreviewMarkDownModal content={event.overview} />}
             />
             <EditorModal
                 title='見出しの変更'
@@ -53,13 +57,27 @@ export default function EditOverview(props: CommonEditInfoProps) {
                 onOpenChange={onOpenChange}
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <Textarea
-                    label='新しい見出し'
-                    defaultValue={event.overview}
-                    height='12rem'
-                    {...register('overview')}
-                    isRequired
-                />
+                <Tabs aria-label='Options'>
+                    <Tab key='edit' title='編集'>
+                        <Textarea
+                            label='新しい見出し'
+                            defaultValue={event.overview}
+                            height='12rem'
+                            {...register('overview')}
+                            isRequired
+                            classNames={{
+                                input: 'resize-y min-h-[2rem] max-h-[30rem]',
+                            }}
+                        />
+                    </Tab>
+                    <Tab key='preview' title='プレビュー'>
+                        {!currentData ? (
+                            <Markdown content={event.overview} />
+                        ) : (
+                            <Markdown content={currentData} />
+                        )}
+                    </Tab>
+                </Tabs>
             </EditorModal>
         </>
     );
