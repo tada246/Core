@@ -7,7 +7,7 @@ import {
     ModalHeader,
     useDisclosure,
 } from '@nextui-org/react';
-import { IoEye } from 'react-icons/io5';
+import { IoLogoMarkdown } from 'react-icons/io5';
 import ReactMarkdown from 'react-markdown';
 
 type Props = {
@@ -27,7 +27,7 @@ export default function PreviewMarkDownModal(props: Props) {
                 variant='flat'
                 size={props.size || 'sm'}
             >
-                <IoEye size={props.size ?? 16} />
+                <IoLogoMarkdown size={props.size ?? 16} />
             </Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
