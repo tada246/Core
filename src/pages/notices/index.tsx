@@ -38,7 +38,6 @@ import Head from '../../components/ui/Head';
 import OnlyEditors from '../../components/ui/OnlyEditors';
 import EditorModal from '../../components/ui/EditorModal';
 import toast from 'react-hot-toast';
-import NoticesAdvice from './advice';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
@@ -68,7 +67,6 @@ export default function Message() {
                 subtitle='TANE Mapへのお知らせの投稿を行うことができます'
             />
             <div className='mt-10'>
-                <NoticesAdvice />
                 <div>
                     <OnlyEditors>
                         <MessageAddModal />
