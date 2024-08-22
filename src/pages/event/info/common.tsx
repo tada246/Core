@@ -2,6 +2,7 @@ import { Button } from '@nextui-org/react';
 import { IoPencilSharp } from 'react-icons/io5';
 import { Event } from '../../../types/firebase';
 import OnlyEditors from '../../../components/ui/OnlyEditors';
+import { ReactNode } from 'react';
 
 export const COMMON_INFO_NAME_CLASS = 'text-md font-semibold line-clamp-3';
 
@@ -12,10 +13,9 @@ export type CommonEditInfoProps = {
 type CommonEditInfoModalProps = {
     name: string;
     onOpen: () => void;
-    value: React.ReactNode;
-    icon: React.ReactNode;
-    onOpen2?: () => void;
-    onOpenIcon2?: React.ReactNode;
+    value: ReactNode;
+    icon: ReactNode;
+    sideContent?: ReactNode;
 };
 
 export function CommonInformation(props: CommonEditInfoModalProps) {
@@ -38,16 +38,7 @@ export function CommonInformation(props: CommonEditInfoModalProps) {
                     >
                         <IoPencilSharp size={18} />
                     </Button>
-                    {props.onOpen2 && (
-                        <Button
-                            isIconOnly
-                            size='sm'
-                            variant='flat'
-                            onClick={props.onOpen2}
-                        >
-                            {props.onOpenIcon2}
-                        </Button>
-                    )}
+                    {props.sideContent && props.sideContent}
                 </div>
             </OnlyEditors>
         </div>
