@@ -108,7 +108,7 @@ const sidebar_content: SidebarContent[] = [
     {
         name: 'マークダウンガイド',
         icon: <IoLogoMarkdown />,
-        link: '/help',
+        link: '/markdown',
     },
     {
         name: '開発者用',
