@@ -39,6 +39,7 @@ import Head from '../../components/ui/Head';
 import WarningCard from '../../components/ui/WarningCard';
 import getEventStatus from '../../features/getEventStatus';
 import FloorEditor from './floor/edit';
+import FinalCheckModal from '../../components/ui/FinalCheckModal';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -291,15 +292,16 @@ function EventList(props: EventListProps) {
                                         place: item.place,
                                     }}
                                 />
-                                <Button
+                                <FinalCheckModal
                                     className='w-8 h-8'
                                     size='sm'
                                     isIconOnly
                                     variant='flat'
                                     onClick={() => deleteEvent(item.id)}
+                                    message='本当に削除しますか？'
                                 >
                                     <IoTrash />
-                                </Button>
+                                </FinalCheckModal>
                             </OnlyEditors>
                         </div>
                         <div className='flex-1'>

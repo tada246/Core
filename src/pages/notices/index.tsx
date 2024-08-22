@@ -38,6 +38,7 @@ import Head from '../../components/ui/Head';
 import OnlyEditors from '../../components/ui/OnlyEditors';
 import EditorModal from '../../components/ui/EditorModal';
 import toast from 'react-hot-toast';
+import FinalCheckModal from '../../components/ui/FinalCheckModal';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
@@ -143,7 +144,8 @@ function NoticeCard(props: Notice) {
             <CardFooter>
                 <OnlyEditors>
                     <div className='flex gap-2'>
-                        <Button
+                        <FinalCheckModal
+                            message='本当にお知らせを削除しますか？'
                             size='sm'
                             variant='flat'
                             startContent={<IoTrash />}
@@ -152,7 +154,7 @@ function NoticeCard(props: Notice) {
                             }}
                         >
                             削除
-                        </Button>
+                        </FinalCheckModal>
                     </div>
                 </OnlyEditors>
             </CardFooter>

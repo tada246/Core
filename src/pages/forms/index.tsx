@@ -26,6 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
 import EditorModal from '../../components/ui/EditorModal';
 import OnlyEditors from '../../components/ui/OnlyEditors';
 import Head from '../../components/ui/Head';
+import FinalCheckModal from '../../components/ui/FinalCheckModal';
 
 export default function Page() {
     const { id } = useParams<{ id: string }>();
@@ -314,13 +315,14 @@ function DeleteForm(props: DeleteFormProps) {
     }
 
     return (
-        <Button
+        <FinalCheckModal
             onPress={() => deleteForm()}
             isIconOnly
             size='sm'
             variant='flat'
+            message='このアンケートを削除しますか？'
         >
             <IoTrash size={16} />
-        </Button>
+        </FinalCheckModal>
     );
 }
