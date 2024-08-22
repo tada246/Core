@@ -1,5 +1,7 @@
 import {
     Button,
+    Image,
+    Link,
     Modal,
     ModalBody,
     ModalContent,
@@ -9,6 +11,7 @@ import {
 } from '@nextui-org/react';
 import { IoLogoMarkdown } from 'react-icons/io5';
 import ReactMarkdown from 'react-markdown';
+import Markdown from '../atom/Markdown';
 
 type Props = {
     content: string;
@@ -37,7 +40,7 @@ export default function PreviewMarkDownModal(props: Props) {
                                 マークダウンのプレビュー
                             </ModalHeader>
                             <ModalBody>
-                                <ReactMarkdown>{props.content}</ReactMarkdown>
+                                <Markdown content={props.content} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button
