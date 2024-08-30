@@ -22,6 +22,7 @@ type Props = {
     onSubmit?: (data: FormEvent<HTMLFormElement>) => void;
     children?: ReactNode;
     isAdding?: boolean;
+    footerSide?: ReactNode;
 };
 
 export default function EditorModal(props: Props) {
@@ -58,21 +59,24 @@ export default function EditorModal(props: Props) {
                                     {props.children}
                                 </div>
                             </ModalBody>
-                            <ModalFooter>
-                                <Button
-                                    color='danger'
-                                    variant='light'
-                                    onPress={onClose}
-                                >
-                                    キャンセル
-                                </Button>
-                                <Button
-                                    color='primary'
-                                    variant='shadow'
-                                    type='submit'
-                                >
-                                    {props.isAdding ? '追加' : '変更'}
-                                </Button>
+                            <ModalFooter className='justify-between'>
+                                {props.footerSide ?? <div></div>}
+                                <div className='flex gap-2'>
+                                    <Button
+                                        color='danger'
+                                        variant='light'
+                                        onPress={onClose}
+                                    >
+                                        キャンセル
+                                    </Button>
+                                    <Button
+                                        color='primary'
+                                        variant='shadow'
+                                        type='submit'
+                                    >
+                                        {props.isAdding ? '追加' : '変更'}
+                                    </Button>
+                                </div>
                             </ModalFooter>
                         </form>
                         {width >= 1300 && (
