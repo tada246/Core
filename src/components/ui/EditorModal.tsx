@@ -9,11 +9,12 @@ import {
 import { useAtom } from 'jotai';
 import { FormEvent, ReactNode, useState } from 'react';
 import { clipboardAtom } from '../../store/jotai';
-import { IoClose, IoCopy, IoImage } from 'react-icons/io5';
+import { IoClose, IoCopy, IoDuplicate, IoImage } from 'react-icons/io5';
 import { copyText } from '../../features/copy';
 import dayjs from 'dayjs';
 import useWindowSize from '../../hooks/useWindowSize';
 import { ImageList } from '../base/DynamicBar';
+import { Link } from 'react-router-dom';
 
 type Props = {
     isOpen: boolean;
@@ -157,7 +158,7 @@ function ImageOpenGuard() {
 
     if (!open) {
         return (
-            <div className='w-full h-full flex justify-center items-center'>
+            <div className='w-full h-full flex justify-center items-center flex-col gap-3'>
                 <Button
                     color='secondary'
                     variant='shadow'
@@ -165,6 +166,15 @@ function ImageOpenGuard() {
                     startContent={<IoImage />}
                 >
                     画像一覧を開く
+                </Button>
+                <Button
+                    color='secondary'
+                    variant='light'
+                    startContent={<IoDuplicate />}
+                    as={Link}
+                    to='/upload'
+                >
+                    アップロードする
                 </Button>
             </div>
         );
