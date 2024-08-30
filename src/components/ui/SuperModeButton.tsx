@@ -53,7 +53,7 @@ export default function SuperModeButton() {
                 fullWidth
                 size='sm'
                 className='bg-transparent text-white/0'
-                onClick={() => setIsRunning(true)}
+                onClick={() => setIsRunning((prev) => !prev)}
             >
                 SUPER MODE
             </Button>
