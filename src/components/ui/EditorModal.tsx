@@ -42,6 +42,7 @@ export default function EditorModal(props: Props) {
             size='md'
             classNames={{
                 body: 'max-h-[calc(100lvh-15rem)]',
+                wrapper: 'overflow-hidden',
             }}
         >
             <ModalContent>
