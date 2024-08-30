@@ -38,6 +38,10 @@ export default function EditorModal(props: Props) {
             onOpenChange={props.onOpenChange}
             backdrop='blur'
             scrollBehavior='inside'
+            size='md'
+            classNames={{
+                body: 'max-h-[calc(100lvh-15rem)]',
+            }}
         >
             <ModalContent>
                 {(onClose) => (
