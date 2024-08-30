@@ -120,6 +120,8 @@ function greet() {
 
 テーブルを作成するには、以下の記法を使用します。
 
+> 注意：テーブルは、GitHub Flavored Markdown（GFM）でのみサポートされています。
+
 例:
 \`\`\`markdown
 | 見出し1 | 見出し2 |
