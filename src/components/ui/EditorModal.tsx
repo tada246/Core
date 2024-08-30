@@ -82,15 +82,16 @@ export default function EditorModal(props: Props) {
                         </form>
                         {width >= 1300 && (
                             <div className='flex fixed right-0 z-50 top-1/2 -translate-y-1/2 px-6 py-2 w-80 bg-white flex-col gap-2 divide-y-1 rounded-l-large shadow-medium divide-default-400 h-[70%] overflow-auto'>
-                                <Button
-                                    fullWidth
-                                    color='danger'
-                                    variant='shadow'
-                                    onClick={() => setClipboard([])}
-                                    className='my-2'
-                                >
-                                    全て削除
-                                </Button>
+                                <div className='my-2 h-10'>
+                                    <Button
+                                        fullWidth
+                                        color='danger'
+                                        variant='shadow'
+                                        onClick={() => setClipboard([])}
+                                    >
+                                        全て削除
+                                    </Button>
+                                </div>
                                 {clipboard.length === 0 && (
                                     <div className='text-default-600 text-center py-12'>
                                         クリップボードは空です
