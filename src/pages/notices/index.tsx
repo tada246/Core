@@ -141,10 +141,8 @@ function NoticeCard(props: Notice) {
                     ))}
                 </div>
             </CardHeader>
-            <CardBody className='px-3 py-0 text-small flex flex-col gap-2'>
-                {props.content.split('\n').map((v, i) => (
-                    <p key={i}>{v}</p>
-                ))}
+            <CardBody className='px-3 py-0'>
+                <Markdown content={props.content} />
             </CardBody>
             <CardFooter>
                 <OnlyEditors>
