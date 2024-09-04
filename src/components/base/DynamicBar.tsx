@@ -17,6 +17,7 @@ import { authority } from '../../store/authority';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useAllImages from '../../hooks/useAllImages';
+import { userCanUploadImages } from '../../features/getAuthority';
 
 export default function DynamicBar() {
     const [clipboard, setClipboard] = useAtom(clipboardAtom);
@@ -40,10 +41,6 @@ export default function DynamicBar() {
         setClipboard((prev) => prev.filter((_, i) => i !== index));
     }
 
-    function canUploadImages(email: string) {
-        return email.endsWith('@toko.ed.jp');
-    }
-
     if (width < 1300) return;
 
     return (
@@ -52,23 +49,23 @@ export default function DynamicBar() {
                 <p className='text-tiny text-default-600'>権限</p>
                 <div className='flex items-center divide-x-1 divide-default-200 h-8'>
                     <Chip
-                        variant='flat'
-                        size='sm'
-                        className='px-2 rounded-r-none'
-                        color='secondary'
-                    >
-                        {canUploadImages(user.data.mail)
-                            ? 'アップ可能'
-                            : 'アップ不可'}
-                    </Chip>
-                    <Chip
                         color={userAuthority.color}
                         variant='flat'
                         size='sm'
                         startContent={userAuthority.icon}
-                        className='px-2 rounded-l-none'
+                        className='pl-2 rounded-r-none'
                     >
                         {userAuthority.name}
+                    </Chip>
+                    <Chip
+                        variant='flat'
+                        size='sm'
+                        className='pr-2 rounded-l-none'
+                        color='secondary'
+                    >
+                        {userCanUploadImages(user.data.mail)
+                            ? 'アップ可能'
+                            : 'アップ不可'}
                     </Chip>
                 </div>
             </div>
