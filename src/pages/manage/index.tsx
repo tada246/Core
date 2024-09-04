@@ -25,6 +25,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../features/firebase';
 import toast from 'react-hot-toast';
 import EditorModal from '../../components/ui/EditorModal';
+import { userCanUploadImages } from '../../features/getAuthority';
 
 export default function Page() {
     return (
@@ -106,38 +107,61 @@ function UserTable(props: UserTableProps) {
                             />
                         </TableCell>
                         <TableCell>
-                            <Tooltip
-                                content={
-                                    authority.filter(
-                                        (v) => v.id === user.authority
-                                    )[0].description
-                                }
-                            >
-                                <Chip
-                                    variant='flat'
-                                    startContent={
+                            <div className='flex gap-0 items-center'>
+                                <Tooltip
+                                    content={
                                         authority.filter(
                                             (v) => v.id === user.authority
-                                        )[0].icon
-                                    }
-                                    size='sm'
-                                    className='px-2 gap-1'
-                                    color={
-                                        authority.filter(
-                                            (v) => v.id === user.authority
-                                        )[0].color ?? 'default'
+                                        )[0].description
                                     }
                                 >
-                                    {authority.filter(
-                                        (v) => v.id === user.authority
-                                    )[0].name ?? '不明'}
-                                </Chip>
-                            </Tooltip>
+                                    <Chip
+                                        variant='flat'
+                                        startContent={
+                                            authority.filter(
+                                                (v) => v.id === user.authority
+                                            )[0].icon
+                                        }
+                                        size='sm'
+                                        className='pl-2 gap-1 rounded-r-none'
+                                        color={
+                                            authority.filter(
+                                                (v) => v.id === user.authority
+                                            )[0].color ?? 'default'
+                                        }
+                                    >
+                                        {authority.filter(
+                                            (v) => v.id === user.authority
+                                        )[0].name ?? '不明'}
+                                    </Chip>
+                                </Tooltip>
+                                <Tooltip
+                                    content={'画像のアップロードが可能かどうか'}
+                                >
+                                    <Chip
+                                        size='sm'
+                                        variant='flat'
+                                        color='secondary'
+                                        className='pr-2 rounded-l-none'
+                                    >
+                                        {userCanUploadImages(user.mail)
+                                            ? 'アップ可能'
+                                            : 'アップ不可'}
+                                    </Chip>
+                                </Tooltip>
+                            </div>
                         </TableCell>
                         <TableCell>
-                            {dayjs(user.timestamp.seconds * 1000).format(
-                                'YYYY/MM/DD'
-                            )}
+                            <p>
+                                {dayjs(user.timestamp.seconds * 1000).format(
+                                    'YYYY/MM/DD'
+                                )}
+                            </p>
+                            <p className='text-tiny text-default-600'>
+                                {dayjs(user.timestamp.seconds * 1000).format(
+                                    'HH:mm:ss'
+                                )}
+                            </p>
                         </TableCell>
                         <TableCell>
                             <EditUserAuthority
