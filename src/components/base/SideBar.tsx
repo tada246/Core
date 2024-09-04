@@ -3,6 +3,7 @@ import {
     IoApps,
     IoArrowBackOutline,
     IoArrowForwardOutline,
+    // IoDesktopOutline,
     IoDuplicate,
     IoFileTrayOutline,
     IoFolderOpen,
@@ -80,6 +81,11 @@ const sidebar_content: SidebarContent[] = [
         icon: <IoFileTrayOutline />,
         link: '/message',
     },
+    // {
+    //     name: '連絡拡大表示',
+    //     icon: <IoDesktopOutline />,
+    //     link: '/message-panel',
+    // },
     {
         name: 'border',
         icon: <div />,

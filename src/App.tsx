@@ -16,6 +16,7 @@ import {
     LinksPage,
     TeapotPage,
     MarkDownPage,
+    MessagePanelPage,
 } from './pages';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
             <Route path='/images' element={<ImagesPage />} />
             <Route path='/account' element={<AccountPage />} />
             <Route path='/message' element={<Message />} />
+            <Route path='/message-panel' element={<MessagePanelPage />} />
             <Route path='/map' element={<EventsPage />} />
             <Route path='/map/:id' element={<MapPage />} />
             <Route path='/map/:id/form' element={<FormPage />} />
