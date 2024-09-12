@@ -1,5 +1,5 @@
 import { Button } from '@nextui-org/react';
-import { IoPencilSharp, IoReceipt } from 'react-icons/io5';
+import { IoChevronForwardOutline, IoReceipt } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 type FormInfoProps = {
@@ -27,7 +27,7 @@ export default function FormInfo(props: FormInfoProps) {
                     as={Link}
                     to={`/map/${props.id}/form`}
                 >
-                    <IoPencilSharp size={18} />
+                    <IoChevronForwardOutline size={18} />
                 </Button>
             </div>
         </div>

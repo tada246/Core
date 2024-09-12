@@ -30,7 +30,16 @@ export default function PreviewMarkDownModal(props: Props) {
             >
                 <IoLogoMarkdown size={props.size ?? 16} />
             </Button>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                backdrop='blur'
+                scrollBehavior='inside'
+                size='md'
+                classNames={{
+                    body: 'max-h-[calc(100lvh-15rem)]',
+                }}
+            >
                 <ModalContent>
                     {(onClose) => (
                         <>

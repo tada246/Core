@@ -1,4 +1,4 @@
-import { Tab, Tabs, Textarea, useDisclosure } from '@nextui-org/react';
+import { Button, Tab, Tabs, Textarea, useDisclosure } from '@nextui-org/react';
 import {
     COMMON_INFO_NAME_CLASS,
     CommonEditInfoProps,
@@ -8,10 +8,11 @@ import { useForm } from 'react-hook-form';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
-import { IoInformation } from 'react-icons/io5';
+import { IoInformation, IoLogoMarkdown, IoReload } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
 import PreviewMarkDownModal from '../../../components/ui/PreviewMarkDownModal';
 import Markdown from '../../../components/atom/Markdown';
+import { Link } from 'react-router-dom';
 
 type EditOverviewForm = {
     overview: string;
@@ -20,7 +21,8 @@ type EditOverviewForm = {
 export default function EditOverview(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, watch } = useForm<EditOverviewForm>();
+    const { register, handleSubmit, watch, setValue } =
+        useForm<EditOverviewForm>();
     const currentData = watch('overview');
 
     const update = async (data: string) => {
@@ -40,6 +42,10 @@ export default function EditOverview(props: CommonEditInfoProps) {
             });
     };
 
+    function resetData() {
+        setValue('overview', event.overview);
+    }
+
     return (
         <>
             <CommonInformation
@@ -56,6 +62,27 @@ export default function EditOverview(props: CommonEditInfoProps) {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 onSubmit={handleSubmit(onSubmit)}
+                footerSide={
+                    <div className='flex gap-2'>
+                        <Button
+                            isIconOnly
+                            radius='full'
+                            variant='light'
+                            onClick={resetData}
+                        >
+                            <IoReload />
+                        </Button>
+                        <Button
+                            isIconOnly
+                            radius='full'
+                            variant='light'
+                            as={Link}
+                            to='/markdown'
+                        >
+                            <IoLogoMarkdown />
+                        </Button>
+                    </div>
+                }
             >
                 <Tabs aria-label='Options'>
                     <Tab key='edit' title='編集'>
@@ -63,11 +90,11 @@ export default function EditOverview(props: CommonEditInfoProps) {
                             label='新しい見出し'
                             defaultValue={event.overview}
                             height='12rem'
-                            {...register('overview')}
                             isRequired
                             classNames={{
                                 input: 'resize-y min-h-[2rem] max-h-[30rem]',
                             }}
+                            {...register('overview')}
                         />
                     </Tab>
                     <Tab key='preview' title='プレビュー'>

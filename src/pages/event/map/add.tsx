@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
 import OnlyEditors from '../../../components/ui/OnlyEditors';
+import WarningCard from '../../../components/ui/WarningCard';
 
 type Props = {
     eventId: string;
@@ -64,6 +65,10 @@ export default function AddMapInfo(props: Props) {
                 onSubmit={handleSubmit(onSubmit)}
                 isAdding
             >
+                <WarningCard
+                    message='作成時の注意'
+                    description='場所の追加を行うと削除ができません。'
+                />
                 <Input
                     autoComplete='off'
                     type='text'

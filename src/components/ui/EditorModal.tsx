@@ -9,11 +9,12 @@ import {
 import { useAtom } from 'jotai';
 import { FormEvent, ReactNode, useState } from 'react';
 import { clipboardAtom } from '../../store/jotai';
-import { IoClose, IoCopy, IoImage } from 'react-icons/io5';
+import { IoClose, IoCopy, IoDuplicate, IoImage } from 'react-icons/io5';
 import { copyText } from '../../features/copy';
 import dayjs from 'dayjs';
 import useWindowSize from '../../hooks/useWindowSize';
 import { ImageList } from '../base/DynamicBar';
+import { Link } from 'react-router-dom';
 
 type Props = {
     isOpen: boolean;
@@ -22,6 +23,7 @@ type Props = {
     onSubmit?: (data: FormEvent<HTMLFormElement>) => void;
     children?: ReactNode;
     isAdding?: boolean;
+    footerSide?: ReactNode;
 };
 
 export default function EditorModal(props: Props) {
@@ -38,6 +40,11 @@ export default function EditorModal(props: Props) {
             onOpenChange={props.onOpenChange}
             backdrop='blur'
             scrollBehavior='inside'
+            size='md'
+            classNames={{
+                body: 'max-h-[calc(100lvh-15rem)]',
+                wrapper: 'overflow-hidden',
+            }}
         >
             <ModalContent>
                 {(onClose) => (
@@ -54,34 +61,38 @@ export default function EditorModal(props: Props) {
                                     {props.children}
                                 </div>
                             </ModalBody>
-                            <ModalFooter>
-                                <Button
-                                    color='danger'
-                                    variant='light'
-                                    onPress={onClose}
-                                >
-                                    キャンセル
-                                </Button>
-                                <Button
-                                    color='primary'
-                                    variant='shadow'
-                                    type='submit'
-                                >
-                                    {props.isAdding ? '追加' : '変更'}
-                                </Button>
+                            <ModalFooter className='justify-between'>
+                                {props.footerSide ?? <div></div>}
+                                <div className='flex gap-2'>
+                                    <Button
+                                        color='danger'
+                                        variant='light'
+                                        onPress={onClose}
+                                    >
+                                        キャンセル
+                                    </Button>
+                                    <Button
+                                        color='primary'
+                                        variant='shadow'
+                                        type='submit'
+                                    >
+                                        {props.isAdding ? '追加' : '変更'}
+                                    </Button>
+                                </div>
                             </ModalFooter>
                         </form>
                         {width >= 1300 && (
                             <div className='flex fixed right-0 z-50 top-1/2 -translate-y-1/2 px-6 py-2 w-80 bg-white flex-col gap-2 divide-y-1 rounded-l-large shadow-medium divide-default-400 h-[70%] overflow-auto'>
-                                <Button
-                                    fullWidth
-                                    color='danger'
-                                    variant='shadow'
-                                    onClick={() => setClipboard([])}
-                                    className='my-2'
-                                >
-                                    全て削除
-                                </Button>
+                                <div className='my-2 h-10'>
+                                    <Button
+                                        fullWidth
+                                        color='danger'
+                                        variant='shadow'
+                                        onClick={() => setClipboard([])}
+                                    >
+                                        全て削除
+                                    </Button>
+                                </div>
                                 {clipboard.length === 0 && (
                                     <div className='text-default-600 text-center py-12'>
                                         クリップボードは空です
@@ -147,7 +158,7 @@ function ImageOpenGuard() {
 
     if (!open) {
         return (
-            <div className='w-full h-full flex justify-center items-center'>
+            <div className='w-full h-full flex justify-center items-center flex-col gap-3'>
                 <Button
                     color='secondary'
                     variant='shadow'
@@ -155,6 +166,15 @@ function ImageOpenGuard() {
                     startContent={<IoImage />}
                 >
                     画像一覧を開く
+                </Button>
+                <Button
+                    color='secondary'
+                    variant='light'
+                    startContent={<IoDuplicate />}
+                    as={Link}
+                    to='/upload'
+                >
+                    アップロードする
                 </Button>
             </div>
         );

@@ -3,11 +3,13 @@ import { Place } from '../../../types/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
-import { Button, Image, Tooltip } from '@nextui-org/react';
+import { Button, Image, Tab, Tabs, Tooltip } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import { IoChevronForward, IoTrash } from 'react-icons/io5';
+import { IoChevronForward, IoEye, IoPencil, IoTrash } from 'react-icons/io5';
 import EditMapInfo from './edit';
 import AddMapInfo from './add';
+import EditorMap from './editorMap';
+import PreviewMap from './previewMap';
 
 type Props = {
     id: string;
@@ -40,44 +42,33 @@ export default function MapInfo(props: Props) {
 
     return (
         <div className='bg-content1 shadow-small p-6 rounded-large mt-10 overflow-hidden'>
-            <div className='p-4 bg-white rounded-large border-1 border-default-200'>
-                <div className='w-full overflow-hidden relative'>
-                    <img src={props.mapImageURL} alt='' className='w-full' />
-                    <div className='w-full h-full absolute top-0 left-0 z-10 flex justify-between'>
-                        <div className='w-[0.05rem] h-full bg-none' />
-                        {[...Array(9)].map((_, i) => (
-                            <div
-                                key={i}
-                                className='w-[0.05rem] h-full bg-default-200'
-                            />
-                        ))}
-                        <div className='w-[0.05rem] h-full bg-none' />
-                    </div>
-                    <div className='w-full h-full absolute top-0 left-0 z-10 flex flex-col justify-between'>
-                        <div className='w-full h-[0.05rem] bg-none' />
-                        {[...Array(9)].map((_, i) => (
-                            <div
-                                key={i}
-                                className='w-full h-[0.05rem] bg-default-200'
-                            />
-                        ))}
-                        <div className='w-full h-[0.05rem] bg-none' />
-                    </div>
-                    <div className='w-full h-full absolute top-0 left-0 z-20'>
-                        {places.map((place) => (
-                            <Tooltip content={place.name} key={place.id}>
-                                <button
-                                    className='w-2 h-2 absolute bg-primary rounded-full -translate-x-1/2 -translate-y-1/2'
-                                    style={{
-                                        left: `${place.location.x}%`,
-                                        top: `${place.location.y}%`,
-                                    }}
-                                />
-                            </Tooltip>
-                        ))}
-                    </div>
-                </div>
-            </div>
+            <Tabs aria-label='マップ'>
+                <Tab
+                    key='editor'
+                    title={
+                        <div className='flex items-center gap-1'>
+                            <IoPencil />
+                            <p>エディター</p>
+                        </div>
+                    }
+                >
+                    <EditorMap
+                        mapImageURL={props.mapImageURL}
+                        places={places}
+                    />
+                </Tab>
+                <Tab
+                    key='preview'
+                    title={
+                        <div className='flex items-center gap-1'>
+                            <IoEye />
+                            <p>プレビュー</p>
+                        </div>
+                    }
+                >
+                    <PreviewMap imageURL={props.mapImageURL} places={places} />
+                </Tab>
+            </Tabs>
             <div className='mt-4 flex gap-4 flex-col'>
                 {places.map((place) => (
                     <div

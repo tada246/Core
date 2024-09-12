@@ -25,6 +25,10 @@ export default function Layout(props: Props) {
         onAuthStateChanged(auth, (_user) => {
             processUserData(_user, setLoginState, setUser);
         });
+
+        window.addEventListener('beforeunload', function (event) {
+            event.preventDefault();
+        });
     }, []);
 
     return (

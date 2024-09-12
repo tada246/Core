@@ -8,12 +8,15 @@ import {
     Input,
     Select,
     SelectItem,
+    Tab,
+    Tabs,
     Textarea,
     useDisclosure,
 } from '@nextui-org/react';
 import {
     IoAddCircleOutline,
     IoFileTrayOutline,
+    IoLogoMarkdown,
     IoTrash,
 } from 'react-icons/io5';
 import { message_type, writer } from '../../store/notice';
@@ -39,6 +42,8 @@ import OnlyEditors from '../../components/ui/OnlyEditors';
 import EditorModal from '../../components/ui/EditorModal';
 import toast from 'react-hot-toast';
 import FinalCheckModal from '../../components/ui/FinalCheckModal';
+import { Link } from 'react-router-dom';
+import Markdown from '../../components/atom/Markdown';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
@@ -136,10 +141,8 @@ function NoticeCard(props: Notice) {
                     ))}
                 </div>
             </CardHeader>
-            <CardBody className='px-3 py-0 text-small flex flex-col gap-2'>
-                {props.content.split('\n').map((v, i) => (
-                    <p key={i}>{v}</p>
-                ))}
+            <CardBody className='px-3 py-0'>
+                <Markdown content={props.content} />
             </CardBody>
             <CardFooter>
                 <OnlyEditors>
@@ -171,8 +174,9 @@ type MessageForm = {
 
 function MessageAddModal() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, reset } = useForm<MessageForm>();
+    const { register, handleSubmit, reset, watch } = useForm<MessageForm>();
     const [error, setError] = useState<string | null>(null);
+    const currentContentData = watch('content');
 
     async function createNewNotice(data: MessageForm) {
         const id = uuidv4();
@@ -219,6 +223,19 @@ function MessageAddModal() {
                 onOpenChange={onOpenChange}
                 onSubmit={handleSubmit(onSubmit)}
                 isAdding
+                footerSide={
+                    <div className='flex gap-2'>
+                        <Button
+                            isIconOnly
+                            radius='full'
+                            variant='light'
+                            as={Link}
+                            to='/markdown'
+                        >
+                            <IoLogoMarkdown />
+                        </Button>
+                    </div>
+                }
             >
                 <Input
                     defaultValue=''
@@ -269,14 +286,39 @@ function MessageAddModal() {
                         </SelectItem>
                     ))}
                 </Select>
-                <Textarea
-                    label='内容'
-                    isRequired
-                    defaultValue=''
-                    id='content'
-                    placeholder='お知らせの内容を入力'
-                    {...register('content')}
-                />
+                <div>
+                    <Tabs
+                        aria-label='Options'
+                        classNames={{
+                            panel: 'pt-2',
+                        }}
+                    >
+                        <Tab key='edit' title='編集'>
+                            <Textarea
+                                label='内容'
+                                isRequired
+                                defaultValue=''
+                                id='content'
+                                placeholder='お知らせの内容を入力'
+                                classNames={{
+                                    input: 'resize-y min-h-[2rem] max-h-[30rem]',
+                                }}
+                                {...register('content')}
+                            />
+                        </Tab>
+                        <Tab key='preview' title='プレビュー'>
+                            <div className=''>
+                                {!currentContentData ? (
+                                    <p className='mt-5 text-default-600 text-center text-sm'>
+                                        プレビューがありません
+                                    </p>
+                                ) : (
+                                    <Markdown content={currentContentData} />
+                                )}
+                            </div>
+                        </Tab>
+                    </Tabs>
+                </div>
                 {error && (
                     <p className='text-red-500 text-tiny opacity-80'>{error}</p>
                 )}
