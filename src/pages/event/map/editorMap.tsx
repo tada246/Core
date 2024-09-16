@@ -1,4 +1,4 @@
-import { Tooltip } from '@nextui-org/react';
+import { Chip, Tooltip } from '@nextui-org/react';
 import { Place } from '../../../types/firebase';
 
 type Props = {
@@ -33,7 +33,22 @@ export default function EditorMap(props: Props) {
                 </div>
                 <div className='w-full h-full absolute top-0 left-0 z-20'>
                     {props.places.map((place) => (
-                        <Tooltip content={place.name} key={place.id}>
+                        <Tooltip
+                            content={
+                                <div className='p-2'>
+                                    <p className='font-medium'>{place.name}</p>
+                                    <div className='flex gap-2 mt-1'>
+                                        <Chip size='sm' variant='flat'>
+                                            X: {place.location.x}
+                                        </Chip>
+                                        <Chip size='sm' variant='flat'>
+                                            Y: {place.location.y}
+                                        </Chip>
+                                    </div>
+                                </div>
+                            }
+                            key={place.id}
+                        >
                             <button
                                 className='w-2 h-2 absolute bg-primary rounded-full -translate-x-1/2 -translate-y-1/2'
                                 style={{
