@@ -23,7 +23,7 @@ export default function FloorMapPreview({ floor }: { floor: DataType }) {
     return (
         <div className='outline outline-1 outline-black/10 rounded-medium bg-white relative w-full flex items-center overflow-hidden'>
             <TransformWrapper initialScale={0.8} centerOnInit>
-                {(utils) => (
+                {() => (
                     <TransformComponent>
                         <div className='w-full aspect-[3/2] flex justify-center items-center'>
                             <div className='relative w-[720px] h-[480px]'>

@@ -20,7 +20,6 @@ import {
     Image,
     Input,
     Textarea,
-    Tooltip,
     useDisclosure,
 } from '@nextui-org/react';
 import dayjs from 'dayjs';
