@@ -1,11 +1,11 @@
-import { IoFolderOpen } from 'react-icons/io5';
+import { IoChevronDownOutline, IoFolderOpen } from 'react-icons/io5';
 import useAllImages from '../../hooks/useAllImages';
-import { Spinner } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import Head from '../../components/ui/Head';
 import ImageCard from './card';
 
 export default function Page() {
-    const { data, isLoading, error } = useAllImages();
+    const { data, isLoading, error, isLast, loadMoreImages } = useAllImages();
 
     return (
         <div>
@@ -26,6 +26,22 @@ export default function Page() {
                         {data.map((image) => (
                             <ImageCard image={image} key={image.id} />
                         ))}
+                    </div>
+                )}
+                {data && (
+                    <div className='flex justify-center gap-2 mt-10'>
+                        <Button
+                            color='primary'
+                            variant='shadow'
+                            onClick={() => {
+                                loadMoreImages();
+                            }}
+                            isDisabled={isLast}
+                            startContent={<IoChevronDownOutline />}
+                            fullWidth
+                        >
+                            もっと読み込む
+                        </Button>
                     </div>
                 )}
             </div>
