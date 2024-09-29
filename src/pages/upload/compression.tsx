@@ -1,7 +1,12 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import imageCompression, { Options } from 'browser-image-compression';
-import { IoDocumentsOutline, IoDownloadOutline, IoLeaf } from 'react-icons/io5';
+import {
+    IoCloudUploadOutline,
+    IoDocumentsOutline,
+    IoDownloadOutline,
+    IoLeaf,
+} from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { Button, Card, CardBody, CardFooter, Tooltip } from '@nextui-org/react';
 import ImageExpansion from '../../components/ui/ImaegExpansion';
@@ -21,7 +26,12 @@ const handleDownload = (url: string, name: string) => {
     document.body.removeChild(link);
 };
 
-export default function ImageCompressor() {
+type Props = {
+    imageUpload: (file: File) => void;
+    isAllow: Boolean;
+};
+
+export default function ImageCompressor(props: Props) {
     const [compressedImage, setCompressedImage] = useState<CompressorImage[]>(
         []
     );
@@ -71,6 +81,21 @@ export default function ImageCompressor() {
         });
     }
 
+    async function handleImageUpload(url: string) {
+        const tar = compressedImage.find((item) => item.url === url);
+
+        if (!tar) {
+            return;
+        }
+
+        const blob = await fetch(tar.url).then((res) => res.blob());
+        const file = new File([blob], tar.name, {
+            type: 'image/png',
+        });
+        props.imageUpload(file);
+        setCompressedImage((prev) => prev.filter((item) => item.url !== url));
+    }
+
     return (
         <div>
             <div
@@ -103,7 +128,12 @@ export default function ImageCompressor() {
             {compressedImage.length > 0 && (
                 <div className='gap-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 mt-10'>
                     {compressedImage.map((item, index) => (
-                        <ImageCard key={index} item={item} />
+                        <ImageCard
+                            key={index}
+                            item={item}
+                            handleImageUpload={handleImageUpload}
+                            isAllow={props.isAllow}
+                        />
                     ))}
                 </div>
             )}
@@ -111,7 +141,11 @@ export default function ImageCompressor() {
     );
 }
 
-function ImageCard(props: { item: CompressorImage }) {
+function ImageCard(props: {
+    item: CompressorImage;
+    handleImageUpload: (url: string) => void;
+    isAllow: Boolean;
+}) {
     return (
         <Card shadow='sm' radius='lg'>
             <CardBody className='overflow-visible p-0 w-full'>
@@ -134,7 +168,7 @@ function ImageCard(props: { item: CompressorImage }) {
                 <p className='text-tiny opacity-90 line-clamp-1'>
                     {props.item.name}
                 </p>
-                <div className='flex gap-2'>
+                <div className='flex gap-1'>
                     <Tooltip content='圧縮後のサイズ'>
                         <Button
                             isIconOnly
@@ -145,6 +179,19 @@ function ImageCard(props: { item: CompressorImage }) {
                             {props.item.size.toFixed(0)}KB
                         </Button>
                     </Tooltip>
+                    {props.isAllow && (
+                        <Tooltip content='そのままアップロード'>
+                            <Button
+                                isIconOnly
+                                variant='light'
+                                onClick={() =>
+                                    props.handleImageUpload(props.item.url)
+                                }
+                            >
+                                <IoCloudUploadOutline />
+                            </Button>
+                        </Tooltip>
+                    )}
                     <Tooltip content='ダウンロードする'>
                         <Button
                             isIconOnly

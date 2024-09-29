@@ -157,7 +157,7 @@ export default function Page() {
                 subtitle='アップロードできるぎりぎりのサイズに圧縮を行うことができます。'
                 className='mt-10'
             >
-                <ImageCompressor />
+                <ImageCompressor imageUpload={imageUpload} isAllow={isAllow} />
             </SubHead>
             <SubHead
                 title='アップロードの制限'
