@@ -12,6 +12,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { Image as ImageType } from '../../types/firebase';
 import { clipboardAtom } from '../../store/jotai';
 import { useAtom } from 'jotai';
+import ImageExpansion from '../../components/ui/ImaegExpansion';
 
 type Props = {
     image: ImageType;
@@ -34,7 +35,7 @@ export default function ImageCard(props: Props) {
     return (
         <Card shadow='sm' radius='lg'>
             <CardBody className='overflow-visible p-0 w-full'>
-                <Image
+                <ImageExpansion
                     shadow='sm'
                     radius='lg'
                     width={300}
