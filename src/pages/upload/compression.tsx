@@ -10,20 +10,12 @@ import {
 import toast from 'react-hot-toast';
 import { Button, Card, CardBody, CardFooter, Tooltip } from '@nextui-org/react';
 import ImageExpansion from '../../components/ui/ImaegExpansion';
+import { handleDownload } from '../../features/download';
 
 type CompressorImage = {
     name: string;
     url: string;
     size: number;
-};
-
-const handleDownload = (url: string, name: string) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `圧縮-${name}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
 };
 
 type Props = {
@@ -80,7 +72,7 @@ export default function ImageCompressor(props: Props) {
 
     function handleDownloadAll() {
         compressedImage.forEach((item) => {
-            handleDownload(item.url, item.name);
+            handleDownload(item.url, `圧縮-${item.name}`);
         });
     }
 
@@ -200,7 +192,10 @@ function ImageCard(props: {
                             isIconOnly
                             variant='light'
                             onClick={() =>
-                                handleDownload(props.item.url, props.item.name)
+                                handleDownload(
+                                    props.item.url,
+                                    `圧縮-${props.item.name}`
+                                )
                             }
                         >
                             <IoDownloadOutline size={16} />
