@@ -131,7 +131,9 @@ function ImageCard(props: { item: CompressorImage }) {
                 />
             </CardBody>
             <CardFooter className='flex justify-between py-1'>
-                <p className='text-tiny opacity-90'>{props.item.name}</p>
+                <p className='text-tiny opacity-90 line-clamp-1'>
+                    {props.item.name}
+                </p>
                 <div className='flex gap-2'>
                     <Tooltip content='圧縮後のサイズ'>
                         <Button
