@@ -1,0 +1,62 @@
+import { useParams } from 'react-router-dom';
+import useEventList from '../../hooks/useEventList';
+import { Chip, Image } from '@nextui-org/react';
+import getEventStatus from '../../features/getEventStatus';
+import dayjs from 'dayjs';
+
+type Props = {
+    className?: string;
+    smallText: string;
+};
+
+export default function SmallEventInfo(props: Props) {
+    const { data } = useEventList();
+    const { id: eventId } = useParams<{ id: string | undefined }>();
+
+    if (!data || !eventId)
+        return <NotEventDataEventInfo smallText={props.smallText} />;
+
+    const event = data.find((event) => event.id === eventId);
+
+    if (!event) return <NotEventDataEventInfo smallText={props.smallText} />;
+
+    const startDate = dayjs(new Date(event.date.start.seconds * 1000));
+
+    return (
+        <div className='flex gap-6 items-center h-24'>
+            <div className='flex-1'>
+                <p className='text-3xl font-bold'>{props.smallText}</p>
+                <p>{event.name}</p>
+                <div className='flex gap-2 mt-2 w-full overflow-x-auto'>
+                    <Chip color='primary' variant='flat' size='sm'>
+                        {event.isPublic ? '公開' : '非公開'}
+                    </Chip>
+                    <Chip color='primary' variant='flat' size='sm'>
+                        {getEventStatus({
+                            start: new Date(event.date.start.seconds * 1000),
+                            end: new Date(event.date.end.seconds * 1000),
+                        })}
+                    </Chip>
+                    <Chip color='default' variant='flat' size='sm'>
+                        {startDate.format('YYYY年 MM月 DD日')}
+                    </Chip>
+                </div>
+            </div>
+            <Image
+                className='w-24 h-24 object-cover object-center'
+                radius='full'
+                src={event.imageURL}
+                isBlurred
+            />
+        </div>
+    );
+}
+
+function NotEventDataEventInfo({ smallText }: { smallText: string }) {
+    return (
+        <div className='h-24 flex items-center'>
+            <p className='text-3xl font-bold'>{smallText}</p>
+            <p>イベントデータが読み込まれませんでした。</p>
+        </div>
+    );
+}
