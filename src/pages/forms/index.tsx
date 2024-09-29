@@ -171,6 +171,7 @@ function AddNewForm(props: FormEditProps) {
                 onOpenChange={onOpenChange}
                 title='アンケートを新規追加'
                 onSubmit={handleSubmit(onFormSubmit)}
+                isAdding
             >
                 <Input
                     label='名前'
