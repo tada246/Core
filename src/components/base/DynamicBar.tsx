@@ -161,43 +161,57 @@ export default function DynamicBar() {
 }
 
 export function ImageList() {
-    const { data, isLoading, error } = useAllImages();
+    const { data, isLoading, error, loadMoreImages, isLast } = useAllImages();
 
     if (error) return <p>エラーが発生しました</p>;
     if (isLoading) return <Spinner label='読み込み中' />;
 
     return (
-        <div className='grid grid-cols-2 gap-6 overflow-y-auto'>
-            {data?.map((image) => (
-                <div
-                    key={image.id}
-                    className='flex items-center gap-2 w-full justify-center'
-                >
-                    <div className='relative'>
-                        <img
-                            src={image.url}
-                            width={100}
-                            height={100}
-                            alt={'画像'}
-                            style={{
-                                width: '7rem',
-                                height: '7rem',
-                            }}
-                            className='object-cover w-28 h-28 rounded-medium'
-                        />
-                        <Button
-                            className='absolute bottom-2 right-2 bg-white/40 backdrop-blur-md rounded-full'
-                            isIconOnly
-                            size='sm'
-                            variant='flat'
-                            color='default'
-                            onClick={() => copyText(image.url)}
-                        >
-                            <IoCopy className='text-default-800' />
-                        </Button>
+        <div className='overflow-y-auto'>
+            <div className='grid grid-cols-2 gap-6'>
+                {data?.map((image) => (
+                    <div
+                        key={image.id}
+                        className='flex items-center gap-2 w-full justify-center'
+                    >
+                        <div className='relative'>
+                            <img
+                                src={image.url}
+                                width={100}
+                                height={100}
+                                alt={'画像'}
+                                style={{
+                                    width: '7rem',
+                                    height: '7rem',
+                                }}
+                                className='object-cover w-28 h-28 rounded-medium'
+                            />
+                            <Button
+                                className='absolute bottom-2 right-2 bg-white/40 backdrop-blur-md rounded-full'
+                                isIconOnly
+                                size='sm'
+                                variant='flat'
+                                color='default'
+                                onClick={() => copyText(image.url)}
+                            >
+                                <IoCopy className='text-default-800' />
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
+            {!isLast && (
+                <Button
+                    fullWidth
+                    variant='flat'
+                    color='primary'
+                    onClick={() => loadMoreImages()}
+                    className='mt-6'
+                    size='md'
+                >
+                    もっと読み込む
+                </Button>
+            )}
         </div>
     );
 }
