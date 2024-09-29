@@ -5,8 +5,11 @@ export default function ImageExpansion(props: ImageProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
-        <>
-            <button className='cursor-zoom-in' onClick={() => setIsOpen(true)}>
+        <div className='overflow-visible'>
+            <button
+                className='cursor-zoom-in overflow-visible'
+                onClick={() => setIsOpen(true)}
+            >
                 <Image {...props} isZoomed={false} />
             </button>
             {isOpen && (
@@ -17,6 +20,6 @@ export default function ImageExpansion(props: ImageProps) {
                     <img src={props.src} alt={props.alt} />
                 </div>
             )}
-        </>
+        </div>
     );
 }
