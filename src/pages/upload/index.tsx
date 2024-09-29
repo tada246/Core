@@ -125,6 +125,7 @@ export default function Page() {
         accept: {
             'image/png': ['.png', '.jpg', '.jpeg', '.webp', '.svg'],
         },
+        noClick: false,
     });
 
     const dropAreaBackground = !isAllow
@@ -148,7 +149,7 @@ export default function Page() {
                 <div>
                     <div
                         {...getRootProps()}
-                        className={`mt-4 py-8 rounded-xl ${dropAreaBackground}`}
+                        className={`mt-4 py-8 rounded-xl ${dropAreaBackground} duration-200`}
                     >
                         {!isAllow && (
                             <IoCloudOfflineOutline
