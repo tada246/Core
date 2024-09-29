@@ -33,13 +33,13 @@ import {
 import { useForm } from 'react-hook-form';
 import EditorModal from '../../components/ui/EditorModal';
 import OnlyEditors from '../../components/ui/OnlyEditors';
-import Head from '../../components/ui/Head';
 import WarningCard from '../../components/ui/WarningCard';
 import getEventStatus from '../../features/getEventStatus';
 import FloorEditor from './floor/edit';
 import FinalCheckModal from '../../components/ui/FinalCheckModal';
 import FloorMap from './floor/map';
 import ImageExpansion from '../../components/ui/ImaegExpansion';
+import SmallEventInfo from '../../components/ui/SmallEventInfo';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -86,11 +86,11 @@ export default function Page() {
 
     return (
         <div>
-            <Head
-                title={'催し物と階層の編集'}
-                subtitle={`${params.id} - ${params.place_id} の催し物と階層を編集します。`}
+            <SmallEventInfo
+                smallText='催し物と階層の編集'
+                tags={[`ID: ${params.place_id}`]}
             />
-            <div className='flex flex-col gap-8 mt-6'>
+            <div className='flex flex-col gap-8 mt-8'>
                 {place.map((item) => (
                     <div
                         key={item.id}
