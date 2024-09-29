@@ -44,8 +44,8 @@ export default function DynamicBar() {
     if (width < 1300) return;
 
     return (
-        <div className='fixed flex bottom-0 right-[calc((100%-15rem)/2)] translate-x-1/2 z-50 gap-2 rounded-t-large bg-white/40 backdrop-blur-md shadow-medium p-4 divide-x-1 items-center'>
-            <div className='flex flex-col gap-2'>
+        <div className='fixed flex bottom-0 right-[calc((100%-15rem)/2)] translate-x-1/2 z-50 gap-2 rounded-t-large bg-white/40 backdrop-blur-md shadow-medium px-4 py-3 divide-x-1 items-center'>
+            <div className='flex flex-col gap-1'>
                 <p className='text-tiny text-default-600'>権限</p>
                 <div className='flex items-center divide-x-1 divide-default-200 h-8'>
                     <Chip
@@ -69,7 +69,7 @@ export default function DynamicBar() {
                     </Chip>
                 </div>
             </div>
-            <div className='flex flex-col gap-2 px-4'>
+            <div className='flex flex-col gap-1 px-4'>
                 <p className='text-tiny text-default-600'>コピー</p>
                 <div className='flex items-center gap-4 h-8'>
                     <p className='text-tiny'>{clipboard.length}件</p>
@@ -130,13 +130,13 @@ export default function DynamicBar() {
                     </Popover>
                 </div>
             </div>
-            <div className='flex flex-col gap-2 px-4 pr-8'>
+            <div className='flex flex-col gap-1 px-4 pr-8'>
                 <p className='text-tiny text-default-600'>リンク</p>
                 <div className='h-8 flex items-center'>
                     <p className='text-tiny'>{history.length}件</p>
                 </div>
             </div>
-            <div className='flex flex-col gap-2 px-4'>
+            <div className='flex flex-col gap-1 px-4'>
                 <p className='text-tiny text-default-600'>画像</p>
                 <div className='h-8 flex items-center'>
                     <Popover placement='top' showArrow offset={12}>
