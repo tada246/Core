@@ -25,8 +25,8 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import EditorModal from '../../components/ui/EditorModal';
 import OnlyEditors from '../../components/ui/OnlyEditors';
-import Head from '../../components/ui/Head';
 import FinalCheckModal from '../../components/ui/FinalCheckModal';
+import SmallEventInfo from '../../components/ui/SmallEventInfo';
 
 export default function Page() {
     const { id } = useParams<{ id: string }>();
@@ -60,11 +60,11 @@ export default function Page() {
 
     return (
         <div>
-            <Head
-                title={'アンケートの編集'}
-                subtitle={`${id} のアンケートを編集します。`}
+            <SmallEventInfo
+                smallText='アンケートの編集'
+                tags={[`アンケート数: ${forms.length}`]}
             />
-            <div className='flex flex-col gap-8 mt-6'>
+            <div className='flex flex-col gap-8 mt-8'>
                 {forms.map((form) => (
                     <div
                         key={form.id}
