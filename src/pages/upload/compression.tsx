@@ -66,6 +66,9 @@ export default function ImageCompressor(props: Props) {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
+        accept: {
+            'image/png': ['.png', '.jpg', '.jpeg', '.webp', '.svg'],
+        },
     });
 
     const dropAreaBackground = isDragActive
