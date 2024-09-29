@@ -3,7 +3,7 @@ import { Place } from '../../../types/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
-import { Button, Tab, Tabs, Tooltip } from '@nextui-org/react';
+import { Button, Chip, Tab, Tabs, Tooltip } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import { IoChevronForward, IoEye, IoPencil, IoTrash } from 'react-icons/io5';
 import EditMapInfo from './edit';
@@ -92,9 +92,15 @@ export default function MapInfo(props: Props) {
                         />
                         <div className='flex-1'>
                             <p className='font-bold'>{place.name}</p>
-                            <p className='text-tiny'>
-                                X: {place.location.x}% Y: {place.location.y}%
-                            </p>
+                            <div className='flex flex-row gap-2 text-tiny mt-1'>
+                                <Chip size='sm' variant='flat'>
+                                    X: {place.location.x}% Y: {place.location.y}
+                                    %
+                                </Chip>
+                                <Chip size='sm' variant='flat'>
+                                    ID: {place.id}
+                                </Chip>
+                            </div>
                         </div>
                         <div className='flex gap-2 items-center'>
                             <EditMapInfo
