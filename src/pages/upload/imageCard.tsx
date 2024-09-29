@@ -1,7 +1,8 @@
-import { Button, Card, CardFooter, Image } from '@nextui-org/react';
+import { Button, Card, CardFooter } from '@nextui-org/react';
 import { useAtom } from 'jotai';
 import { clipboardAtom } from '../../store/jotai';
 import { copyText } from '../../features/copy';
+import ImageExpansion from '../../components/ui/ImaegExpansion';
 
 type Props = {
     item: {
@@ -27,7 +28,7 @@ export default function UploadImageCard(props: Props) {
 
     return (
         <Card isFooterBlurred radius='md' className='border-none w-60 h-60'>
-            <Image className='object-cover w-60 h-60' src={item.url} />
+            <ImageExpansion className='object-cover w-60 h-60' src={item.url} />
             <CardFooter className='flex justify-between absolute bg-black/20 backdrop-blur-md bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100'>
                 <p className='text-tiny w-32 truncate text-white'>
                     {item.name}
