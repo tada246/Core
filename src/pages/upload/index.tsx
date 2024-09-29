@@ -142,7 +142,7 @@ export default function Page() {
             />
             <SubHead
                 title='ファイルをアップロード'
-                subtitle='ドラッグアンドドロップ又は選択してアップロードをすることができます。最大5枚までアップロードできます。'
+                subtitle='ドラッグアンドドロップ又は選択してアップロードをすることができます。最大4枚までアップロードできます。'
                 className='mt-10'
             >
                 <div>
