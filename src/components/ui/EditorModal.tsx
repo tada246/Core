@@ -42,7 +42,6 @@ export default function EditorModal(props: Props) {
             scrollBehavior='inside'
             size='md'
             classNames={{
-                body: 'max-h-[calc(100lvh-15rem)]',
                 wrapper: 'overflow-hidden',
             }}
         >
