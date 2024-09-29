@@ -26,7 +26,7 @@ export default function FinalCheckModal(props: Props) {
                     {(onClose) => (
                         <>
                             <ModalHeader className='flex flex-col gap-1'>
-                                マークダウンのプレビュー
+                                最後の確認
                             </ModalHeader>
                             <ModalBody>
                                 <p>{props.message}</p>
