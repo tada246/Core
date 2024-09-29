@@ -1,7 +1,6 @@
 import { Button, Input, useDisclosure } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 import { EditMapInfoForm } from './common';
-import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
@@ -14,14 +13,17 @@ type Props = {
     eventId: string;
 };
 
+interface AddMapInfoProps extends EditMapInfoForm {
+    id: string;
+}
+
 export default function AddMapInfo(props: Props) {
     const { isOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, reset } = useForm<EditMapInfoForm>();
+    const { register, handleSubmit, reset } = useForm<AddMapInfoProps>();
 
-    const createNewMap = async (data: EditMapInfoForm) => {
-        const newId = uuidv4();
-        await setDoc(doc(db, 'events', props.eventId, 'places', newId), {
-            id: newId,
+    const createNewMap = async (data: AddMapInfoProps) => {
+        await setDoc(doc(db, 'events', props.eventId, 'places', data.id), {
+            id: data.id,
             name: data.name,
             location: {
                 x: parseInt(data.location.x.toString()),
@@ -31,7 +33,12 @@ export default function AddMapInfo(props: Props) {
         });
     };
 
-    const onSubmit = (data: EditMapInfoForm) => {
+    const onSubmit = (data: AddMapInfoProps) => {
+        if (!/^[a-zA-Z0-9]+$/.test(data.id)) {
+            toast.error('IDは半角英数字のみです');
+            return;
+        }
+
         createNewMap(data)
             .then(() => {
                 onOpenChangeModal();
@@ -68,6 +75,14 @@ export default function AddMapInfo(props: Props) {
                 <WarningCard
                     message='作成時の注意'
                     description='場所の追加を行うと削除ができません。'
+                />
+                <Input
+                    autoComplete='off'
+                    type='text'
+                    label='ID'
+                    {...register('id')}
+                    isRequired
+                    description='半角英数字で入力してください。'
                 />
                 <Input
                     autoComplete='off'
