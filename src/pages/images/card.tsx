@@ -1,11 +1,4 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    Image,
-    Tooltip,
-} from '@nextui-org/react';
+import { Button, Card, CardBody, CardFooter, Tooltip } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { copyText } from '../../features/copy';
 import { IoCopyOutline } from 'react-icons/io5';
