@@ -104,7 +104,7 @@ export default function Page() {
 
     const onDrop = (files: File[]) => {
         if (files.length > 0) {
-            for (let i = 0; i < Math.min(files.length, 5); i++) {
+            for (let i = 0; i < Math.min(files.length, 11); i++) {
                 imageUpload(files[i]);
             }
         }
@@ -141,7 +141,7 @@ export default function Page() {
             />
             <SubHead
                 title='ファイルをアップロード'
-                subtitle='ドラッグアンドドロップ又は選択してアップロードをすることができます。最大4枚までアップロードできます。'
+                subtitle='ドラッグアンドドロップ又は選択してアップロードをすることができます。最大10枚まで同時アップロードできます。'
                 className='mt-10'
             >
                 <Upload
