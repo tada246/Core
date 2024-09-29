@@ -17,7 +17,6 @@ import toast from 'react-hot-toast';
 import {
     Button,
     Chip,
-    Image,
     Input,
     Textarea,
     useDisclosure,
@@ -40,6 +39,7 @@ import getEventStatus from '../../features/getEventStatus';
 import FloorEditor from './floor/edit';
 import FinalCheckModal from '../../components/ui/FinalCheckModal';
 import FloorMap from './floor/map';
+import ImageExpansion from '../../components/ui/ImaegExpansion';
 
 export default function Page() {
     const params = useParams<{ id: string; place_id: string }>();
@@ -267,7 +267,7 @@ function EventList(props: EventListProps) {
                         <div className='flex-1'>
                             <div className='flex gap-4 items-center'>
                                 <div>
-                                    <Image
+                                    <ImageExpansion
                                         src={item.imageURL}
                                         width={120}
                                         height={120}
