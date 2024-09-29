@@ -7,18 +7,21 @@ import dayjs from 'dayjs';
 type Props = {
     className?: string;
     smallText: string;
+    tags?: string[];
 };
 
 export default function SmallEventInfo(props: Props) {
     const { data } = useEventList();
     const { id: eventId } = useParams<{ id: string | undefined }>();
+    const event = data?.find((event) => event.id === eventId);
 
-    if (!data || !eventId)
-        return <NotEventDataEventInfo smallText={props.smallText} />;
-
-    const event = data.find((event) => event.id === eventId);
-
-    if (!event) return <NotEventDataEventInfo smallText={props.smallText} />;
+    if (!data || !eventId || !event)
+        return (
+            <NotEventDataEventInfo
+                smallText={props.smallText}
+                tags={props.tags}
+            />
+        );
 
     const startDate = dayjs(new Date(event.date.start.seconds * 1000));
 
@@ -40,6 +43,16 @@ export default function SmallEventInfo(props: Props) {
                     <Chip color='default' variant='flat' size='sm'>
                         {startDate.format('YYYY年 MM月 DD日')}
                     </Chip>
+                    {props.tags?.map((tag) => (
+                        <Chip
+                            key={tag}
+                            color='default'
+                            variant='flat'
+                            size='sm'
+                        >
+                            {tag}
+                        </Chip>
+                    ))}
                 </div>
             </div>
             <Image
@@ -52,11 +65,31 @@ export default function SmallEventInfo(props: Props) {
     );
 }
 
-function NotEventDataEventInfo({ smallText }: { smallText: string }) {
+function NotEventDataEventInfo({
+    smallText,
+    tags,
+}: {
+    smallText: string;
+    tags?: string[];
+}) {
     return (
         <div className='h-24 flex items-center'>
             <p className='text-3xl font-bold'>{smallText}</p>
             <p>イベントデータが読み込まれませんでした。</p>
+            {tags && (
+                <div className='flex gap-2 mt-2 w-full overflow-x-auto'>
+                    {tags.map((tag) => (
+                        <Chip
+                            key={tag}
+                            color='default'
+                            variant='flat'
+                            size='sm'
+                        >
+                            {tag}
+                        </Chip>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
