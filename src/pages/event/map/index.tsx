@@ -3,13 +3,14 @@ import { Place } from '../../../types/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
-import { Button, Image, Tab, Tabs, Tooltip } from '@nextui-org/react';
+import { Button, Tab, Tabs, Tooltip } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import { IoChevronForward, IoEye, IoPencil, IoTrash } from 'react-icons/io5';
 import EditMapInfo from './edit';
 import AddMapInfo from './add';
 import EditorMap from './editorMap';
 import PreviewMap from './previewMap';
+import ImageExpansion from '../../../components/ui/ImaegExpansion';
 
 type Props = {
     id: string;
@@ -75,7 +76,7 @@ export default function MapInfo(props: Props) {
                         key={place.id}
                         className='w-full p-4 bg-white rounded-md flex items-center gap-4'
                     >
-                        <Image
+                        <ImageExpansion
                             src={place.imageURL}
                             alt='画像'
                             width={160}
