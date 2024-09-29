@@ -70,7 +70,7 @@ export default function MapInfo(props: Props) {
                     <PreviewMap imageURL={props.mapImageURL} places={places} />
                 </Tab>
             </Tabs>
-            <div className='mt-4 flex gap-4 flex-col'>
+            <div className='mt-4 flex gap-4 flex-col w-full overflow-x-auto'>
                 {places.map((place) => (
                     <div
                         key={place.id}
@@ -133,6 +133,8 @@ export default function MapInfo(props: Props) {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className='mt-4'>
                 <AddMapInfo eventId={props.id} />
             </div>
         </div>
