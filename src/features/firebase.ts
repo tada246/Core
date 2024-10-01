@@ -20,22 +20,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const google_provider = new GoogleAuthProvider();
-const auth = getAuth(app);
-const storage = getStorage(app);
 
 const isDev = import.meta.env.DEV;
 const useEmulators =
     import.meta.env.VITE_USE_EMULATORS.toLowerCase() === 'true' && isDev;
-
-if (useEmulators) {
-    connectAuthEmulator(auth, 'http://localhost:9099', {
-        disableWarnings: true,
-    });
-    connectFirestoreEmulator(db, 'localhost', 8080);
-    connectStorageEmulator(storage, 'localhost', 9199);
-}
 
 if (isDev && !useEmulators) {
     window.self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
@@ -50,6 +38,19 @@ if (!useEmulators) {
     });
 
     getAnalytics(app);
+}
+
+const db = getFirestore(app);
+const google_provider = new GoogleAuthProvider();
+const auth = getAuth(app);
+const storage = getStorage(app);
+
+if (useEmulators) {
+    connectAuthEmulator(auth, 'http://localhost:9099', {
+        disableWarnings: true,
+    });
+    connectFirestoreEmulator(db, 'localhost', 8080);
+    connectStorageEmulator(storage, 'localhost', 9199);
 }
 
 export { google_provider, auth, db, storage };
