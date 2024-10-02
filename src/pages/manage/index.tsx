@@ -86,6 +86,13 @@ function UserTable(props: UserTableProps) {
         });
     }
 
+    console.log(
+        ['ADMIN', 'EDITOR'].includes(
+            authority.filter((v) => v.id === admin_users[3]?.authority)[0].id
+        ) && userCanUploadImages(admin_users[3].mail),
+        admin_users[3]
+    );
+
     return (
         <Table aria-label='ユーザー一覧'>
             <TableHeader>
@@ -95,83 +102,88 @@ function UserTable(props: UserTableProps) {
                 <TableColumn>アクション</TableColumn>
             </TableHeader>
             <TableBody>
-                {admin_users.map((user) => (
-                    <TableRow key={user.id}>
-                        <TableCell>
-                            <NextUIUser
-                                name={user.name}
-                                description={user.mail}
-                                avatarProps={{
-                                    src: user.photoURL,
-                                }}
-                            />
-                        </TableCell>
-                        <TableCell>
-                            <div className='flex gap-0 items-center'>
-                                <Tooltip
-                                    content={
-                                        authority.filter(
-                                            (v) => v.id === user.authority
-                                        )[0].description
-                                    }
-                                >
-                                    <Chip
-                                        variant='flat'
-                                        startContent={
-                                            authority.filter(
-                                                (v) => v.id === user.authority
-                                            )[0].icon
-                                        }
-                                        size='sm'
-                                        className='pl-2 gap-1 rounded-r-none'
-                                        color={
-                                            authority.filter(
-                                                (v) => v.id === user.authority
-                                            )[0].color ?? 'default'
+                {admin_users.map((user) => {
+                    // これじゃないとエラーが出る
+                    const userOwnAuthority = authority.filter(
+                        (v) => v.id === user.authority
+                    )[0];
+                    const userCanUpload =
+                        userCanUploadImages(user.mail) &&
+                        ['ADMIN', 'EDITOR'].includes(userOwnAuthority.id);
+
+                    return (
+                        <TableRow key={user.id}>
+                            <TableCell>
+                                <NextUIUser
+                                    name={user.name}
+                                    description={user.mail}
+                                    avatarProps={{
+                                        src: user.photoURL,
+                                    }}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <div className='flex gap-0 items-center divide-x-1'>
+                                    <Tooltip
+                                        content={userOwnAuthority.description}
+                                    >
+                                        <Chip
+                                            variant='flat'
+                                            startContent={userOwnAuthority.icon}
+                                            size='sm'
+                                            className='pl-2 gap-1 rounded-r-none'
+                                            color={
+                                                userOwnAuthority.color ??
+                                                'default'
+                                            }
+                                        >
+                                            {userOwnAuthority.name ?? '不明'}
+                                        </Chip>
+                                    </Tooltip>
+                                    <Tooltip
+                                        content={
+                                            '画像のアップロードが可能かどうか'
                                         }
                                     >
-                                        {authority.filter(
-                                            (v) => v.id === user.authority
-                                        )[0].name ?? '不明'}
-                                    </Chip>
-                                </Tooltip>
-                                <Tooltip
-                                    content={'画像のアップロードが可能かどうか'}
-                                >
-                                    <Chip
-                                        size='sm'
-                                        variant='flat'
-                                        color='secondary'
-                                        className='pr-2 rounded-l-none'
-                                    >
-                                        {userCanUploadImages(user.mail)
-                                            ? 'アップ可能'
-                                            : 'アップ不可'}
-                                    </Chip>
-                                </Tooltip>
-                            </div>
-                        </TableCell>
-                        <TableCell>
-                            <p>
-                                {dayjs(user.timestamp.seconds * 1000).format(
-                                    'YYYY/MM/DD'
-                                )}
-                            </p>
-                            <p className='text-tiny text-default-600'>
-                                {dayjs(user.timestamp.seconds * 1000).format(
-                                    'HH:mm:ss'
-                                )}
-                            </p>
-                        </TableCell>
-                        <TableCell>
-                            <EditUserAuthority
-                                id={user.id}
-                                authority={user.authority}
-                                mutate={handleUpdateUserAuthority}
-                            />
-                        </TableCell>
-                    </TableRow>
-                ))}
+                                        <Chip
+                                            size='sm'
+                                            variant='flat'
+                                            color={
+                                                userCanUpload
+                                                    ? 'secondary'
+                                                    : 'default'
+                                            }
+                                            className='pr-2 rounded-l-none'
+                                        >
+                                            {userCanUpload
+                                                ? 'アップ可能'
+                                                : 'アップ不可'}
+                                        </Chip>
+                                    </Tooltip>
+                                </div>
+                            </TableCell>
+                            <TableCell>
+                                <p>
+                                    {dayjs(
+                                        user.timestamp.seconds * 1000
+                                    ).format('YYYY/MM/DD')}
+                                </p>
+                                <p className='text-tiny text-default-600'>
+                                    {dayjs(
+                                        user.timestamp.seconds * 1000
+                                    ).format('HH:mm:ss')}
+                                </p>
+                            </TableCell>
+                            <TableCell>
+                                <EditUserAuthority
+                                    id={user.id}
+                                    authority={user.authority}
+                                    mutate={handleUpdateUserAuthority}
+                                />
+                            </TableCell>
+                        </TableRow>
+                    );
+                })}
             </TableBody>
         </Table>
     );
