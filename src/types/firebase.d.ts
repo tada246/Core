@@ -23,6 +23,7 @@ type Event = {
     imageURL: string;
     overview: string;
     mapImageURL: string;
+    isStampRallyEnabled: boolean;
 };
 
 type Image = {
