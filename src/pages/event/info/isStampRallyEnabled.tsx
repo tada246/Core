@@ -9,7 +9,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../features/firebase';
-import { IoBalloonOutline } from 'react-icons/io5';
+import { IoBalloon } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
 
 type EditIsStampRallyEnabledForm = {};
@@ -54,7 +54,7 @@ export default function EditIsStampRallyEnabled(props: CommonEditInfoProps) {
                         {event.isStampRallyEnabled ? '可能' : '不可'}
                     </p>
                 }
-                icon={<IoBalloonOutline size={20} />}
+                icon={<IoBalloon size={20} />}
             />
             <EditorModal
                 title='スタンプラリー設定の変更'
