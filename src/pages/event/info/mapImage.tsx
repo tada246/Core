@@ -19,7 +19,7 @@ type EditMapImageForm = {
 export default function EditMapImage(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit } = useForm<EditMapImageForm>();
+    const { register, handleSubmit, setValue } = useForm<EditMapImageForm>();
 
     const update = async (data: string) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -38,11 +38,16 @@ export default function EditMapImage(props: CommonEditInfoProps) {
             });
     };
 
+    function openModal() {
+        setValue('mapImageURL', event.mapImageURL);
+        onOpenChange();
+    }
+
     return (
         <>
             <CommonInformation
                 name='マップ画像'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={
                     <Link
                         href={event.mapImageURL}

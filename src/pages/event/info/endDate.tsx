@@ -19,7 +19,7 @@ type EditEndDateForm = {
 export default function EditEndDate(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit } = useForm<EditEndDateForm>();
+    const { register, handleSubmit, setValue } = useForm<EditEndDateForm>();
 
     const update = async (data: string) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -41,11 +41,21 @@ export default function EditEndDate(props: CommonEditInfoProps) {
             });
     };
 
+    const openModal = () => {
+        setValue(
+            'endDate',
+            dayjs(new Date(event.date.end.seconds * 1000)).format(
+                'YYYY-MM-DDTHH:mm'
+            )
+        );
+        onOpen();
+    };
+
     return (
         <>
             <CommonInformation
                 name='終了時刻'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={
                     <p className={COMMON_INFO_NAME_CLASS}>
                         {dayjs(

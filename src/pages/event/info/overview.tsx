@@ -46,11 +46,16 @@ export default function EditOverview(props: CommonEditInfoProps) {
         setValue('overview', event.overview);
     }
 
+    function openModal() {
+        setValue('overview', event.overview);
+        onOpen();
+    }
+
     return (
         <>
             <CommonInformation
                 name='見出し'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={
                     <p className={COMMON_INFO_NAME_CLASS}>{event.overview}</p>
                 }

@@ -19,7 +19,7 @@ type EditStartDateForm = {
 export default function EditStartDate(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit } = useForm<EditStartDateForm>();
+    const { register, handleSubmit, setValue } = useForm<EditStartDateForm>();
 
     const update = async (data: string) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -41,11 +41,19 @@ export default function EditStartDate(props: CommonEditInfoProps) {
             });
     };
 
+    function openModal() {
+        setValue(
+            'startDate',
+            dayjs(event.date.start.seconds * 1000).format('YYYY-MM-DDTHH:mm')
+        );
+        onOpenChange();
+    }
+
     return (
         <>
             <CommonInformation
                 name='開始時刻'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={
                     <p className={COMMON_INFO_NAME_CLASS}>
                         {dayjs(

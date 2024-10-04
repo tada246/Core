@@ -18,7 +18,7 @@ type EditNameForm = {
 export default function EditName(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit } = useForm<EditNameForm>();
+    const { register, handleSubmit, setValue } = useForm<EditNameForm>();
 
     const update = async (data: string) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -37,11 +37,16 @@ export default function EditName(props: CommonEditInfoProps) {
             });
     };
 
+    const openModal = () => {
+        setValue('name', event.name);
+        onOpenChange();
+    };
+
     return (
         <>
             <CommonInformation
                 name='名前'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={<p className={COMMON_INFO_NAME_CLASS}>{event.name}</p>}
                 icon={<IoMedicalSharp size={20} />}
             />

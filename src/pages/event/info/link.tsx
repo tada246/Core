@@ -18,7 +18,7 @@ type EditLinkForm = {
 export default function EditLink(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit } = useForm<EditLinkForm>();
+    const { register, handleSubmit, setValue } = useForm<EditLinkForm>();
 
     const update = async (data: string) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -37,11 +37,16 @@ export default function EditLink(props: CommonEditInfoProps) {
             });
     };
 
+    function openModal() {
+        setValue('link', event.link);
+        onOpenChange();
+    }
+
     return (
         <>
             <CommonInformation
                 name='リンク'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={
                     <Link
                         href={event.link}

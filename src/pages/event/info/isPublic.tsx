@@ -37,11 +37,16 @@ export default function EditIsPublic(props: CommonEditInfoProps) {
             });
     };
 
+    function openModal() {
+        setIsSelected(event.isPublic);
+        onOpen();
+    }
+
     return (
         <>
             <CommonInformation
                 name='公開・非公開'
-                onOpen={onOpen}
+                onOpen={openModal}
                 value={
                     <p className={COMMON_INFO_NAME_CLASS}>
                         {event.isPublic ? '公開' : '非公開'}
