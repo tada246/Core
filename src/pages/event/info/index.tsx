@@ -2,6 +2,7 @@ import { Event } from '../../../types/firebase';
 import EditEndDate from './endDate';
 import EditImageURL from './image';
 import EditIsPublic from './isPublic';
+import EditIsStampRallyEnabled from './isStampRallyEnabled';
 import EditLink from './link';
 import EditMapImage from './mapImage';
 import EditName from './name';
@@ -25,6 +26,7 @@ export default function EditInfo(props: EditInfoProps) {
             <EditMapImage event={event} />
             <EditStartDate event={event} />
             <EditEndDate event={event} />
+            <EditIsStampRallyEnabled event={event} />
         </div>
     );
 }
