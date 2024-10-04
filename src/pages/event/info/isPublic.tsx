@@ -16,7 +16,7 @@ type EditIsPublicForm = {};
 
 export default function EditIsPublic(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { handleSubmit } = useForm<EditIsPublicForm>();
     const [isSelected, setIsSelected] = useState<boolean>(props.event.isPublic);
 
@@ -39,7 +39,7 @@ export default function EditIsPublic(props: CommonEditInfoProps) {
 
     function openModal() {
         setIsSelected(event.isPublic);
-        onOpen();
+        onOpenChange();
     }
 
     return (

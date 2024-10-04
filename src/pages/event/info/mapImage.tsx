@@ -18,7 +18,7 @@ type EditMapImageForm = {
 
 export default function EditMapImage(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditMapImageForm>();
 
     const update = async (data: string) => {

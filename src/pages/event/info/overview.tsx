@@ -20,7 +20,7 @@ type EditOverviewForm = {
 
 export default function EditOverview(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, watch, setValue } =
         useForm<EditOverviewForm>();
     const currentData = watch('overview');
@@ -48,7 +48,7 @@ export default function EditOverview(props: CommonEditInfoProps) {
 
     function openModal() {
         setValue('overview', event.overview);
-        onOpen();
+        onOpenChange();
     }
 
     return (

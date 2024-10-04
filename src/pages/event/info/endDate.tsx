@@ -18,7 +18,7 @@ type EditEndDateForm = {
 
 export default function EditEndDate(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditEndDateForm>();
 
     const update = async (data: string) => {
@@ -44,11 +44,9 @@ export default function EditEndDate(props: CommonEditInfoProps) {
     const openModal = () => {
         setValue(
             'endDate',
-            dayjs(new Date(event.date.end.seconds * 1000)).format(
-                'YYYY-MM-DDTHH:mm'
-            )
+            dayjs(event.date.end.seconds * 1000).format('YYYY-MM-DDTHH:mm')
         );
-        onOpen();
+        onOpenChange();
     };
 
     return (

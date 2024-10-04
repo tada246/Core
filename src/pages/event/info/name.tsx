@@ -17,7 +17,7 @@ type EditNameForm = {
 
 export default function EditName(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditNameForm>();
 
     const update = async (data: string) => {

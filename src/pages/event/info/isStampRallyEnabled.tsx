@@ -16,7 +16,7 @@ type EditIsStampRallyEnabledForm = {};
 
 export default function EditIsStampRallyEnabled(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { handleSubmit } = useForm<EditIsStampRallyEnabledForm>();
     const [isSelected, setIsSelected] = useState<boolean>(
         props.event.isStampRallyEnabled
@@ -41,7 +41,7 @@ export default function EditIsStampRallyEnabled(props: CommonEditInfoProps) {
 
     function openModal() {
         setIsSelected(event.isStampRallyEnabled);
-        onOpen();
+        onOpenChange();
     }
 
     return (

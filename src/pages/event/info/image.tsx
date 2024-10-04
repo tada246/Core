@@ -18,7 +18,7 @@ type EditImageURLForm = {
 
 export default function EditImageURL(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditImageURLForm>();
 
     const update = async (data: string) => {
@@ -40,7 +40,7 @@ export default function EditImageURL(props: CommonEditInfoProps) {
 
     const openModal = () => {
         setValue('imageURL', event.imageURL);
-        onOpen();
+        onOpenChange();
     };
 
     return (

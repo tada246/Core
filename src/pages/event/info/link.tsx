@@ -17,7 +17,7 @@ type EditLinkForm = {
 
 export default function EditLink(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditLinkForm>();
 
     const update = async (data: string) => {

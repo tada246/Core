@@ -18,7 +18,7 @@ type EditStartDateForm = {
 
 export default function EditStartDate(props: CommonEditInfoProps) {
     const { event } = props;
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditStartDateForm>();
 
     const update = async (data: string) => {
