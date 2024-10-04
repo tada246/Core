@@ -6,7 +6,7 @@ import { Event } from '../types/firebase';
 async function getEventList() {
     const q = query(
         collection(db, 'events'),
-        limit(20),
+        limit(40),
         orderBy('date.start', 'desc')
     );
     const querySnapshot = await getDocs(q);
