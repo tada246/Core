@@ -13,9 +13,25 @@ import Head from '../../components/ui/Head';
 import OnlyEditors from '../../components/ui/OnlyEditors';
 import MessageAddModal from './form';
 import NoticeCard from './card';
+import dayjs from 'dayjs';
+import { Chip } from '@nextui-org/react';
 
 export default function Message() {
     const [data, setData] = useState<Notice[]>([]);
+
+    const groupedNotices = data.reduce(
+        (acc: Record<string, Notice[]>, notice) => {
+            const date = dayjs(notice.timestamp.seconds * 1000).format(
+                'YYYY-MM-DD'
+            );
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(notice);
+            return acc;
+        },
+        {}
+    );
 
     useEffect(() => {
         onSnapshot(
@@ -52,12 +68,24 @@ export default function Message() {
                         お知らせはありません 🥹
                     </p>
                 )}
-                <div className='mt-6'>
-                    <div className='gap-x-8 lg:columns-2 columns-1'>
-                        {data.map((v) => (
-                            <NoticeCard {...v} key={v.id} />
-                        ))}
-                    </div>
+                <div className='mt-12 flex flex-col gap-12'>
+                    {Object.keys(groupedNotices).map((date) => (
+                        <div key={date}>
+                            <div className='flex gap-2 items-end'>
+                                <h2 className='text-xl font-bold'>
+                                    {dayjs(date).format('YYYY/MM/DD (dddd)')}
+                                </h2>
+                                <Chip size='sm'>
+                                    {groupedNotices[date].length} 件
+                                </Chip>
+                            </div>
+                            <div className='gap-x-8 lg:columns-2 columns-1 mt-4'>
+                                {groupedNotices[date].map((v) => (
+                                    <NoticeCard {...v} key={v.id} />
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
