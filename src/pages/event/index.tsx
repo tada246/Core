@@ -5,8 +5,8 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../features/firebase';
 import EditInfo from './info';
 import MapTopInfo from './top';
-import FormInfo from './form';
 import MapInfo from './map';
+import OthersInfo from './others';
 
 export default function Page() {
     const { id } = useParams<{ id: string }>();
@@ -28,7 +28,7 @@ export default function Page() {
         <div>
             <MapTopInfo event={event} />
             <EditInfo event={event} />
-            <FormInfo id={id} />
+            <OthersInfo id={id} event={event} />
             <MapInfo id={id} mapImageURL={event.mapImageURL} />
         </div>
     );
