@@ -14,6 +14,11 @@ export default function StampRallyEditor(props: Props) {
         <div className='shadow-medium p-4 rounded-medium'>
             <AddStampRally eventId={props.eventId} />
             <div className='flex flex-col gap-4 mt-6'>
+                {props.stampRally.length === 0 && (
+                    <p className='text-center py-6 text-default-600'>
+                        何もありません
+                    </p>
+                )}
                 {props.stampRally.map((stampRally) => (
                     <div
                         key={stampRally.id}
