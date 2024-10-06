@@ -94,6 +94,7 @@ type StampRally = {
 
 type StampRallySecret = {
     id: string;
+    secretId: string;
 };
 
 export type {
