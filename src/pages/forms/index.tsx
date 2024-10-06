@@ -1,32 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { Form } from '../../types/firebase';
 import { useEffect, useState } from 'react';
-import {
-    collection,
-    deleteDoc,
-    doc,
-    onSnapshot,
-    orderBy,
-    query,
-    setDoc,
-    updateDoc,
-} from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../features/firebase';
 import toast from 'react-hot-toast';
-import {
-    Button,
-    Input,
-    Link as NextUILink,
-    Textarea,
-    useDisclosure,
-} from '@nextui-org/react';
-import { IoAddCircleOutline, IoPencilSharp, IoTrash } from 'react-icons/io5';
-import { useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
-import EditorModal from '../../components/ui/EditorModal';
+import { Link as NextUILink } from '@nextui-org/react';
 import OnlyEditors from '../../components/ui/OnlyEditors';
-import FinalCheckModal from '../../components/ui/FinalCheckModal';
 import SmallEventInfo from '../../components/ui/SmallEventInfo';
+import { AddNewForm } from './addModal';
+import UpdateForm from './updateModal';
+import DeleteForm from './deleteModal';
 
 export default function Page() {
     const { id } = useParams<{ id: string }>();
@@ -111,219 +94,13 @@ export default function Page() {
         </div>
     );
 }
-
-// フォームの新規追加もーだるとかなんとか
-
-type FormEditProps = {
+export type FormEditProps = {
     id: string;
 };
 
-type FormEditState = {
+export type FormEditState = {
     name: string;
     url: string;
     content: string;
     order: number;
 };
-
-function AddNewForm(props: FormEditProps) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, reset } = useForm<FormEditState>();
-
-    const addNewForm = async (data: FormEditState) => {
-        const id = uuidv4();
-        await setDoc(doc(db, 'events', props.id, 'forms', id), {
-            id: id,
-            name: data.name,
-            url: data.url,
-            content: data.content,
-            order: parseInt(data.order.toString()),
-        });
-    };
-
-    const onFormSubmit = async (data: FormEditState) => {
-        await addNewForm(data)
-            .then(() => {
-                toast.success('アンケートの新規追加に成功');
-                reset();
-                onOpenChange();
-            })
-            .catch(() => {
-                toast.error('アンケートの新規追加に失敗');
-            });
-    };
-
-    const openModal = () => {
-        reset();
-        onOpen();
-    };
-
-    return (
-        <>
-            <Button
-                onPress={openModal}
-                fullWidth
-                startContent={<IoAddCircleOutline />}
-            >
-                アンケートの新規追加
-            </Button>
-            <EditorModal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title='アンケートを新規追加'
-                onSubmit={handleSubmit(onFormSubmit)}
-                isAdding
-            >
-                <Input
-                    label='名前'
-                    {...register('name')}
-                    autoComplete='off'
-                    isRequired
-                    description='アンケートの名前を入力してください'
-                />
-                <Input
-                    label='URL'
-                    {...register('url')}
-                    autoComplete='off'
-                    isRequired
-                    description='アンケートのURLを入力してください（https://から始まるもの）'
-                />
-                <Textarea
-                    label='内容'
-                    autoComplete='off'
-                    {...register('content')}
-                    isRequired
-                    description='アンケートの内容を入力してください'
-                />
-                <Input
-                    autoComplete='off'
-                    label='表示順番'
-                    {...register('order')}
-                    type='number'
-                    isRequired
-                    description='アンケートの表示順番を入力してください'
-                />
-            </EditorModal>
-        </>
-    );
-}
-
-// フォームの更新もーだるとかなんとか
-
-type UpdateFormEditProps = {
-    id: string;
-    form: Form;
-};
-
-function UpdateForm(props: UpdateFormEditProps) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, setValue } = useForm<FormEditState>();
-
-    const updateForm = async (data: FormEditState) => {
-        await updateDoc(doc(db, 'events', props.id, 'forms', props.form.id), {
-            name: data.name,
-            url: data.url,
-            content: data.content,
-            order: parseInt(data.order.toString()),
-        });
-    };
-
-    const updateFormValue = () => {
-        setValue('name', props.form.name);
-        setValue('url', props.form.url);
-        setValue('content', props.form.content);
-        setValue('order', props.form.order);
-    };
-
-    useEffect(() => {
-        updateFormValue();
-    }, [props.form]);
-
-    const onFormSubmit = async (data: FormEditState) => {
-        await updateForm(data)
-            .then(() => {
-                toast.success('既存アンケートの更新に成功');
-                onOpenChange();
-            })
-            .catch(() => {
-                toast.error('既存アンケートの更新に失敗');
-            });
-    };
-
-    const openModal = () => {
-        updateFormValue();
-        onOpen();
-    };
-
-    return (
-        <>
-            <Button onPress={openModal} isIconOnly size='sm' variant='flat'>
-                <IoPencilSharp size={16} />
-            </Button>
-            <EditorModal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title='アンケートを更新'
-                onSubmit={handleSubmit(onFormSubmit)}
-            >
-                <Input
-                    label='名前'
-                    {...register('name')}
-                    autoComplete='off'
-                    isRequired
-                    description='アンケートの名前を入力してください'
-                />
-                <Input
-                    label='URL'
-                    {...register('url')}
-                    autoComplete='off'
-                    isRequired
-                    description='アンケートのURLを入力してください（https://から始まるもの）'
-                />
-                <Textarea
-                    label='内容'
-                    autoComplete='off'
-                    {...register('content')}
-                    isRequired
-                    description='アンケートの内容を入力してください'
-                />
-                <Input
-                    autoComplete='off'
-                    label='表示順番'
-                    {...register('order')}
-                    type='number'
-                    isRequired
-                    description='アンケートの表示順番を入力してください'
-                />
-            </EditorModal>
-        </>
-    );
-}
-
-type DeleteFormProps = {
-    eventId: string;
-    formId: string;
-};
-
-function DeleteForm(props: DeleteFormProps) {
-    async function deleteForm() {
-        await deleteDoc(doc(db, 'events', props.eventId, 'forms', props.formId))
-            .then(() => {
-                toast.success('削除に成功');
-            })
-            .catch(() => {
-                toast.error('削除に失敗');
-            });
-    }
-
-    return (
-        <FinalCheckModal
-            onPress={() => deleteForm()}
-            isIconOnly
-            size='sm'
-            variant='flat'
-            message='このアンケートを削除しますか？'
-        >
-            <IoTrash size={16} />
-        </FinalCheckModal>
-    );
-}
