@@ -30,7 +30,7 @@ export default function AddStampRally(props: Props) {
             }
         );
 
-        const stampRallySecretId = nanoid();
+        const stampRallySecretId = nanoid(5);
         await setDoc(
             doc(
                 db,
