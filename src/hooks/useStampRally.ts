@@ -12,10 +12,6 @@ import { StampRally, StampRallySecret } from '../types/firebase';
 import { db } from '../features/firebase';
 import { useEffect } from 'react';
 
-export interface StampRallyData extends StampRally {
-    secret?: StampRallySecret;
-}
-
 export default function useStampRally(eventId?: string) {
     if (!eventId)
         return {
@@ -41,9 +37,9 @@ export default function useStampRally(eventId?: string) {
                 orderBy('order', 'asc')
             ),
             (stampRallyDoc) => {
-                const _stampRally: StampRallyData[] = [];
+                const _stampRally: StampRally[] = [];
                 stampRallyDoc.forEach((doc) => {
-                    const docData = doc.data() as StampRallyData;
+                    const docData = doc.data() as StampRally;
                     _stampRally.push(docData);
                 });
                 mutate(_stampRally);
