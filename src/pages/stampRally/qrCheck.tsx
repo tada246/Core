@@ -103,7 +103,9 @@ function Content(props: Props) {
     if (error) return <p className='text-center py-6'>エラー</p>;
 
     if (page === 0) {
-        return <video ref={ref} className='w-full aspect-[4/3]' />;
+        return (
+            <video ref={ref} className='w-full aspect-[4/3] rounded-medium' />
+        );
     }
 
     if (page === 1) {
