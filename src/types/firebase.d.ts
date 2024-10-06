@@ -84,6 +84,18 @@ type Entertainment = {
     };
 };
 
+type StampRally = {
+    id: string;
+    name: string;
+    hint: string;
+    order: number;
+    imageURL: string;
+};
+
+type StampRallySecret = {
+    id: string;
+};
+
 export type {
     AdminUser,
     Event,
@@ -93,4 +105,6 @@ export type {
     Place,
     Floor,
     Entertainment,
+    StampRally,
+    StampRallySecret,
 };
