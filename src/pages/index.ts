@@ -19,3 +19,4 @@ export { default as TeapotPage } from './teapot';
 export { default as ErrorPage } from './error';
 export { default as MarkDownPage } from './markdown';
 export { default as MessagePanelPage } from './notice-panel';
+export { default as StampRallyPage } from './stampRally';

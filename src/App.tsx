@@ -17,6 +17,7 @@ import {
     TeapotPage,
     MarkDownPage,
     MessagePanelPage,
+    StampRallyPage,
 } from './pages';
 import 'dayjs/locale/ja';
 import dayjs from 'dayjs';
@@ -37,6 +38,7 @@ export default function App() {
             <Route path='/map' element={<EventsPage />} />
             <Route path='/map/:id' element={<MapPage />} />
             <Route path='/map/:id/form' element={<FormPage />} />
+            <Route path='/map/:id/stampRally' element={<StampRallyPage />} />
             <Route path='/map/:id/place/:place_id' element={<PlacePage />} />
             <Route path='/user-management' element={<ManagePage />} />
             <Route path='/markdown' element={<MarkDownPage />} />
