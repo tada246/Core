@@ -8,12 +8,14 @@ type Props = {
     className?: string;
     smallText: string;
     tags?: string[];
+    isStampRally?: boolean;
 };
 
 export default function SmallEventInfo(props: Props) {
     const { data } = useEventList();
     const { id: eventId } = useParams<{ id: string | undefined }>();
     const event = data?.find((event) => event.id === eventId);
+    const isStampRally = props.isStampRally || false;
 
     if (!data || !eventId || !event)
         return (
@@ -40,6 +42,13 @@ export default function SmallEventInfo(props: Props) {
                             end: new Date(event.date.end.seconds * 1000),
                         })}
                     </Chip>
+                    {isStampRally && (
+                        <Chip color='secondary' variant='flat' size='sm'>
+                            {event.isStampRallyEnabled
+                                ? 'スタンプラリー機能は有効です'
+                                : 'スタンプラリー機能は使えません'}
+                        </Chip>
+                    )}
                     <Chip color='default' variant='flat' size='sm'>
                         {startDate.format('YYYY年 MM月 DD日')}
                     </Chip>
