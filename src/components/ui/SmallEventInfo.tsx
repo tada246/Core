@@ -28,11 +28,11 @@ export default function SmallEventInfo(props: Props) {
     const startDate = dayjs(new Date(event.date.start.seconds * 1000));
 
     return (
-        <div className='flex gap-6 items-center h-24'>
+        <div className='flex gap-6 items-center min-h-24'>
             <div className='flex-1'>
                 <p className='text-3xl font-bold'>{props.smallText}</p>
                 <p>{event.name}</p>
-                <div className='flex gap-2 mt-2 w-full overflow-x-auto'>
+                <div className='flex gap-2 mt-2 w-full flex-wrap'>
                     <Chip color='primary' variant='flat' size='sm'>
                         {event.isPublic ? '公開' : '非公開'}
                     </Chip>
