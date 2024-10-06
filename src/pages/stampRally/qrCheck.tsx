@@ -29,7 +29,7 @@ export default function QRCheck(props: Props) {
         <>
             <button
                 onClick={onOpen}
-                className='shadow-medium p-4 rounded-medium flex items-center justify-center flex-col gap-2 hover:shadow-large duration-300'
+                className='shadow-medium p-4 rounded-medium flex items-center justify-center flex-col gap-2 hover:shadow-large duration-300 min-h-40'
             >
                 <IoSparkles size={32} />
                 <p className='text-sm font-bold'>QRコードでチェック</p>
