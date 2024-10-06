@@ -86,13 +86,6 @@ function UserTable(props: UserTableProps) {
         });
     }
 
-    console.log(
-        ['ADMIN', 'EDITOR'].includes(
-            authority.filter((v) => v.id === admin_users[3]?.authority)[0].id
-        ) && userCanUploadImages(admin_users[3].mail),
-        admin_users[3]
-    );
-
     return (
         <Table aria-label='ユーザー一覧'>
             <TableHeader>
