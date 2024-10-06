@@ -1,12 +1,12 @@
 import ImageExpansion from '../../../components/ui/ImaegExpansion';
-import { StampRallyData } from '../../../hooks/useStampRally';
 import AddStampRally from './add';
 import StampRallyKeyModal from './key';
 import EditStampRally from './edit';
+import { StampRally } from '../../../types/firebase';
 
 type Props = {
     eventId: string;
-    stampRally: StampRallyData[];
+    stampRally: StampRally[];
 };
 
 export default function StampRallyEditor(props: Props) {
