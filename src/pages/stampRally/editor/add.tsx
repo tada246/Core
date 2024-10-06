@@ -7,6 +7,7 @@ import { db } from '../../../features/firebase';
 import toast from 'react-hot-toast';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
+import { nanoid } from 'nanoid';
 
 type Props = {
     eventId: string;
@@ -29,7 +30,7 @@ export default function AddStampRally(props: Props) {
             }
         );
 
-        const stampRallySecretId = uuidv4();
+        const stampRallySecretId = nanoid();
         await setDoc(
             doc(
                 db,
