@@ -23,7 +23,7 @@ export default function Page() {
             <div className='mt-10 grid md:grid-cols-2 grid-cols-1 gap-6'>
                 <StampRallyEditor eventId={id} stampRally={data} />
                 <QRCheck eventId={id} />
-                <StampRallyQRDownload />
+                <StampRallyQRDownload eventId={id} stampRally={data} />
             </div>
         </div>
     );
