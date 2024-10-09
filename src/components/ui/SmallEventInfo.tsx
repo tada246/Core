@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import useEventList from '../../hooks/useEventList';
 import { Chip, Image } from '@nextui-org/react';
 import getEventStatus from '../../features/getEventStatus';
 import dayjs from 'dayjs';
+import { useEvent } from '../../hooks/useEvent';
 
 type Props = {
     className?: string;
@@ -12,12 +12,11 @@ type Props = {
 };
 
 export default function SmallEventInfo(props: Props) {
-    const { data } = useEventList();
     const { id: eventId } = useParams<{ id: string | undefined }>();
-    const event = data?.find((event) => event.id === eventId);
+    const { data: event } = useEvent(eventId);
     const isStampRally = props.isStampRally || false;
 
-    if (!data || !eventId || !event)
+    if (!eventId || !event)
         return (
             <NotEventDataEventInfo
                 smallText={props.smallText}
