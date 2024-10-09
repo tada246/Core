@@ -11,14 +11,10 @@ import toast from 'react-hot-toast';
 import { IoEye, IoLocationOutline } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
 import { EventPlace } from '../../../types/firebase';
-import {
-    MapContainer,
-    Marker,
-    Popup,
-    TileLayer,
-    useMapEvents,
-} from 'react-leaflet';
-import { useEffect, useState } from 'react';
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
+import { useState } from 'react';
+import 'leaflet/dist/leaflet.css';
+import { defaultState } from '../../../store/geography';
 
 type EditEventPlace = EventPlace;
 
@@ -26,7 +22,7 @@ export default function EditEventPlace(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditEventPlace>();
-    const [position, setPosition] = useState<[number, number]>([0, 0]);
+    const [position, setPosition] = useState<[number, number]>(defaultState);
 
     const update = async (data: EditEventPlace) => {
         await updateDoc(doc(db, 'events', props.event.id), {
