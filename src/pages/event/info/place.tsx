@@ -11,10 +11,7 @@ import toast from 'react-hot-toast';
 import { IoEye, IoLocationOutline } from 'react-icons/io5';
 import EditorModal from '../../../components/ui/EditorModal';
 import { EventPlace } from '../../../types/firebase';
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
-import { useState } from 'react';
-import 'leaflet/dist/leaflet.css';
-import { defaultState } from '../../../store/geography';
+import GeographyInput from '../../../components/ui/geographyInput';
 
 type EditEventPlace = EventPlace;
 
@@ -22,7 +19,6 @@ export default function EditEventPlace(props: CommonEditInfoProps) {
     const { event } = props;
     const { isOpen, onOpenChange } = useDisclosure();
     const { register, handleSubmit, setValue } = useForm<EditEventPlace>();
-    const [position, setPosition] = useState<[number, number]>(defaultState);
 
     const update = async (data: EditEventPlace) => {
         await updateDoc(doc(db, 'events', props.event.id), {
@@ -53,21 +49,8 @@ export default function EditEventPlace(props: CommonEditInfoProps) {
         setValue('name', event.place.name);
         setValue('lat', event.place.lat);
         setValue('lng', event.place.lng);
-        setPosition([event.place.lat, event.place.lng]);
         onOpenChange();
     };
-
-    function LocationMarker() {
-        useMapEvents({
-            click(e) {
-                setPosition([e.latlng.lat, e.latlng.lng]);
-                setValue('lat', e.latlng.lat);
-                setValue('lng', e.latlng.lng);
-            },
-        });
-
-        return <Marker position={position} />;
-    }
 
     if (!event.place) {
         return;
@@ -115,33 +98,14 @@ export default function EditEventPlace(props: CommonEditInfoProps) {
                     description='例: 桐光学園など'
                     isRequired
                 />
-                <div className='w-full aspect-square flex flex-col rounded-large overflow-hidden'>
-                    <MapContainer
-                        center={position}
-                        zoom={16}
-                        className='w-full flex-1'
-                    >
-                        <TileLayer
-                            attribution='© <a href="http://osm.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
-                            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                        />
-                        <LocationMarker />
-                    </MapContainer>
-                    <div className='h-6 bg-default-100 flex justify-center gap-4 items-center'>
-                        <p className='text-xs text-default-600'>
-                            緯度
-                            <span className='text-sm text-black pl-1'>
-                                {position[0]}
-                            </span>
-                        </p>
-                        <p className='text-xs text-default-600'>
-                            経度
-                            <span className='text-sm text-black pl-1'>
-                                {position[1]}
-                            </span>
-                        </p>
-                    </div>
-                </div>
+                <GeographyInput
+                    lat={event.place.lat}
+                    lng={event.place.lng}
+                    onChange={(lat, lng) => {
+                        setValue('lat', lat);
+                        setValue('lng', lng);
+                    }}
+                />
             </EditorModal>
         </>
     );
