@@ -7,6 +7,8 @@ import toast from 'react-hot-toast';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import EditorModal from '../../components/ui/EditorModal';
 import WarningCard from '../../components/ui/WarningCard';
+import GeographyInput from '../../components/ui/geographyInput';
+import { defaultState } from '../../store/geography';
 
 type EventEditState = {
     id: string;
@@ -19,6 +21,11 @@ type EventEditState = {
     imageURL: string;
     overview: string;
     mapImageURL: string;
+    place: {
+        name: string;
+        lat: number;
+        lng: number;
+    };
 };
 
 type AddNewEventProps = {
@@ -27,7 +34,8 @@ type AddNewEventProps = {
 
 export default function AddNewEvent(props: AddNewEventProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, reset } = useForm<EventEditState>();
+    const { register, handleSubmit, reset, setValue } =
+        useForm<EventEditState>();
 
     const addNewEvent = async (data: EventEditState) => {
         await setDoc(doc(db, 'events', data.id), {
@@ -42,6 +50,12 @@ export default function AddNewEvent(props: AddNewEventProps) {
             imageURL: data.imageURL,
             overview: data.overview,
             mapImageURL: data.mapImageURL,
+            isStampRallyEnabled: false,
+            place: {
+                name: data.place.name,
+                lat: data.place.lat,
+                lng: data.place.lng,
+            },
         });
     };
 
@@ -66,6 +80,7 @@ export default function AddNewEvent(props: AddNewEventProps) {
                 overview: data.overview,
                 mapImageURL: data.mapImageURL,
                 isStampRallyEnabled: false,
+                place: data.place,
             };
 
             props.addSWRegistration(event);
@@ -93,6 +108,8 @@ export default function AddNewEvent(props: AddNewEventProps) {
     const openModal = () => {
         reset();
         onOpen();
+        setValue('place.lat', defaultState[0]);
+        setValue('place.lng', defaultState[1]);
     };
 
     return (
@@ -177,6 +194,21 @@ export default function AddNewEvent(props: AddNewEventProps) {
                         description='マップイベントの終了日時を入力してください'
                     />
                 </div>
+                <Input
+                    autoComplete='off'
+                    label='場所名'
+                    {...register('place.name')}
+                    isRequired
+                    description='マップイベントの場所名を入力してください'
+                />
+                <GeographyInput
+                    lat={defaultState[0]}
+                    lng={defaultState[1]}
+                    onChange={(lat, lng) => {
+                        setValue('place.lat', lat);
+                        setValue('place.lng', lng);
+                    }}
+                />
             </EditorModal>
         </>
     );
