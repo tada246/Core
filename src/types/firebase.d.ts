@@ -11,6 +11,12 @@ type AdminUser = {
     timestamp: Timestamp;
 };
 
+type EventPlace = {
+    name: string;
+    lat: number;
+    lng: number;
+};
+
 type Event = {
     id: string;
     isPublic: boolean;
@@ -24,6 +30,7 @@ type Event = {
     overview: string;
     mapImageURL: string;
     isStampRallyEnabled: boolean;
+    place?: EventPlace;
 };
 
 type Image = {
@@ -108,4 +115,5 @@ export type {
     Entertainment,
     StampRally,
     StampRallySecret,
+    EventPlace,
 };
