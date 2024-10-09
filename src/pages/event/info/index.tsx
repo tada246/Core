@@ -7,6 +7,7 @@ import EditLink from './link';
 import EditMapImage from './mapImage';
 import EditName from './name';
 import EditOverview from './overview';
+import EditEventPlace from './place';
 import EditStartDate from './startDate';
 
 type EditInfoProps = {
@@ -26,6 +27,7 @@ export default function EditInfo(props: EditInfoProps) {
             <EditMapImage event={event} />
             <EditStartDate event={event} />
             <EditEndDate event={event} />
+            {event.place && <EditEventPlace event={event} />}
             <EditIsStampRallyEnabled event={event} />
         </div>
     );
