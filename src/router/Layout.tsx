@@ -1,69 +1,56 @@
 import { ReactNode, useEffect, useState } from 'react';
-import SideBar from '../components/base/SideBar';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../features/firebase';
-import { BannedPage, LoadingPage, Login } from '../pages';
+import { LoadingPage, LoginPage, SignInPage } from '../pages';
 import { Toaster } from 'react-hot-toast';
-import { useAtom } from 'jotai';
-import { user as user_atom } from '../store/jotai';
-import processUserData from './processUserData';
 import ToastBar from './ToastBar';
-import RightChip from '../components/base/RightChip';
-import DynamicBar from '../components/base/DynamicBar';
-import TextHighlight from '../components/atom/TextHighlight';
+import useUser from '../hooks/useUser';
+import Header from '../components/ui/Header';
 
 type Props = {
     children: ReactNode;
 };
 
 export default function Layout(props: Props) {
-    // 0: ログインチェック中, 1: ログイン済み, 2: 未ログイン, 3: バン済み
-    const [loginState, setLoginState] = useState<Number>(0);
-    const [_, setUser] = useAtom(user_atom);
+    const [uid, setUid] = useState<string | undefined>();
+    const { user, userNotFound, userFetchError, userFetchLoading } =
+        useUser(uid);
 
     useEffect(() => {
         onAuthStateChanged(auth, (_user) => {
-            processUserData(_user, setLoginState, setUser);
+            setUid(_user?.uid ?? '');
         });
     }, []);
 
-    return (
-        <main className='flex font-noto'>
-            <SideBar />
-            <RightChip />
-            <DynamicBar />
-            <Toaster>{(t) => <ToastBar toast={t} />}</Toaster>
-            {loginState === 1 && <TextHighlight />}
-            <div className='max-w-4xl mx-auto w-full md:pb-36 pb-12 px-6 pt-24 md:pt-12'>
-                <Content state={loginState}>{props.children}</Content>
-            </div>
-        </main>
-    );
-}
-
-type ContentProps = {
-    state: Number;
-    children: ReactNode;
-};
-
-function Content(props: ContentProps) {
-    const { state } = props;
-
-    if (state === 0) {
+    if (uid == undefined) {
+        // ローディング
         return <LoadingPage />;
     }
 
-    if (state === 2) {
-        return <Login />;
+    if (uid === '') {
+        // 未ログイン
+        return <LoginPage />;
     }
 
-    if (state === 3) {
-        return <BannedPage />;
+    if (!user && userFetchLoading) {
+        // ローディング
+        return <LoadingPage />;
     }
 
-    if (state === 1) {
-        return props.children;
+    if (userFetchError) {
+        // エラー
     }
 
-    return <>エラー</>;
+    if (userNotFound) {
+        // アカウント未作成
+        return <SignInPage />;
+    }
+
+    return (
+        <main className='font-noto'>
+            <Toaster>{(t) => <ToastBar toast={t} />}</Toaster>
+            {props.children}
+            <Header />
+        </main>
+    );
 }
