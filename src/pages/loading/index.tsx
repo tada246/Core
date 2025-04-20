@@ -1,4 +1,4 @@
-import { DNA } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 import { motion } from 'framer-motion';
 
 export default function Page() {
@@ -9,13 +9,12 @@ export default function Page() {
                 animate={{ opacity: 1 }}
                 transition={{ ease: 'easeIn', duration: 1 }}
             >
-                <DNA
+                <ThreeDots
                     visible={true}
-                    height='120'
-                    width='120'
-                    ariaLabel='puff-loading'
-                    wrapperStyle={{}}
-                    wrapperClass=''
+                    height={40}
+                    width={40}
+                    color='#006FEE'
+                    ariaLabel='loading'
                 />
             </motion.div>
         </div>
