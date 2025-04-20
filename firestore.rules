@@ -108,34 +108,23 @@ service cloud.firestore {
     
     // events
     
-    function isValidEventAtUpdate(id, data) {
-    	let oldData = getData('events', id).data;
-    	return data.size() == 8
-    		&& 'id' in data && data.id is string && data.id == oldData.id
+    function isValidEvent(id, data) {
+    	return [9, 10].hasAny([data.size()])
+    		&& 'id' in data && data.id is string && data.id == id
     		&& 'name' in data && data.name is string
     		&& 'overview' in data && data.overview is string
     		&& 'mapImageURL' in data && data.mapImageURL is string
     		&& 'link' in data && data.link is string
     		&& 'isPublic' in data && data.isPublic is bool
     		&& 'imageURL' in data && data.imageURL is string
-    		&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp;
-    }
-    
-    function isValidEventAtCreate(data) {
-    	return data.size() == 8
-    		&& 'id' in data && data.id is string
-    		&& 'name' in data && data.name is string
-    		&& 'overview' in data && data.overview is string
-    		&& 'mapImageURL' in data && data.mapImageURL is string
-    		&& 'link' in data && data.link is string
-    		&& 'isPublic' in data && data.isPublic is bool
-    		&& 'imageURL' in data && data.imageURL is string
-    		&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp;
+    		&& 'date' in data && data.date.size() == 2 && data.date.start is timestamp && data.date.end is timestamp
+        && 'isStampRallyEnabled' in data && data.isStampRallyEnabled is bool
+        && (data.place == null || (data.place is map && data.place.keys().hasAll(['name', 'lat', 'lng']) && data.place.name is string && data.place.lat is number && data.place.lng is number));
     }
     
     match /events/{eventId} {
-    	allow update: if isEditor() && isValidEventAtUpdate(request.resource.id, request.resource.data);
-      allow create: if isAdmin() && isValidEventAtCreate(request.resource.data);
+    	allow update: if isEditor() && isValidEvent(request.resource.id, request.resource.data);
+      allow create: if isAdmin() && isValidEvent(request.resource.id, request.resource.data);
       allow read: if true;
       
       // forms
@@ -153,6 +142,36 @@ service cloud.firestore {
     		allow create, update: if isEditor() && isValidForm(request.resource.id, request.resource.data);
         allow read: if true;
         allow delete: if isEditor();
+      }
+      
+      
+      // stampRally
+      function isValidstampRally(id, data) {
+    		return data.size() == 5
+    			&& 'id' in data && data.id is string && data.id == id
+    			&& 'name' in data && data.name is string
+    			&& 'hint' in data && data.hint is string
+    			&& 'imageURL' in data && data.imageURL is string
+    			&& 'order' in data && data.order is number;
+    	}
+      
+      match /stampRally/{stampRallyId} {
+    		allow create, update: if isEditor() && isValidstampRally(request.resource.id, request.resource.data);
+        allow read: if true;
+        allow delete: if isEditor();
+        
+        // id secret
+        function isValidstampRallyIdSecret(id, data) {
+          return data.size() == 2
+            && 'id' in data && data.id is string && data.id == id && id == 'main'
+            && 'secretId' in data && data.secretId is string;
+        }
+        
+        match /secret/{stampRallySecretId} {
+    			allow create: if isEditor() && isValidstampRallyIdSecret(request.resource.id, request.resource.data);
+        	allow read: if isReader();
+          allow delete: if isEditor();
+        }
       }
       
       // places
