@@ -21,6 +21,10 @@ export default function Message() {
 
     const groupedNotices = data.reduce(
         (acc: Record<string, Notice[]>, notice) => {
+            // timestampが存在しない場合はスキップ
+            if (!notice.timestamp || !notice.timestamp.seconds) {
+                return acc;
+            }
             const date = dayjs(notice.timestamp.seconds * 1000).format(
                 'YYYY-MM-DD'
             );
